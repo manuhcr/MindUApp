@@ -5,30 +5,33 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:pointerIcon="none"
     tools:context=".TelaInicio">
+
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="554dp"
+        android:layout_height="904dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.755"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.893"
         app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
-
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="358dp"
-        android:layout_height="471dp"
+        android:layout_width="326dp"
+        android:layout_height="404dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintHorizontal_bias="0.329"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.405"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/gemini_generated_image_540zhb540zhb540z_removebg_preview_1" />
 
     <com.example.mindu.GradienteTitulo
@@ -46,8 +49,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="353dp"
+        android:layout_height="82dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/plus_jakarta_sans_light"
@@ -57,5 +60,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/titulo"
         app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="75dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="#4d366d"
+        android:isScrollContainer="false"
+        android:pointerIcon="none"
+        app:cornerRadius="@android:dimen/config_shapeCornerRadiusMedium"
+        app:icon="@drawable/baseline_arrow_forward_24"
+        app:iconGravity="start"
+        app:iconSize="28dp"
+        app:iconTintMode="multiply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.928"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
