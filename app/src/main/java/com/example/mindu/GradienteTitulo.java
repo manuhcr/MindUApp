@@ -1,8 +1,9 @@
 package com.example.mindu;
+
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.Matrix;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import androidx.annotation.NonNull;
@@ -10,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 public class GradienteTitulo extends AppCompatTextView {
+
+    private Shader shaderConstruido = null;
 
     public GradienteTitulo(@NonNull Context context) {
         super(context);
@@ -24,29 +27,43 @@ public class GradienteTitulo extends AppCompatTextView {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        // Cria o gradiente sempre que o tamanho mudar
+        gerarGradiente(w, h);
+    }
 
-        // O gradiente só é gerado se o tamanho do componente mudar ou for definido
-        if (changed) {
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        if (shaderConstruido == null && getWidth() > 0) {
+            gerarGradiente(getWidth(), getHeight());
+        }
+
+        if (shaderConstruido != null) {
+            getPaint().setShader(shaderConstruido);
+        }
+
+        super.onDraw(canvas);
+    }
+
+    private void gerarGradiente(int largura, int altura) {
+        if (largura > 0) {
             int[] cores = new int[]{
-                    Color.parseColor("#683FE6"), // 15%
-                    Color.parseColor("#8294EF"), // 57%
-                    Color.parseColor("#3D366D")  // 89%
+                    Color.parseColor("#4d366d"),
+                    Color.parseColor("#db9ec0"),
+                    Color.parseColor("#c688dd")
             };
 
             float[] posicoes = new float[]{0.15f, 0.57f, 0.89f};
 
-            float larguraDoTexto = getPaint().measureText(getText().toString());
-
-            Shader shader = new LinearGradient(
-                    0, 0, 0, getHeight(),
+            // Criamos um gradiente horizontal estendido de ponta a ponta
+            shaderConstruido = new LinearGradient(
+                    0, 0, largura, 0,
                     cores,
                     posicoes,
                     Shader.TileMode.CLAMP
             );
-
-
         }
     }
 }
