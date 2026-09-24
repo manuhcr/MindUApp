@@ -51,11 +51,10 @@ public class GradienteTitulo extends AppCompatTextView {
         if (largura > 0) {
             int[] cores = new int[]{
                     Color.parseColor("#4d366d"),
-                    Color.parseColor("#db9ec0"),
-                    Color.parseColor("#c688dd")
+                    Color.parseColor("#c688dd"),
             };
 
-            float[] posicoes = new float[]{0.15f, 0.57f, 0.89f};
+            float[] posicoes = new float[]{0.15f, 0.57f};
 
             // Criamos um gradiente horizontal estendido de ponta a ponta
             shaderConstruido = new LinearGradient(

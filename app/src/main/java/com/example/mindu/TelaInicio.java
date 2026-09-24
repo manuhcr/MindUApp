@@ -1,9 +1,11 @@
 package com.example.mindu;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +25,11 @@ public class TelaInicio extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        Button btnProx = findViewById(R.id.btnProx);
+        btnProx.setOnClickListener(v -> {
+            Intent rotacionar = new Intent(TelaInicio.this, Acessos.class);
+            startActivity(rotacionar);
         });
 
     }
