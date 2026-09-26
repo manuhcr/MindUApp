@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://android.com"
+    android:shape="rectangle">
+
+    <!-- GRADIENTE: Branco translúcido para fundir com as ondas do fundo -->
+    <!-- #4DFFFFFF = Branco com 30% de opacidade no topo esquerdo -->
+    <!-- #1AFFFFFF = Branco com 10% de opacidade na base direita -->
+    <gradient
+        android:startColor="#4DFFFFFF"
+        android:endColor="#1AFFFFFF"
+        android:angle="315"
+        android:type="linear" />
+
+    <!-- CANTOS ARREDONDADOS: Curvatura idêntica à do seu design -->
+    <corners android:radius="24dp" />
+
+    <!-- BORDA DE REFLEXO: Linha fina branca que destaca o vidro -->
+    <stroke
+        android:width="1.2dp"
+        android:color="#80FFFFFF" /> <!-- 50% de opacidade -->
+</shape>

@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/lora_bold</item>
+        <item>@font/plus_jakarta_sans_bold</item>
         <item>@font/plus_jakarta_sans_light</item>
     </array>
 </resources>

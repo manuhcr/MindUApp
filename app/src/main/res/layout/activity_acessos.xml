@@ -15,10 +15,10 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.722"
+        app:layout_constraintHorizontal_bias="0.707"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.975"
         app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
 
     <TextView
@@ -35,35 +35,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- BOTÃO 1: SOU BENEFICIÁRIO -->
     <Button
         android:id="@+id/btnColaborador"
-        android:layout_width="314dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="80dp"
-        android:text="Button"
+        android:layout_width="282dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/bg_glassmorphism"
+        app:backgroundTint="@null"
+        android:drawableLeft="@drawable/paciente_1"
+        android:drawablePadding="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Sou beneficiário"
+        android:textAlignment="viewStart"
+        android:textColor="#373545"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto" />
 
+    <!-- BOTÃO 2: SOU EMPRESA -->
     <Button
         android:id="@+id/btnEmpresa"
-        android:layout_width="317dp"
-        android:layout_height="122dp"
-        android:layout_marginTop="52dp"
-        android:text="Button"
+        android:layout_width="282dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/bg_glassmorphism"
+        app:backgroundTint="@null"
+        android:drawableLeft="@drawable/companhia_1"
+        android:drawablePadding="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Sou empresa"
+        android:textAlignment="viewStart"
+        android:textColor="#373545"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnColaborador" />
 
+    <!-- BOTÃO 3: SOU PSICÓLOGO -->
     <Button
         android:id="@+id/btnPsicologo"
-        android:layout_width="309dp"
-        android:layout_height="119dp"
-        android:layout_marginTop="52dp"
-        android:text="Button"
+        android:layout_width="282dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_glassmorphism"
+        app:backgroundTint="@null"
+        android:drawableLeft="@drawable/psicologia_1"
+        android:drawablePadding="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Sou psicólogo"
+        android:textAlignment="viewStart"
+        android:textColor="#373545"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEmpresa" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
