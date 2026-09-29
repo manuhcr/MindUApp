@@ -1,109 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F1F5"
+    android:background="#F5F3F7"
     tools:context=".Acessos">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="678dp"
-        android:layout_height="1103dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- CONTEÚDO QUE SERÁ USADO COMO FUNDO DO BLUR -->
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/blurTarget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="678dp"
+                android:layout_height="1103dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.797"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
+
+            <TextView
+                android:id="@+id/texto"
+                android:layout_width="294dp"
+                android:layout_height="98dp"
+                android:layout_marginTop="100dp"
+                android:text="Para começar, precisamos entender qual o seu perfil de acesso."
+                android:textColor="#3d3642"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </eightbitlab.com.blurview.BlurTarget>
+
+
+    <!-- BLUR + BOTÃO BENEFICIÁRIO -->
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurColaborador"
+        android:layout_width="277dp"
+        android:layout_height="116dp"
+        android:background="@drawable/bg_glassmorphism"
+        app:blurOverlayColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.707"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975"
-        app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
+        android:layout_marginTop="254dp">
 
-    <TextView
-        android:id="@+id/texto"
-        android:layout_width="294dp"
-        android:layout_height="98dp"
-        android:layout_margin="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="120dp"
-        android:text="Para começar, precisamos entender qual o seu perfil de acesso. "
-        android:textColor="#3d3642"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btnColaborador"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/paciente_1"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:paddingStart="32dp"
+            android:paddingEnd="16dp"
+            android:text="Sou beneficiário"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="#373545"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- BOTÃO 1: SOU BENEFICIÁRIO -->
-    <Button
-        android:id="@+id/btnColaborador"
-        android:layout_width="282dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="56dp"
+    </eightbitlab.com.blurview.BlurView>
+
+
+    <!-- BLUR + BOTÃO EMPRESA -->
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurEmpresa"
+        android:layout_width="277dp"
+        android:layout_height="116dp"
         android:background="@drawable/bg_glassmorphism"
-        app:backgroundTint="@null"
-        android:drawableLeft="@drawable/paciente_1"
-        android:drawablePadding="24dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:fontFamily="@font/plus_jakarta_sans_bold"
-        android:text="Sou beneficiário"
-        android:textAlignment="viewStart"
-        android:textColor="#373545"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textAllCaps="false"
+        app:blurOverlayColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto" />
+        app:layout_constraintTop_toBottomOf="@id/blurColaborador"
+        android:layout_marginTop="32dp">
 
-    <!-- BOTÃO 2: SOU EMPRESA -->
-    <Button
-        android:id="@+id/btnEmpresa"
-        android:layout_width="282dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/bg_glassmorphism"
-        app:backgroundTint="@null"
-        android:drawableLeft="@drawable/companhia_1"
-        android:drawablePadding="24dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:fontFamily="@font/plus_jakarta_sans_bold"
-        android:text="Sou empresa"
-        android:textAlignment="viewStart"
-        android:textColor="#373545"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnColaborador" />
+        <Button
+            android:id="@+id/btnEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/companhia_1"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:paddingStart="32dp"
+            android:paddingEnd="16dp"
+            android:text="Sou empresa"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="#373545"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- BOTÃO 3: SOU PSICÓLOGO -->
-    <Button
-        android:id="@+id/btnPsicologo"
-        android:layout_width="282dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
+    </eightbitlab.com.blurview.BlurView>
+
+
+    <!-- BLUR + BOTÃO PSICÓLOGO -->
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurPsicologo"
+        android:layout_width="277dp"
+        android:layout_height="116dp"
         android:background="@drawable/bg_glassmorphism"
-        app:backgroundTint="@null"
-        android:drawableLeft="@drawable/psicologia_1"
-        android:drawablePadding="24dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:fontFamily="@font/plus_jakarta_sans_bold"
-        android:text="Sou psicólogo"
-        android:textAlignment="viewStart"
-        android:textColor="#373545"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:blurOverlayColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEmpresa" />
+        app:layout_constraintTop_toBottomOf="@id/blurEmpresa"
+        android:layout_marginTop="32dp">
+
+        <Button
+            android:id="@+id/btnPsicologo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/psicologia_1"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:paddingStart="32dp"
+            android:paddingEnd="16dp"
+            android:text="Sou psicólogo"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="#373545"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </eightbitlab.com.blurview.BlurView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
