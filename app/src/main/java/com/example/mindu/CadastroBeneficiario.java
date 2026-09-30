@@ -62,12 +62,12 @@ public class CadastroBeneficiario extends AppCompatActivity {
         liquidGlass.setCornerRadius(24 * density);
         int strokeWidthPx = (int) (1 * density);
         liquidGlass.setStroke(strokeWidthPx, Color.parseColor("#99F5F3F7"));
-
+        view.setBackground(liquidGlass);
         view.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
 
         view.setClipToOutline(true);
 
         view.setElevation(4 * density);
-        view.setBackground(liquidGlass);
+
     }
 }
