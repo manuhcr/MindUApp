@@ -596,7 +596,7 @@
                         app:cornerRadius="12dp" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btnCriarConta"
                         android:layout_width="205dp"
                         android:layout_height="49dp"
                         android:layout_gravity="center"
