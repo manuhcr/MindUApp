@@ -9,134 +9,221 @@
     android:layout_height="match_parent"
     tools:context=".CadastroBeneficiario">
 
-    <!--
-        FUNDO DA TELA
-        Tudo que estiver aqui pode ser capturado pelo BlurView.
-    -->
+    <!-- ========================================================= -->
+    <!-- FUNDO DA TELA                                             -->
+    <!-- ========================================================= -->
+
     <eightbitlab.com.blurview.BlurTarget
         android:id="@+id/blurTargetCadastro"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="472dp"
+        android:layout_height="783dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- IMAGEM DE FUNDO -->
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- TÍTULO -->
 
         <!-- SUBTÍTULO -->
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="328dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="72dp"
-            android:fontFamily="@font/plus_jakarta_sans_bold"
-            android:text="Bem-vindo a MindU!"
-            android:textColor="#3E3545"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="300dp"
-            android:layout_height="53dp"
-            android:fontFamily="@font/plus_jakarta_sans_bold"
-            android:text="Entre na sua conta!"
-            android:textColor="#3E3545"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/textView4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </eightbitlab.com.blurview.BlurTarget>
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="678dp"
+        android:layout_height="1103dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
 
-    <!--
-        CARD DE VIDRO
-        O BlurView pega o fundo do BlurTarget,
-        aplica o desfoque e recebe o efeito de vidro.
-    -->
+
+    <!-- ========================================================= -->
+    <!-- CONTEÚDO QUE SERÁ CAPTURADO PELO BLUR                     -->
+    <!-- ========================================================= -->
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="328dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Bem-vindo a MindU!"
+        android:textColor="#3E3545"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="300dp"
+        android:layout_height="53dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Entre na sua conta!"
+        android:textColor="#3E3545"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/blurCadastroBeneficiario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <!-- ========================================================= -->
+    <!-- CARD DE VIDRO                                             -->
+    <!-- ========================================================= -->
+
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurCadastroBeneficiario"
-        android:layout_width="313dp"
-        android:layout_height="366dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="291dp"
+        android:layout_height="388dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- CAMPO MATRÍCULA -->
+            android:layout_height="387dp">
 
 
-            <!-- CAMPO SENHA -->
+            <!-- ================================================= -->
+            <!-- CAMPO MATRÍCULA                                   -->
+            <!-- ================================================= -->
 
-
-            <!-- BOTÃO -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputMatricula"
                 android:layout_width="230dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="100dp"
                 android:hint="Matrícula"
-                android:textColorHint="#020202"
-                app:hintTextColor="#050505"
+                android:textColorHint="#3E3545"
+                app:boxBackgroundColor="#55F5F3F7"
+                app:boxBackgroundMode="filled"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtMatricula"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textColor="#3E3545"
+                    android:textSize="14sp" />
+
             </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CAMPO SENHA                                       -->
+            <!-- ================================================= -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputSenha"
                 android:layout_width="230dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:hint="Senha"
-                android:textColorHint="#161515"
+                android:textColorHint="#3E3545"
+                app:boxBackgroundColor="#55F5F3F7"
                 app:boxBackgroundMode="filled"
-                app:boxCornerRadiusBottomEnd="40dp"
-                app:boxCornerRadiusBottomStart="40dp"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputMatricula">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:textColor="#3E3545"
+                    android:textSize="14sp" />
+
             </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- ================================================= -->
+            <!-- BOTÃO ENTRAR                                      -->
+            <!-- ================================================= -->
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="112dp"
+                android:layout_width="118dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="52dp"
+                android:backgroundTint="#75689A"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
                 android:text="Entrar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputSenha" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </eightbitlab.com.blurview.BlurView>
+
+    <TextView
+        android:id="@+id/textPrimeiraVez"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="170dp"
+        android:fontFamily="@font/plus_jakarta_sans_light"
+        android:text="Primeira vez por aqui?"
+        android:textColor="#3E3545"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blurCadastroBeneficiario" />
+
+    <TextView
+        android:id="@+id/textAtiveBeneficio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="140dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Ative seu benefício"
+        android:textColor="#3E3545"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPrimeiraVez" />
+
+
+    <!-- ================================================= -->
+    <!-- PRIMEIRA VEZ POR AQUI?                            -->
+    <!-- ================================================= -->
+
+
+    <!-- ================================================= -->
+    <!-- ATIVE SEU BENEFÍCIO                               -->
+    <!-- ================================================= -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

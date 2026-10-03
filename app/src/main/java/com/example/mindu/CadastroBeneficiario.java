@@ -47,7 +47,7 @@ public class CadastroBeneficiario extends AppCompatActivity {
 
 
         liquidGlass.setColor(
-                Color.parseColor("#388294EF")
+                Color.parseColor("#1F8294EF")
         );
         /*
          * Valores como "24dp" precisam ser convertidos
@@ -67,7 +67,7 @@ public class CadastroBeneficiario extends AppCompatActivity {
 
         view.setClipToOutline(true);
 
-        view.setElevation(4 * density);
+        view.setElevation(5 * density);
 
     }
 }

@@ -302,7 +302,7 @@ public class Acessos extends AppCompatActivity {
          */
 
         liquidGlass.setColor(
-                Color.parseColor("#388294EF")
+                Color.parseColor("#1F8294EF")
         );
         /*
          * Valores como "24dp" precisam ser convertidos
