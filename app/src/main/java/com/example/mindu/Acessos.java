@@ -210,19 +210,19 @@ public class Acessos extends AppCompatActivity {
         // ==========================================
 
         btnColaborador.setOnClickListener(v -> {
-            Intent rotacionar = new Intent(Acessos.this, CadastroBeneficiario.class);
+            Intent rotacionar = new Intent(Acessos.this, LoginBeneficiario.class);
             startActivity(rotacionar);
         });
 
 
         btnEmpresa.setOnClickListener(v -> {
-            Intent rotacionar = new Intent(Acessos.this, TelaInicio.class);
+            Intent rotacionar = new Intent(Acessos.this, LoginEmpresa.class);
             startActivity(rotacionar);
         });
 
 
         btnPsicologo.setOnClickListener(v -> {
-            Intent rotacionar = new Intent(Acessos.this, TelaInicio.class);
+            Intent rotacionar = new Intent(Acessos.this, LoginPsicologo.class);
             startActivity(rotacionar);
         });
     }

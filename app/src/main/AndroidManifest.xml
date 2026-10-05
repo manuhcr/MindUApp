@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MindU">
         <activity
-            android:name=".CadastroBeneficiario"
+            android:name=".LoginBeneficiario"
+            android:exported="false" />
+        <activity
+            android:name=".LoginEmpresa"
+            android:exported="false" />
+        <activity
+            android:name=".LoginPsicologo"
             android:exported="false" />
         <activity
             android:name=".Acessos"
@@ -30,6 +36,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".CadastroBeneficiario"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
