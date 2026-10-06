@@ -32,6 +32,11 @@
             <!-- FUNDO                                             -->
             <!-- ================================================= -->
 
+
+            <!-- ================================================= -->
+            <!-- TÍTULO                                            -->
+            <!-- ================================================= -->
+
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="678dp"
@@ -39,16 +44,11 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.797"
+                app:layout_constraintHorizontal_bias="0.801"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_bias="0.997"
                 app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
-
-
-            <!-- ================================================= -->
-            <!-- TÍTULO                                            -->
-            <!-- ================================================= -->
 
             <TextView
                 android:id="@+id/textView4"
@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtMatricula"
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#66FFFFFF"
@@ -230,7 +230,7 @@
 
 
     <TextView
-        android:id="@+id/textAtiveBeneficio"
+        android:id="@+id/textCadastreOrg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

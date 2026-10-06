@@ -163,7 +163,7 @@
                 app:layout_constraintTop_toBottomOf="@id/inputNome">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtEmail"
+                    android:id="@+id/edtEmailCorp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
@@ -229,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@id/inputEmpresa">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtMatricula"
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="number"

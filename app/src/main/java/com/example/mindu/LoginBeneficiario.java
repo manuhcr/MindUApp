@@ -36,7 +36,7 @@ public class LoginBeneficiario extends AppCompatActivity {
 
         aplicarEfeitoVidroLiquido(blurCadastroBeneficiario);
 
-        TextView textAtivaBeneficio = findViewById(R.id.textAtiveBeneficio);
+        TextView textAtivaBeneficio = findViewById(R.id.textCadastreOrg);
         textAtivaBeneficio.setOnClickListener(v -> {
             Intent rotacionar = new Intent(LoginBeneficiario.this, CadastroBeneficiario.class);
             startActivity(rotacionar);
