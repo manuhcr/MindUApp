@@ -560,7 +560,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="288dp"
-                        android:layout_height="53dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="20dp"
                         android:hint="ID do plano"
@@ -570,17 +570,21 @@
                         app:boxCornerRadiusBottomStart="10dp"
                         app:boxCornerRadiusTopEnd="10dp"
                         app:boxCornerRadiusTopStart="10dp"
+                        app:endIconMode="dropdown_menu"
                         app:hintTextColor="#75689A">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/edtPlanoId"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:minHeight="52dp"
+                            android:layout_height="match_parent"
+                            android:inputType="none"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
                             android:textColor="#3E3545"
                             android:textSize="14sp" />
+
                     </com.google.android.material.textfield.TextInputLayout>
+
 
                     <Button
                         android:id="@+id/buttonVoltarEtapa"

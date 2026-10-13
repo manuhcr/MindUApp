@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,9 +23,13 @@ import com.example.mindu.api.ApiService;
 import com.example.mindu.api.RetrofitClient;
 import com.example.mindu.api.cadastro.EmpresaRequest;
 import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.api.planos.PlanoResponse;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
@@ -44,6 +49,14 @@ public class CadastroEmpresa extends AppCompatActivity {
     private View progressoEtapa2;
 
     private ApiService api;
+
+    private MaterialAutoCompleteTextView campoPlano;
+
+    private List<PlanoResponse> planosDisponiveis = new ArrayList<>();
+
+    private String planoIdSelecionado;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,104 +102,14 @@ public class CadastroEmpresa extends AppCompatActivity {
             mostrarEtapa(1);
         });
 
+        api = RetrofitClient.getApiService(this);
+
+        campoPlano = findViewById(R.id.edtPlanoId);
+
+        carregarPlanos();
+
         Button btnCriarConta = findViewById(R.id.btnCriarConta);
-        btnCriarConta.setOnClickListener(v -> {
-            // Lógica para criar a conta
-            TextInputEditText edtRazaoSocial = findViewById(R.id.edtRazaoSocial);
-            TextInputEditText edtNomeFantasia = findViewById(R.id.edtNomeFantasia);
-            TextInputEditText edtCnpj = findViewById(R.id.edtCnpj);
-            TextInputEditText edtInscricaoEstadual = findViewById(R.id.edtInscricaoEstadual);
-            TextInputEditText edtResponsavel = findViewById(R.id.edtResponsavel);
-            TextInputEditText edtCep = findViewById(R.id.edtCep);
-            TextInputEditText edtLogradouro = findViewById(R.id.edtLogradouro);
-            TextInputEditText edtNumero = findViewById(R.id.edtNumero);
-            TextInputEditText edtComplemento = findViewById(R.id.edtComplemento);
-            TextInputEditText edtBairro = findViewById(R.id.edtBairro);
-            TextInputEditText edtCidade = findViewById(R.id.edtCidade);
-            TextInputEditText edtEstado = findViewById(R.id.edtEstado);
-            TextInputEditText edtEmailEmpresa = findViewById(R.id.edtEmailEmpresa);
-            TextInputEditText edtTelefone = findViewById(R.id.edtTelefone);
-            TextInputEditText edtSenha = findViewById(R.id.edtSenha);
-            TextInputEditText edtPlanoId = findViewById(R.id.edtPlanoId);
-
-            String razaoSocial = edtRazaoSocial.getText().toString();
-            String nomeFantasia = edtNomeFantasia.getText().toString();
-            String cnpj = edtCnpj.getText().toString();
-            String inscricaoEstadual = edtInscricaoEstadual.getText().toString();
-            String responsavel = edtResponsavel.getText().toString();
-            String cep = edtCep.getText().toString();
-            String logradouro = edtLogradouro.getText().toString();
-            String numero = edtNumero.getText().toString();
-            String complemento = edtComplemento.getText().toString();
-            String bairro = edtBairro.getText().toString();
-            String cidade = edtCidade.getText().toString();
-            String estado = edtEstado.getText().toString();
-            String emailEmpresa = edtEmailEmpresa.getText().toString();
-            String telefone = edtTelefone.getText().toString();
-            String senha = edtSenha.getText().toString();
-            String planoId = edtPlanoId.getText().toString();
-
-            String[] campos = {
-                    razaoSocial, nomeFantasia, cnpj, inscricaoEstadual, responsavel,
-                    cep, logradouro, numero, complemento, bairro, cidade, estado,
-                    emailEmpresa, telefone, senha, planoId
-            };
-
-
-            EmpresaRequest request = new EmpresaRequest();
-            request.setRazaoSocial(razaoSocial);
-            request.setNomeFantasia(nomeFantasia);
-            request.setCnpj(cnpj);
-            request.setInscricaoEstadual(inscricaoEstadual);
-            request.setResponsavel(responsavel);
-            request.setCep(cep);
-            request.setLogradouro(logradouro);
-            request.setNumero(numero);
-            request.setComplemento(complemento);
-            request.setBairro(bairro);
-            request.setCidade(cidade);
-            request.setEstado(estado);
-            request.setEmailEmpresa(emailEmpresa);
-            request.setTelefone(telefone);
-            request.setSenha(senha);
-            request.setPlanoId(planoId);
-            // Enviar a solicitação para API
-            api.cadastrarEmpresa(request).enqueue(new Callback<EmpresaResponse>() {
-
-                @Override
-                public void onResponse(Call<EmpresaResponse> call, Response<EmpresaResponse> response) {
-                     if (response.isSuccessful()) {
-                         EmpresaResponse empresaResponse = response.body();
-                         // Lógica para lidar com a resposta da API
-                         Toast.makeText(CadastroEmpresa.this,
-                                 "Empresa cadastrada com sucesso!",
-                                 Toast.LENGTH_SHORT).show();
-                         Intent rotacionar = new Intent(CadastroEmpresa.this, LoginEmpresa.class);
-                         startActivity(rotacionar);
-                     }
-                     if (camposVazios(campos)) {
-                         Toast.makeText(CadastroEmpresa.this,
-                                 "Preencha todos os campos!",
-                                 Toast.LENGTH_SHORT).show();
-
-                         return;
-
-                     }
-                }
-
-                @Override
-                public void onFailure(Call<EmpresaResponse> call, Throwable throwable) {
-                    if (throwable != null) {
-                        Toast.makeText(CadastroEmpresa.this,
-                                "Erro ao cadastrar empresa: " + throwable.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-
-
-        });
+        btnCriarConta.setOnClickListener(v ->  cadastrarEmpresa());
 
     }
     private void mostrarEtapa(int etapa) {
@@ -271,5 +194,153 @@ public class CadastroEmpresa extends AppCompatActivity {
 
         view.setElevation(4 * density);
     }
+
+    private void carregarPlanos() {
+        api.listarPlanos().enqueue(new Callback<List<PlanoResponse>>() {
+
+            @Override
+            public void onResponse(
+                    Call<List<PlanoResponse>> call,
+                    Response<List<PlanoResponse>> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+
+                    planosDisponiveis.clear();
+                    planosDisponiveis.addAll(response.body());
+
+                    List<String> nomesPlanos = new ArrayList<>();
+
+                    for (PlanoResponse plano : planosDisponiveis) {
+                        nomesPlanos.add(plano.nome);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                            CadastroEmpresa.this,
+                            android.R.layout.simple_dropdown_item_1line,
+                            nomesPlanos
+                    );
+
+                    campoPlano.setAdapter(adapter);
+
+                    campoPlano.setOnItemClickListener((parent, view, position, id) -> {
+                        PlanoResponse plano = planosDisponiveis.get(position);
+                        planoIdSelecionado = plano.id;
+                    });
+
+                } else {
+                    Toast.makeText(
+                            CadastroEmpresa.this,
+                            "Não foi possível carregar os planos.",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<List<PlanoResponse>> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        CadastroEmpresa.this,
+                        "Erro de conexão ao buscar os planos.",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    private String valorCampo(int id) {
+        TextInputEditText campo = findViewById(id);
+        return campo.getText().toString().trim();
+    }
+
+    private void cadastrarEmpresa() {
+
+        if (planoIdSelecionado == null) {
+            Toast.makeText(
+                    this,
+                    "Selecione um plano antes de continuar.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        EmpresaRequest request = new EmpresaRequest();
+
+        request.setRazaoSocial(valorCampo(R.id.edtRazaoSocial));
+        request.setNomeFantasia(valorCampo(R.id.edtNomeFantasia));
+        request.setCnpj(valorCampo(R.id.edtCnpj));
+        request.setInscricaoEstadual(valorCampo(R.id.edtInscricaoEstadual));
+        request.setResponsavel(valorCampo(R.id.edtResponsavel));
+
+        request.setCep(valorCampo(R.id.edtCep));
+        request.setLogradouro(valorCampo(R.id.edtLogradouro));
+        request.setNumero(valorCampo(R.id.edtNumero));
+        request.setComplemento(valorCampo(R.id.edtComplemento));
+        request.setBairro(valorCampo(R.id.edtBairro));
+        request.setCidade(valorCampo(R.id.edtCidade));
+        request.setEstado(valorCampo(R.id.edtEstado));
+
+        request.setEmailEmpresa(valorCampo(R.id.edtEmailEmpresa));
+        request.setTelefone(valorCampo(R.id.edtTelefone));
+        request.setSenha(valorCampo(R.id.edtSenha));
+
+        request.setPlanoId(planoIdSelecionado);
+
+        api.cadastrarEmpresa(request).enqueue(new Callback<EmpresaResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<EmpresaResponse> call,
+                    Response<EmpresaResponse> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+
+                    EmpresaResponse empresa = response.body();
+
+                    if (empresa.id == null || empresa.id.isEmpty()) {
+                        Toast.makeText(
+                                CadastroEmpresa.this,
+                                "A API não retornou o ID da empresa.",
+                                Toast.LENGTH_LONG
+                        ).show();
+                        return;
+                    }
+
+                    getSharedPreferences("mindu", MODE_PRIVATE)
+                            .edit()
+                            .putString("empresaId", empresa.id)
+                            .apply();
+
+                    Toast.makeText(
+                            CadastroEmpresa.this,
+                            "Empresa cadastrada com sucesso!",
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                } else {
+                    Toast.makeText(
+                            CadastroEmpresa.this,
+                            "Falha no cadastro. Código HTTP: " + response.code(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<EmpresaResponse> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        CadastroEmpresa.this,
+                        "Erro de conexão: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
 
 }

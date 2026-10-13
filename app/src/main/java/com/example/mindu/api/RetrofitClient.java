@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "https://mindu-api.onrender.com"; // emulador -> localhost da máquina
+    private static final String BASE_URL = "https://mindu-api.onrender.com/"; // emulador -> localhost da máquina
     private static Retrofit retrofit;
 
     public static Retrofit getInstance(Context context) {
