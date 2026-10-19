@@ -109,6 +109,7 @@ public class Acessos extends AppCompatActivity {
         Button btnColaborador = findViewById(R.id.btnColaborador);
         Button btnEmpresa = findViewById(R.id.btnEmpresa);
         Button btnPsicologo = findViewById(R.id.btnPsicologo);
+        Button btnAdmin = findViewById(R.id.btnAdmin);
 
 
         // ==========================================
@@ -169,6 +170,7 @@ public class Acessos extends AppCompatActivity {
         BlurView blurColaborador = findViewById(R.id.blurColaborador);
         BlurView blurEmpresa = findViewById(R.id.blurEmpresa);
         BlurView blurPsicologo = findViewById(R.id.blurPsicologo);
+        BlurView blurAdmin = findViewById(R.id.blurAdmin);
 
 
         // ==========================================
@@ -178,6 +180,7 @@ public class Acessos extends AppCompatActivity {
         blurColaborador.setupWith(blurTarget).setBlurRadius(20f);
         blurEmpresa.setupWith(blurTarget).setBlurRadius(20f);
         blurPsicologo.setupWith(blurTarget).setBlurRadius(20f);
+        blurAdmin.setupWith(blurTarget).setBlurRadius(20f);
 
 
 
@@ -203,6 +206,7 @@ public class Acessos extends AppCompatActivity {
         aplicarEfeitoVidroLiquido(blurColaborador);
         aplicarEfeitoVidroLiquido(blurEmpresa);
         aplicarEfeitoVidroLiquido(blurPsicologo);
+        aplicarEfeitoVidroLiquido(blurAdmin);
 
 
         // ==========================================
@@ -224,6 +228,10 @@ public class Acessos extends AppCompatActivity {
         btnPsicologo.setOnClickListener(v -> {
             Intent rotacionar = new Intent(Acessos.this, LoginPsicologo.class);
             startActivity(rotacionar);
+        });
+        btnAdmin.setOnClickListener(v -> {
+            Intent intent = new Intent(Acessos.this, LoginAdmin.class);
+            startActivity(intent);
         });
     }
 

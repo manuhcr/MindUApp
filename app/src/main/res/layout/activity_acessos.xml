@@ -26,10 +26,10 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.797"
+                app:layout_constraintHorizontal_bias="0.807"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_bias="0.982"
                 app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
 
             <TextView
@@ -143,6 +143,39 @@
             android:textAllCaps="false"
             android:textColor="#373545"
             android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </eightbitlab.com.blurview.BlurView>
+
+
+    <!-- BLUR + BOTÃO ADMINISTRADOR -->
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurAdmin"
+        android:layout_width="277dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        app:blurOverlayColor="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/blurPsicologo">
+
+        <Button
+            android:id="@+id/btnAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@android:drawable/ic_lock_lock"
+            android:drawablePadding="34dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:paddingStart="32dp"
+            android:paddingEnd="16dp"
+            android:text="Sou administrador"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="#373545"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </eightbitlab.com.blurview.BlurView>

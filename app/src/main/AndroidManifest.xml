@@ -23,8 +23,19 @@
             android:name=".LoginPsicologo"
             android:exported="false" />
         <activity
+            android:name=".LoginAdmin"
+            android:exported="false" />
+        <activity
             android:name=".Acessos"
             android:exported="false" />
+        <activity
+            android:name=".CadastroBeneficiario"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CadastroEmpresa"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TelaInicio"
             android:exported="true">
@@ -39,14 +50,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".CadastroBeneficiario"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".CadastroEmpresa"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
