@@ -30,8 +30,8 @@
     <!-- Conteúdo do painel -->
     <ScrollView
         android:id="@+id/scrollDashboard"
-        android:layout_width="398dp"
-        android:layout_height="720dp"
+        android:layout_width="379dp"
+        android:layout_height="754dp"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:paddingStart="20dp"
