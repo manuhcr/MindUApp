@@ -14,6 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MindU">
         <activity
+            android:name=".DashboardAdmin"
+            android:exported="false"
+            android:theme="@style/Theme.MindU" />
+        <activity
+            android:name=".ProfissionaisPendentes"
+            android:exported="false" />
+        <activity
             android:name=".LoginBeneficiario"
             android:exported="false" />
         <activity
@@ -49,8 +56,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
     </application>
 
 </manifest>

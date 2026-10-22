@@ -3,6 +3,8 @@ package com.example.mindu.api;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -10,12 +12,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "https://mindu-api.onrender.com/"; // emulador -> localhost da máquina
+    private static final String BASE_URL = "https://mindu-api.onrender.com/";
     private static Retrofit retrofit;
 
     public static Retrofit getInstance(Context context) {
         if (retrofit == null) {
+            // Aumentando os timeouts para lidar com o "cold start" do Render (serviço gratuito)
             OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .addInterceptor(chain -> {
                         SharedPreferences prefs = context.getSharedPreferences("mindu", Context.MODE_PRIVATE);
                         String token = prefs.getString("token", null);

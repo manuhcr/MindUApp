@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgrounddashboard">
+
+    <!-- Fundo utilizado pelo efeito Blur -->
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/blurTargetDashboardAdmin"
+        android:layout_width="478dp"
+        android:layout_height="970dp"
+        app:layout_constraintBottom_toTopOf="@id/navAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_marginTop="4dp"
+            android:text="Painel administrativo"
+            android:textColor="#683FE6"
+            android:textSize="14sp" />
+    </eightbitlab.com.blurview.BlurTarget>
+
+    <!-- Conteúdo do painel -->
+    <ScrollView
+        android:id="@+id/scrollDashboard"
+        android:layout_width="398dp"
+        android:layout_height="720dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingStart="20dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/navAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Cabeçalho -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MindU"
+                android:textColor="#373545"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <!-- Boas-vindas -->
+
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurCardBoasVindas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@android:color/transparent"
+                app:blurOverlayColor="#33F5F3F7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gestão da plataforma"
+                        android:textColor="#373545"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Acompanhe os cadastros e gerencie os recursos do MindU."
+                        android:textColor="#777080"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </eightbitlab.com.blurview.BlurView>
+
+            <!-- Indicadores -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Visão geral"
+                android:textColor="#373545"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <!-- Cadastros pendentes -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurCardPendentes"
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:blurOverlayColor="#33F5F3F7">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cadastros pendentes"
+                            android:textColor="#683FE6"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtTotalPendentes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="—"
+                            android:textColor="#373545"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
+
+                <!-- Profissionais ativos -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurCardAtivos"
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:blurOverlayColor="#33F5F3F7">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Profissionais ativos"
+                            android:textColor="#683FE6"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtTotalProfissionais"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="—"
+                            android:textColor="#373545"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
+
+            </LinearLayout>
+
+            <!-- Gestão -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Gestão do MindU"
+                android:textColor="#373545"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <!-- Usuários e cadastros -->
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurCardUsuarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                app:blurOverlayColor="#33F5F3F7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Usuários e cadastros"
+                        android:textColor="#373545"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Acesse as áreas de beneficiários, empresas e profissionais."
+                        android:textColor="#777080"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btnGerenciarUsuarios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="#683FE6"
+                        android:text="Gerenciar usuários"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+
+                </LinearLayout>
+            </eightbitlab.com.blurview.BlurView>
+
+
+            <!-- Aprovações -->
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurCardAprovacoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@android:color/transparent"
+                app:blurOverlayColor="#33F5F3F7">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aprovações"
+                        android:textColor="#373545"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Revise solicitações de cadastro de profissionais."
+                        android:textColor="#777080"
+                        android:textSize="13sp" />
+
+                    <!-- Lista dinâmica de profissionais pendentes -->
+                    <LinearLayout
+                        android:id="@+id/layoutListaPendentes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+
+                    <Button
+                        android:id="@+id/btnAbrirAprovacoes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="#683FE6"
+                        android:text="Atualizar solicitações"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+
+                </LinearLayout>
+
+            </eightbitlab.com.blurview.BlurView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Navegação inferior -->
+    <LinearLayout
+        android:id="@+id/navAdmin"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_nav_admin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/navInicio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="⌂"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/navUsuarios"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="♙"
+            android:textColor="#D4CDE9"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/navAprovacoes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="▤"
+            android:textColor="#D4CDE9"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/navPerfil"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="◎"
+            android:textColor="#D4CDE9"
+            android:textSize="23sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,15 @@
 package com.example.mindu;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +17,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mindu.api.RetrofitClient;
+import com.example.mindu.api.login.LoginRequest;
+import com.example.mindu.api.login.LoginResponse;
+
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Body;
 
 public class LoginAdmin extends AppCompatActivity {
 
@@ -42,6 +55,26 @@ public class LoginAdmin extends AppCompatActivity {
                     .setBlurRadius(20f);
             aplicarEfeitoVidroLiquido(blurView);
         }
+
+        EditText edtEmail = findViewById(R.id.edtEmailAdmin);
+        EditText edtSenha = findViewById(R.id.edtSenhaAdmin);
+        Button btnEntrar = findViewById(R.id.btnEntrarAdmin);
+
+        btnEntrar.setOnClickListener(v -> {
+            String email = edtEmail.getText().toString().trim();
+            String senha = edtSenha.getText().toString();
+
+            if (email.isEmpty() || senha.isEmpty()) {
+                Toast.makeText(
+                        LoginAdmin.this,
+                        "Preencha o e-mail e a senha",
+                        Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+
+            login(email, senha);
+        });
     }
 
     private void aplicarEfeitoVidroLiquido(View view) {
@@ -63,4 +96,77 @@ public class LoginAdmin extends AppCompatActivity {
         view.setClipToOutline(true);
         view.setElevation(5 * density);
     }
-}
+
+
+    private void login(String email, String senha) {
+        RetrofitClient.getApiService(this)
+                .login(new LoginRequest(email, senha))
+                .enqueue(new Callback<LoginResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<LoginResponse> call,
+                            Response<LoginResponse> response) {
+
+                        if (response.isSuccessful()) {
+                            LoginResponse loginResponse = response.body();
+
+                            if (loginResponse != null
+                                    && loginResponse.getToken() != null) {
+
+                                String token = loginResponse.getToken();
+
+                                SharedPreferences prefs =
+                                        getSharedPreferences("mindu", MODE_PRIVATE);
+
+                                prefs.edit()
+                                        .putString("token", token)
+                                        .apply();
+
+                                // TODO: redirecionar para a tela correta
+                                Toast.makeText(
+                                        LoginAdmin.this,
+                                        "Login bem-sucedido",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                                Intent intent = new Intent(
+                                        LoginAdmin.this,
+                                        DashboardAdmin.class
+                                );
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(
+                                        LoginAdmin.this,
+                                        "Erro ao fazer login",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+
+                        } else {
+                            Toast.makeText(
+                                    LoginAdmin.this,
+                                    "Credenciais inválidas",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<LoginResponse> call,
+                            Throwable t) {
+
+                        android.util.Log.e("MINDU_LOGIN", "Falha na requisição de login", t);
+
+                        Toast.makeText(
+                                LoginAdmin.this,
+                                "Erro: " + t.getClass().getSimpleName()
+                                        + " - " + t.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                });
+
+    }
+    }
