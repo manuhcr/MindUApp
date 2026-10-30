@@ -1,10 +1,12 @@
 package com.example.mindu;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +17,13 @@ import androidx.core.view.WindowInsetsCompat;
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
 
-public class LoginPsicologo extends AppCompatActivity {
+public class LoginProfissional extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login_psicologo);
+        setContentView(R.layout.activity_login_profissional);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -33,6 +35,12 @@ public class LoginPsicologo extends AppCompatActivity {
         blurCadastroBeneficiario.setupWith(blurTargetCadastro).setBlurRadius(20f);
 
         aplicarEfeitoVidroLiquido(blurCadastroBeneficiario);
+
+        TextView textSolicitaCredenciamento = findViewById(R.id.textCadastreOrg);
+        textSolicitaCredenciamento.setOnClickListener(v -> {
+            Intent rotacionar = new Intent(LoginProfissional.this, CadastroProfissional.class);
+            startActivity(rotacionar);
+        });
     }
 
     private void aplicarEfeitoVidroLiquido(View view) {

@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MindU">
         <activity
+            android:name=".CadastroProfissional"
+            android:exported="false" />
+        <activity
             android:name=".DashboardAdmin"
             android:exported="false"
             android:theme="@style/Theme.MindU" />
@@ -27,7 +30,7 @@
             android:name=".LoginEmpresa"
             android:exported="false" />
         <activity
-            android:name=".LoginPsicologo"
+            android:name=".LoginProfissional"
             android:exported="false" />
         <activity
             android:name=".LoginAdmin"
