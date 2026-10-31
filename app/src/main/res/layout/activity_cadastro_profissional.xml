@@ -9,16 +9,10 @@
     android:background="#F5F3F7"
     tools:context=".CadastroProfissional">
 
-    <eightbitlab.com.blurview.BlurView
-        android:id="@+id/blurCadastroProfissional"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="95dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@android:color/transparent"
-        app:blurOverlayColor="#33F5F3F7"
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/blurTargetCadastro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,13 +24,13 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="528dp"
-                android:layout_height="1023dp"
+                android:layout_width="432dp"
+                android:layout_height="866dp"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6"
-                tools:layout_editor_absoluteX="-90dp"
-                tools:layout_editor_absoluteY="-70dp" />
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="-8dp" />
 
             <TextView
                 android:id="@+id/textViewTituloCadastro"
