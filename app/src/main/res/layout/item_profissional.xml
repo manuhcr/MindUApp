@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_nav_admin">
+
+    <TextView
+        android:id="@+id/txtNomeProfissional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do profissional"
+        android:textColor="#75689A"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtStatusProfissional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Status: PENDENTE"
+        android:textColor="#777777"
+        android:textSize="13sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/btnAprovar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Aprovar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#75689A"/>
+
+        <Button
+            android:id="@+id/btnRejeitar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Rejeitar"
+            android:textAllCaps="false"
+            android:textColor="#75689A"
+            android:backgroundTint="#EAE6F0"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F3F7"
-    tools:context=".Acessos">
+    tools:context=".model.Acessos">
 
     <!-- CONTEÚDO QUE SERÁ USADO COMO FUNDO DO BLUR -->
     <eightbitlab.com.blurview.BlurTarget

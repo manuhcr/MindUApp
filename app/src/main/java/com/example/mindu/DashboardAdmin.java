@@ -4,225 +4,149 @@ package com.example.mindu;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindu.api.RetrofitClient;
+import com.example.mindu.api.dashboard.DashboardResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
-
 import java.util.List;
-
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.FrameLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mindu.adapter.ProfissionaisAdapter;
 
 public class DashboardAdmin extends AppCompatActivity {
 
+    private View contentInicio;
+    private View contentEmpresas;
+    private View contentProfissionais;
+    private View contentPerfil;
+    private FrameLayout containerAdmin;
+    private TextView navInicio;
+    private TextView navEmpresas;
+    private TextView navProfissionais;
+    private TextView navPerfil;
+
+    private RecyclerView recyclerProfissionais;
+    private ProfissionaisAdapter profissionaisAdapter;
+
     private TextView txtTotalPendentes;
-    private LinearLayout layoutListaPendentes;
-    private boolean carregando = false;
+    private TextView txtTotalProfissionais;
+    private TextView txtTotalEmpresas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_admin);
 
-        BlurTarget target =
-                findViewById(R.id.blurTargetDashboardAdmin);
+        containerAdmin = findViewById(R.id.containerAdmin);
 
-        aplicarEfeitoVidro(
-                findViewById(R.id.blurCardBoasVindas), target);
-        aplicarEfeitoVidro(
-                findViewById(R.id.blurCardPendentes), target);
-        aplicarEfeitoVidro(
-                findViewById(R.id.blurCardAtivos), target);
-        aplicarEfeitoVidro(
-                findViewById(R.id.blurCardUsuarios), target);
-        aplicarEfeitoVidro(
-                findViewById(R.id.blurCardAprovacoes), target);
+        navInicio = findViewById(R.id.navInicio);
+        navEmpresas = findViewById(R.id.navEmpresas);
+        navProfissionais = findViewById(R.id.navProfissionais);
+        navPerfil = findViewById(R.id.navPerfil);
 
-        txtTotalPendentes =
-                findViewById(R.id.txtTotalPendentes);
+        navInicio.setOnClickListener(v ->
+                mostrarTela(R.layout.content_inicio_admin));
 
-        layoutListaPendentes =
-                findViewById(R.id.layoutListaPendentes);
+        navEmpresas.setOnClickListener(v ->
+                mostrarTela(R.layout.content_empresas_admin));
 
-        findViewById(R.id.navInicio).setOnClickListener(v ->
-                Toast.makeText(this,
-                        "Você já está no início.",
-                        Toast.LENGTH_SHORT).show());
+        navProfissionais.setOnClickListener(v -> mostrarProfissionais());
 
-        findViewById(R.id.btnAbrirAprovacoes).setOnClickListener(v ->
-                carregarPendentes());
+        navPerfil.setOnClickListener(v ->
+                mostrarTela(R.layout.content_perfil_admin));
 
-        findViewById(R.id.navAprovacoes).setOnClickListener(v ->
-                carregarPendentes());
-
-        carregarPendentes();
+        mostrarTela(R.layout.content_inicio_admin);
     }
 
-    private void carregarPendentes() {
-        if (carregando) return;
+    private void mostrarTela(int layout) {
 
-        carregando = true;
-        txtTotalPendentes.setText("...");
-        layoutListaPendentes.removeAllViews();
+        View tela = getLayoutInflater().inflate(layout, containerAdmin, false);
 
-        TextView carregandoTexto = new TextView(this);
-        carregandoTexto.setText("Carregando profissionais...");
-        carregandoTexto.setTextColor(Color.WHITE);
-        layoutListaPendentes.addView(carregandoTexto);
+        containerAdmin.removeAllViews();
+        containerAdmin.addView(tela);
 
-        RetrofitClient.getApiService(this)
-                .profissionaisPendentes()
-                .enqueue(new Callback<List<ProfissionalResponse>>() {
-                    @Override
-                    public void onResponse(
-                            Call<List<ProfissionalResponse>> call,
-                            Response<List<ProfissionalResponse>> response) {
+        if (layout == R.layout.content_inicio_admin) {
 
-                        carregando = false;
-                        layoutListaPendentes.removeAllViews();
+            txtTotalPendentes = tela.findViewById(R.id.txtTotalPendentes);
+            txtTotalProfissionais = tela.findViewById(R.id.txtTotalProfissionais);
+            txtTotalEmpresas = tela.findViewById(R.id.txtTotalEmpresas);
 
-                        if (!response.isSuccessful()
-                                || response.body() == null) {
-                            txtTotalPendentes.setText("—");
-                            mostrarMensagem(
-                                    "Não foi possível carregar os pendentes.");
-                            return;
-                        }
-
-                        List<ProfissionalResponse> profissionais =
-                                response.body();
-
-                        txtTotalPendentes.setText(
-                                String.valueOf(profissionais.size()));
-
-                        if (profissionais.isEmpty()) {
-                            mostrarMensagem(
-                                    "Não há profissionais pendentes.");
-                            return;
-                        }
-
-                        for (ProfissionalResponse profissional
-                                : profissionais) {
-                            adicionarProfissional(profissional);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(
-                            Call<List<ProfissionalResponse>> call,
-                            Throwable t) {
-
-                        carregando = false;
-                        txtTotalPendentes.setText("—");
-                        layoutListaPendentes.removeAllViews();
-                        mostrarMensagem(
-                                "Erro de conexão ao carregar os pendentes.");
-                    }
-                });
+            carregarIndicadores();
+        }
     }
 
-    private void adicionarProfissional(
-            ProfissionalResponse profissional) {
+     private void carregarProfissionais() {
 
-        LinearLayout item = new LinearLayout(this);
-        item.setOrientation(LinearLayout.VERTICAL);
-        item.setPadding(dp(12), dp(12), dp(12), dp(12));
+         RetrofitClient.getApiService(this)
+                 .profissionaisPendentes()
+                 .enqueue(new Callback<>() {
+                     @Override
+                     public void onResponse(
+                             Call<List<ProfissionalResponse>> call,
+                             Response<List<ProfissionalResponse>> response) {
+                         Log.d("MINDU_API", "Código: " + response.code());
 
-        GradientDrawable fundo = new GradientDrawable();
-        fundo.setColor(Color.parseColor("#337FFFFFF"));
-        fundo.setCornerRadius(dp(16));
-        fundo.setStroke(dp(1),
-                Color.parseColor("#66F5F3F7"));
-        item.setBackground(fundo);
+                         Log.d("MINDU_API", "Body: " + response.body());
+                         if (!response.isSuccessful()
+                                 || response.body() == null) {
+                             Toast.makeText(
+                                     DashboardAdmin.this,
+                                     "Não foi possível carregar os profissionais.",
+                                     Toast.LENGTH_LONG).show();
+                             return;
+                         }else{
+                             List<ProfissionalResponse> profissionais =
+                                     response.body();
+                             profissionaisAdapter = new ProfissionaisAdapter(
+                                     profissionais,
+                                     (profissional, aprovado, position) -> {
+                                         atualizarAprovacao(profissional, aprovado, position);
+                                     }
+                             );
+                             recyclerProfissionais.setAdapter(profissionaisAdapter);
+                             Log.d("MINDU_API", "Total de profissionais: "
+                                     + profissionais.size());
 
-        LinearLayout.LayoutParams itemParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        itemParams.setMargins(0, dp(6), 0, dp(6));
 
-        TextView nome = new TextView(this);
-        nome.setText(profissional.getNome() != null
-                ? profissional.getNome()
-                : "Profissional sem nome");
-        nome.setTextColor(Color.WHITE);
-        nome.setTextSize(16);
-        nome.setTypeface(null, android.graphics.Typeface.BOLD);
+                         }
+                     }
 
-        TextView status = new TextView(this);
-        status.setText("Status: " + profissional.getStatus());
-        status.setTextColor(Color.WHITE);
-        status.setTextSize(13);
+                     @Override
+                     public void onFailure(
+                             Call<List<ProfissionalResponse>> call,
+                             Throwable t) {
+                         Toast.makeText(
+                                 DashboardAdmin.this,
+                                 "Erro de conexão ao carregar os profissionais.",
+                                 Toast.LENGTH_LONG).show();
+                         return;
+                     }
 
-        LinearLayout botoes = new LinearLayout(this);
-        botoes.setOrientation(LinearLayout.HORIZONTAL);
-        botoes.setPadding(0, dp(8), 0, 0);
-
-        Button aprovar = new Button(this);
-        aprovar.setText("Aprovar");
-        aprovar.setAllCaps(false);
-
-        Button rejeitar = new Button(this);
-        rejeitar.setText("Rejeitar");
-        rejeitar.setAllCaps(false);
-
-        LinearLayout.LayoutParams botaoParams =
-                new LinearLayout.LayoutParams(
-                        0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1f);
-        botaoParams.setMargins(0, 0, dp(6), 0);
-
-        botoes.addView(aprovar, botaoParams);
-
-        LinearLayout.LayoutParams rejeitarParams =
-                new LinearLayout.LayoutParams(
-                        0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1f);
-        rejeitarParams.setMargins(dp(6), 0, 0, 0);
-
-        botoes.addView(rejeitar, rejeitarParams);
-
-        item.addView(nome);
-        item.addView(status);
-        item.addView(botoes);
-
-        layoutListaPendentes.addView(item, itemParams);
-
-        aprovar.setOnClickListener(v ->
-                atualizarAprovacao(profissional, true,
-                        aprovar, rejeitar));
-
-        rejeitar.setOnClickListener(v ->
-                atualizarAprovacao(profissional, false,
-                        aprovar, rejeitar));
+                 });
     }
 
     private void atualizarAprovacao(
             ProfissionalResponse profissional,
-            boolean aprovado,
-            Button botaoAprovar,
-            Button botaoRejeitar) {
-
-        botaoAprovar.setEnabled(false);
-        botaoRejeitar.setEnabled(false);
+            boolean aprovado, int position) {
 
         RetrofitClient.getApiService(this)
                 .aprovarProfissional(
                         profissional.getId(), aprovado)
-                .enqueue(new Callback<ProfissionalResponse>() {
+                .enqueue(new Callback<>() {
 
                     @Override
                     public void onResponse(
@@ -230,18 +154,8 @@ public class DashboardAdmin extends AppCompatActivity {
                             Response<ProfissionalResponse> response) {
 
                         if (response.isSuccessful()) {
-                            Toast.makeText(
-                                    DashboardAdmin.this,
-                                    aprovado
-                                            ? "Profissional aprovado!"
-                                            : "Solicitação rejeitada.",
-                                    Toast.LENGTH_SHORT).show();
-
-                            carregarPendentes();
+                            profissionaisAdapter.removerProfissional(position);
                         } else {
-                            botaoAprovar.setEnabled(true);
-                            botaoRejeitar.setEnabled(true);
-
                             Toast.makeText(
                                     DashboardAdmin.this,
                                     "Não foi possível concluir a ação. "
@@ -255,29 +169,12 @@ public class DashboardAdmin extends AppCompatActivity {
                             Call<ProfissionalResponse> call,
                             Throwable t) {
 
-                        botaoAprovar.setEnabled(true);
-                        botaoRejeitar.setEnabled(true);
-
                         Toast.makeText(
                                 DashboardAdmin.this,
                                 "Erro de conexão ao atualizar cadastro.",
                                 Toast.LENGTH_LONG).show();
                     }
                 });
-    }
-
-    private void mostrarMensagem(String mensagem) {
-        TextView texto = new TextView(this);
-        texto.setText(mensagem);
-        texto.setTextColor(Color.WHITE);
-        texto.setTextSize(14);
-        texto.setPadding(0, dp(8), 0, dp(8));
-        layoutListaPendentes.addView(texto);
-    }
-
-    private int dp(float valor) {
-        return (int) (valor * getResources()
-                .getDisplayMetrics().density + 0.5f);
     }
 
     private void aplicarEfeitoVidro(
@@ -306,4 +203,6 @@ public class DashboardAdmin extends AppCompatActivity {
         blurView.setClipToOutline(true);
         blurView.setElevation(4 * density);
     }
+
 }
+
