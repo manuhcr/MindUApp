@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindu.api.RetrofitClient;
+import com.example.mindu.api.cliente.ClienteResponse;
 import com.example.mindu.api.dashboard.DashboardResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
 import java.util.List;
@@ -26,6 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.adapter.ProfissionaisAdapter;
+import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.adapter.EmpresasAdapter;
 
 public class DashboardAdmin extends AppCompatActivity {
 
@@ -48,6 +51,10 @@ public class DashboardAdmin extends AppCompatActivity {
 
     private TextView txtListaVazia;
 
+    private RecyclerView recyclerEmpresas;
+    private EmpresasAdapter empresasAdapter;
+    private TextView txtEmpresasVazio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +70,7 @@ public class DashboardAdmin extends AppCompatActivity {
         navInicio.setOnClickListener(v ->
                 mostrarTela(R.layout.content_inicio_admin));
 
-        navEmpresas.setOnClickListener(v ->
-                mostrarTela(R.layout.content_empresas_admin));
+        navEmpresas.setOnClickListener(v -> mostrarEmpresas());
 
         navProfissionais.setOnClickListener(v -> mostrarProfissionais());
 
@@ -106,9 +112,133 @@ public class DashboardAdmin extends AppCompatActivity {
         carregarProfissionais();
 
     }
-    private void carregarIndicadores() {
-    }
 
+    private void mostrarEmpresas() {
+
+        mostrarTela(R.layout.content_empresas_admin);
+
+        txtEmpresasVazio = containerAdmin.findViewById(R.id.txtEmpresasVazio);
+
+        recyclerEmpresas = containerAdmin.findViewById(R.id.recyclerEmpresas);
+
+        recyclerEmpresas.setLayoutManager(
+                new LinearLayoutManager(this));
+
+        carregarEmpresas();
+    }
+    private void carregarIndicadores() {
+
+        // requisição de clientes pendentes
+        RetrofitClient.getApiService(this)
+                .listarClientesAdmin("pendente")
+                .enqueue(new Callback<>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ClienteResponse>> call,
+                            Response<List<ClienteResponse>> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            List<ClienteResponse> clientes = response.body();
+
+                            int totalClientesPendentes = clientes.size();
+
+                            txtTotalPendentes.setText(
+                                    String.valueOf(totalClientesPendentes)
+                            );
+
+                        } else {
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Não foi possível carregar os indicadores. Código: "
+                                            + response.code(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<ClienteResponse>> call,
+                            Throwable t) {
+
+                        Toast.makeText(
+                                DashboardAdmin.this,
+                                "Erro de conexão ao carregar os indicadores.",
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                        Log.e("MINDU_API", "Erro nos indicadores", t);
+                    }
+                });
+
+        // requisição de profissionais aprovados
+        RetrofitClient.getApiService(this)
+                .listarProfissionais("aprovado")
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(
+                            Call<List<ProfissionalResponse>> call,
+                            Response<List<ProfissionalResponse>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            txtTotalProfissionais.setText(
+                                    String.valueOf(response.body().size())
+                            );
+                        }
+                    }
+                    @Override
+                    public void onFailure(
+                            Call<List<ProfissionalResponse>> call,
+                            Throwable t) {
+
+                        Log.e("MINDU_API", "Erro nos indicadores", t);
+                        if (t != null) {
+                            Log.e("MINDU_API", "Erro nos indicadores", t);
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Erro de conexão ao carregar os indicadores.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+                }
+                );
+
+        // requisição de empresas
+        RetrofitClient.getApiService(this)
+                .listarEmpresas()
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(
+                            Call<List<EmpresaResponse>> call,
+                            Response<List<EmpresaResponse>> response) {
+                        if (response.isSuccessful() && response.body() != null){
+                            txtTotalEmpresas.setText(
+                                    String.valueOf(response.body().size())
+                            );
+                        }
+                    }
+                    @Override
+                    public void onFailure(
+                            Call<List<EmpresaResponse>> call,
+                            Throwable t) {
+                        Log.e("MINDU_API", "Erro nos indicadores", t);
+
+                        if (t != null) {
+                            Log.e("MINDU_API", "Erro nos indicadores", t);
+
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Erro de conexão ao carregar os indicadores.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+                }
+                );
+
+    }
     private void carregarProfissionais() {
 
         RetrofitClient.getApiService(this)
@@ -164,6 +294,64 @@ public class DashboardAdmin extends AppCompatActivity {
                         return;
                     }
 
+                });
+    }
+
+    private void carregarEmpresas() {
+
+        RetrofitClient.getApiService(this)
+                .listarEmpresas()
+                .enqueue(new Callback<>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<EmpresaResponse>> call,
+                            Response<List<EmpresaResponse>> response) {
+
+                        if (!response.isSuccessful()
+                                || response.body() == null) {
+
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Não foi possível carregar as empresas.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        } else {
+
+                            List<EmpresaResponse> empresas = response.body();
+
+                            if (empresas.isEmpty()) {
+
+                                txtEmpresasVazio.setVisibility(View.VISIBLE);
+                                recyclerEmpresas.setVisibility(View.GONE);
+
+                            } else {
+
+                                txtEmpresasVazio.setVisibility(View.GONE);
+                                recyclerEmpresas.setVisibility(View.VISIBLE);
+                            }
+
+                            empresasAdapter = new EmpresasAdapter(empresas);
+
+                            recyclerEmpresas.setAdapter(empresasAdapter);
+
+                            Log.d("MINDU_API",
+                                    "Total de empresas: " + empresas.size());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<EmpresaResponse>> call,
+                            Throwable t) {
+
+                        Toast.makeText(
+                                DashboardAdmin.this,
+                                "Erro de conexão ao carregar empresas.",
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
                 });
     }
 
