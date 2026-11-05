@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:backgroundTint="#FFFFFF"
+    android:radius="16dp"
+    android:elevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txtRazaoSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Razão Social da Empresa"
+            android:textColor="#75689A"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txtIdEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="ID: 123"
+            android:textColor="#777777"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/txtPlanoEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Plano: Premium"
+            android:textColor="#555555"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

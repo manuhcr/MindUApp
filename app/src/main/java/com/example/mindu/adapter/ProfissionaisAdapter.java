@@ -28,7 +28,7 @@ public class ProfissionaisAdapter
     @Override
     public ProfissionalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_profissional, parent, false);
+                .inflate(R.layout.item_profissional_admin, parent, false);
         return new ProfissionalViewHolder(view);
     }
 
