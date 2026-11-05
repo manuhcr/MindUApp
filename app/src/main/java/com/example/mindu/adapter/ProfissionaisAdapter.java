@@ -34,7 +34,6 @@ public class ProfissionaisAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ProfissionalViewHolder holder, int position) {
-        int posicaoAtual =holder.getAdapterPosition();
         ProfissionalResponse profissional = profissionais.get(position);
 
         holder.txtNomeProfissional.setText(profissional.getNome());
@@ -42,6 +41,8 @@ public class ProfissionaisAdapter
         holder.btnAprovar.setOnClickListener(v -> {
             holder.btnAprovar.setEnabled(false);
             holder.btnRejeitar.setEnabled(false);
+
+            int posicaoAtual =holder.getAdapterPosition();
             if (posicaoAtual != RecyclerView.NO_POSITION){
                 listener.onAprovacaoClick(profissional, true, posicaoAtual);
             }
@@ -50,6 +51,7 @@ public class ProfissionaisAdapter
         holder.btnRejeitar.setOnClickListener(v -> {
             holder.btnAprovar.setEnabled(false);
             holder.btnRejeitar.setEnabled(false);
+            int posicaoAtual =holder.getAdapterPosition();
 
             if (posicaoAtual != RecyclerView.NO_POSITION){
                 listener.onAprovacaoClick(profissional, false, posicaoAtual);

@@ -118,8 +118,8 @@ public interface ApiService {
 
     @GET("v1/profissionais")
     Call<List<ProfissionalResponse>> buscar(@Query("modalidade") String modalidade,
-                                           @Query("nome") String nome,
-                                           @Query("especialidade") String especialidade);
+                                            @Query("nome") String nome,
+                                            @Query("especialidade") String especialidade);
 
     @GET("v1/profissionais/{id}")
     Call<ProfissionalDetalheResponse> detalhes(@Path("id") String id);
