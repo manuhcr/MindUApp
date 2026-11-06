@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindu.adapter.ProfissionaisAdapter;
 import com.example.mindu.api.cadastro.EmpresaResponse;
 import com.example.mindu.adapter.EmpresasAdapter;
+import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 
 public class DashboardAdmin extends AppCompatActivity {
 
@@ -54,6 +55,8 @@ public class DashboardAdmin extends AppCompatActivity {
     private RecyclerView recyclerEmpresas;
     private EmpresasAdapter empresasAdapter;
     private TextView txtEmpresasVazio;
+
+    private TextView txtTotalAgendamentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class DashboardAdmin extends AppCompatActivity {
             txtTotalPendentes = tela.findViewById(R.id.txtTotalPendentes);
             txtTotalProfissionais = tela.findViewById(R.id.txtTotalProfissionais);
             txtTotalEmpresas = tela.findViewById(R.id.txtTotalEmpresas);
+            txtTotalAgendamentos = tela.findViewById(R.id.txtTotalAgendamentos);
 
             carregarIndicadores();
         }
@@ -237,6 +241,30 @@ public class DashboardAdmin extends AppCompatActivity {
                     }
                 }
                 );
+
+        // requisição de total de lista de atendimentos
+        RetrofitClient.getApiService(this)
+                .listarAgendamentos()
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(
+                            Call<List<AgendamentoResponse>> call,
+                            Response<List<AgendamentoResponse>> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            int total = response.body().size();
+
+                            txtTotalAgendamentos.setText(String.valueOf(total));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<AgendamentoResponse>> call,
+                            Throwable t) {
+                        Log.e("MINDU_API", "Erro ao carregar agendamentos", t);
+                    }
+                });
 
     }
     private void carregarProfissionais() {
