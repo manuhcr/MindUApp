@@ -3,6 +3,7 @@ package com.example.mindu.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,19 @@ public class EmpresasAdapter
 
     private List<EmpresaResponse> empresas;
 
+    public interface OnExcluirEmpresaListener {
+        void onExcluirEmpresa(String empresaId);
+    }
+
+    private OnExcluirEmpresaListener listener;
+
     public class EmpresasViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtRazaoSocial;
         TextView txtIdEmpresa;
         TextView txtPlanoEmpresa;
+
+        Button btnExcluirEmpresa;
 
         public EmpresasViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -30,11 +39,18 @@ public class EmpresasAdapter
             txtIdEmpresa = itemView.findViewById(R.id.txtIdEmpresa);
             txtRazaoSocial = itemView.findViewById(R.id.txtRazaoSocial);
             txtPlanoEmpresa = itemView.findViewById(R.id.txtPlanoEmpresa);
+            btnExcluirEmpresa = itemView.findViewById(R.id.btnExcluirEmpresa);
         }
     }
 
-    public EmpresasAdapter(List<EmpresaResponse> empresas) {
+
+
+    public EmpresasAdapter(
+            List<EmpresaResponse> empresas,
+            OnExcluirEmpresaListener listener) {
+
         this.empresas = empresas;
+        this.listener = listener;
     }
 
     @NonNull
@@ -59,6 +75,14 @@ public class EmpresasAdapter
                 "Razão Social: " + empresa.razaoSocial);
         holder.txtPlanoEmpresa.setText(
                 "Plano: " + empresa.plano);
+
+        holder.btnExcluirEmpresa.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onExcluirEmpresa(empresa.id);
+            }
+        });
+
+
     }
 
     @Override

@@ -360,7 +360,10 @@ public class DashboardAdmin extends AppCompatActivity {
                                 recyclerEmpresas.setVisibility(View.VISIBLE);
                             }
 
-                            empresasAdapter = new EmpresasAdapter(empresas);
+                            empresasAdapter = new EmpresasAdapter(
+                                    empresas,
+                                    empresaId -> excluirEmpresa(empresaId)
+                            );
 
                             recyclerEmpresas.setAdapter(empresasAdapter);
 
@@ -381,6 +384,64 @@ public class DashboardAdmin extends AppCompatActivity {
                         ).show();
                     }
                 });
+
+    }
+
+    private void excluirEmpresa(String empresaId) {
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Excluir empresa")
+                .setMessage("Tem certeza de que deseja excluir esta empresa?")
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("Excluir", (dialog, which) -> {
+
+                    RetrofitClient.getApiService(this)
+                            .excluirEmpresa(empresaId)
+                            .enqueue(new Callback<Void>() {
+
+                                @Override
+                                public void onResponse(
+                                        Call<Void> call,
+                                        Response<Void> response) {
+
+                                    if (response.isSuccessful()) {
+
+                                        Toast.makeText(
+                                                DashboardAdmin.this,
+                                                "Empresa excluída com sucesso!",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+
+                                        carregarEmpresas();
+
+                                    } else {
+
+                                        Toast.makeText(
+                                                DashboardAdmin.this,
+                                                "Não foi possível excluir a empresa. Código: "
+                                                        + response.code(),
+                                                Toast.LENGTH_LONG
+                                        ).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(
+                                        Call<Void> call,
+                                        Throwable t) {
+
+                                    Log.e("MINDU_API",
+                                            "Erro ao excluir empresa", t);
+
+                                    Toast.makeText(
+                                            DashboardAdmin.this,
+                                            "Erro de conexão ao excluir empresa.",
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                }
+                            });
+                })
+                .show();
     }
 
     private void atualizarAprovacao(

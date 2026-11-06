@@ -32,6 +32,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -76,6 +77,8 @@ public interface ApiService {
 
 
 
+
+
     @POST("v1/clientes")
     Call<ClienteResponse> cadastrarCliente(@Body ClienteRequest body);
 
@@ -93,6 +96,9 @@ public interface ApiService {
 
     @GET("v1/clientes")
     Call<List<ClienteResponse>> listarClientes(@Query("status") String status);
+
+    @DELETE("v1/clientes/{id}")
+    Call<Void> excluirFuncionario(@Path("id") String clienteId);
 
 
 
@@ -148,6 +154,12 @@ public interface ApiService {
 
     @GET("v1/admin/agendamentos")
     Call<List<AgendamentoResponse>> listarAgendamentos();
+
+    @DELETE("v1/admin/empresas/{id}")
+    Call<Void> excluirEmpresa(@Path("id") String empresaId);
+
+    @DELETE("v1/admin/profissionais/{id}")
+    Call<Void> excluirProfissional(@Path("id") String profissionalId);
 
 
     @POST("v1/agendamentos")
