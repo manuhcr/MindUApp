@@ -1,21 +1,33 @@
 
 package com.example.mindu;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindu.api.RetrofitClient;
 import com.example.mindu.api.cliente.ClienteResponse;
-import com.example.mindu.api.dashboard.DashboardResponse;
+import com.example.mindu.api.login.MinhaContaResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
@@ -33,10 +45,11 @@ import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 
 public class DashboardAdmin extends AppCompatActivity {
 
-    private View contentInicio;
-    private View contentEmpresas;
-    private View contentProfissionais;
-    private View contentPerfil;
+    private ImageView imgFotoAdmin;
+    private ImageButton btnCameraAdmin;
+    private FrameLayout areaFotoAdmin;
+
+    private ActivityResultLauncher<Void> cameraLauncher;
     private FrameLayout containerAdmin;
     private TextView navInicio;
     private TextView navEmpresas;
@@ -58,10 +71,32 @@ public class DashboardAdmin extends AppCompatActivity {
 
     private TextView txtTotalAgendamentos;
 
+    TextView txtNome;
+    TextView txtEmail;
+    TextView txtInicial;
+
+    @SuppressLint("ThreadConstraint")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_admin);
+
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.TakePicturePreview(),
+                bitmap -> {
+                    if (bitmap != null) {
+
+                        salvarFotoAdmin(bitmap);
+
+                        imgFotoAdmin.setImageBitmap(bitmap);
+                        imgFotoAdmin.setVisibility(View.VISIBLE);
+                        txtInicial.setVisibility(View.GONE);
+
+
+
+                    }
+                }
+        );
 
         containerAdmin = findViewById(R.id.containerAdmin);
 
@@ -99,6 +134,39 @@ public class DashboardAdmin extends AppCompatActivity {
             txtTotalAgendamentos = tela.findViewById(R.id.txtTotalAgendamentos);
 
             carregarIndicadores();
+        }
+        if (layout == R.layout.content_perfil_admin) {
+
+            BlurView blurCard = tela.findViewById(R.id.blurCardPerfilAdmin);
+
+            BlurTarget blurTarget = findViewById(R.id.blurTargetDashboardAdmin);
+
+            txtNome = tela.findViewById(R.id.txtNomeAdmin);
+            txtEmail = tela.findViewById(R.id.txtEmailAdmin);
+            txtInicial = tela.findViewById(R.id.txtInicialAdmin);
+
+            imgFotoAdmin = tela.findViewById(R.id.imgFotoAdmin);
+            btnCameraAdmin = tela.findViewById(R.id.btnCameraAdmin);
+            areaFotoAdmin = tela.findViewById(R.id.areaFotoAdmin);
+
+            carregarFotoAdmin();
+
+            imgFotoAdmin.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, android.graphics.Outline outline) {
+                    outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                }
+            });
+
+            imgFotoAdmin.setClipToOutline(true);
+
+            btnCameraAdmin.setOnClickListener(v -> cameraLauncher.launch(null));
+
+            areaFotoAdmin.setOnClickListener(v -> cameraLauncher.launch(null));
+
+            aplicarEfeitoVidro(blurCard, blurTarget);
+
+            carregarPerfilAdmin(tela);
         }
     }
 
@@ -513,6 +581,104 @@ public class DashboardAdmin extends AppCompatActivity {
                 ViewOutlineProvider.BACKGROUND);
         blurView.setClipToOutline(true);
         blurView.setElevation(4 * density);
+    }
+
+    private void carregarPerfilAdmin(View tela) {
+
+        TextView txtNome = tela.findViewById(R.id.txtNomeAdmin);
+        TextView txtEmail = tela.findViewById(R.id.txtEmailAdmin);
+        TextView txtInicial = tela.findViewById(R.id.txtInicialAdmin);
+
+        RetrofitClient.getApiService(this)
+                .minhaConta()
+                .enqueue(new Callback<MinhaContaResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<MinhaContaResponse> call,
+                            Response<MinhaContaResponse> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            MinhaContaResponse conta = response.body();
+
+                            String nome = conta.getNome();
+                            String email = conta.getEmail();
+
+                            txtNome.setText(nome);
+                            txtEmail.setText(email);
+
+                            if (nome != null && !nome.trim().isEmpty()) {
+                                txtInicial.setText(
+                                        nome.trim().substring(0, 1).toUpperCase()
+                                );
+                            }
+
+                            // Salva os dados recebidos para uso local
+                            SharedPreferences prefs =
+                                    getSharedPreferences("mindu", MODE_PRIVATE);
+
+                            prefs.edit()
+                                    .putString("nomeAdmin", nome)
+                                    .putString("emailAdmin", email)
+                                    .apply();
+
+                        } else {
+                            Log.e("MINDU_API",
+                                    "Erro ao carregar perfil. Código: " + response.code());
+
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Não foi possível carregar os dados da conta.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<MinhaContaResponse> call,
+                            Throwable t) {
+
+                        Log.e("MINDU_API", "Erro ao carregar perfil", t);
+
+                        Toast.makeText(
+                                DashboardAdmin.this,
+                                "Erro de conexão ao carregar o perfil.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
+    }
+
+
+    private void carregarFotoAdmin() {
+        File arquivo = new File(getFilesDir(), "foto_admin.png");
+
+        if (arquivo.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(arquivo.getAbsolutePath());
+
+            if (bitmap != null) {
+                imgFotoAdmin.setImageBitmap(bitmap);
+                imgFotoAdmin.setVisibility(View.VISIBLE);
+                txtInicial.setVisibility(View.GONE);
+            }
+        }
+    }
+    private void salvarFotoAdmin(Bitmap bitmap) {
+        try {
+            File arquivo = new File(getFilesDir(), "foto_admin.png");
+
+            FileOutputStream outputStream = new FileOutputStream(arquivo);
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+            outputStream.close();
+
+        } catch (IOException e) {
+            Log.e("MINDU_API", "Erro ao salvar foto do administrador", e);
+            Toast.makeText(this, "Erro ao salvar a foto.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

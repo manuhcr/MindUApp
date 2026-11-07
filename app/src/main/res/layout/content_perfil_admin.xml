@@ -1,25 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
+    android:clipToPadding="false"
     android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Meu perfil"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#75689A"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <!-- Cabeçalho -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Meu perfil"
+            android:textColor="#75689A"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Informações da conta administrativa."
+            android:textColor="#777777"
+            android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Informações da conta administrativa."
-        android:textSize="14sp"
-        android:textColor="#777777"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="24dp">
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/areaFotoAdmin"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:background="@drawable/bg_avatar_admin"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/imgFotoAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtInicialAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="#75689A"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btnCameraAdmin"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_camera_admin"
+                android:contentDescription="Tirar foto de perfil"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_camera"
+                android:tint="#FFFFFF" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtNomeAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Administrador"
+            android:textColor="#302653"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+        <!-- Card de vidro -->
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurCardPerfilAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:textAlignment="center">
+
+                <TextView
+                    android:id="@+id/txtEmailAdmin"
+                    android:layout_width="211dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="2dp"
+                    android:text="SEU EMAIL AQUI"
+                    android:textAlignment="center"
+                    android:textColor="#8A80A8"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#55FFFFFF" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:text="INFORMAÇÕES DA CONTA"
+                    android:textColor="#75689A"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Tipo de acesso"
+                    android:textColor="#777080"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Administrador"
+                    android:textColor="#302653"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardMinhaContaAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Minha conta"
+                        android:textColor="#302653"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Informações pessoais e cadastro"
+                        android:textColor="#777080"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#75689A"
+                    android:textSize="28sp"/>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+    </LinearLayout>
+
+</ScrollView>

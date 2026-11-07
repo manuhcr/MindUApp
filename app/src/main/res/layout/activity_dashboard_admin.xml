@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrounddashboard">
+    android:background="@drawable/nova_cole__o_story_do_instagram_bege_marrom_5">
 
     <!-- Fundo utilizado pelo efeito Blur -->
     <eightbitlab.com.blurview.BlurTarget
