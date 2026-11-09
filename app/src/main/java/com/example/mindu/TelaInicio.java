@@ -10,8 +10,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.mindu.model.Acessos;
-
 public class TelaInicio extends AppCompatActivity {
 
     @Override

@@ -37,7 +37,7 @@
             android:name=".LoginAdmin"
             android:exported="false" />
         <activity
-            android:name=".model.Acessos"
+            android:name=".Acessos"
             android:exported="false" />
         <activity
             android:name=".CadastroBeneficiario"

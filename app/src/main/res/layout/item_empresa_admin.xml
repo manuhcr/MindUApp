@@ -11,6 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal|fill_horizontal"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -21,7 +23,7 @@
             android:text="Razão Social da Empresa"
             android:textColor="#75689A"
             android:textSize="17sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtIdEmpresa"
@@ -30,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:text="ID: 123"
             android:textColor="#777777"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/txtPlanoEmpresa"
@@ -39,7 +41,7 @@
             android:layout_marginTop="4dp"
             android:text="Plano: Premium"
             android:textColor="#555555"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnExcluirEmpresa"
@@ -47,11 +49,11 @@
             android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginTop="12dp"
-            android:backgroundTint="#C65D6D"
+            android:backgroundTint="#4d366d"
             android:text="Excluir"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 

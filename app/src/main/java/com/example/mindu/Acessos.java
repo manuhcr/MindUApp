@@ -1,4 +1,4 @@
-package com.example.mindu.model;
+package com.example.mindu;
 import android.content.Intent;
 
 // Color = permite trabalhar com cores, inclusive cores em hexadecimal
@@ -26,11 +26,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 // BlurTarget = informa ao BlurView qual conteúdo ele deve observar
 // para produzir o desfoque
-import com.example.mindu.LoginAdmin;
-import com.example.mindu.LoginBeneficiario;
-import com.example.mindu.LoginEmpresa;
-import com.example.mindu.LoginProfissional;
-import com.example.mindu.R;
 
 import eightbitlab.com.blurview.BlurTarget;
 

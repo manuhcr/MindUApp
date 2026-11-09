@@ -4,22 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/nova_cole__o_story_do_instagram_bege_marrom_5">
+    android:layout_height="match_parent">
 
-    <!-- Fundo utilizado pelo efeito Blur -->
+    <!-- Fundo utilizado pelo BlurView -->
     <eightbitlab.com.blurview.BlurTarget
         android:id="@+id/blurTargetDashboardAdmin"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/navAdmin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/nova_cole__o_story_do_instagram_bege_marrom_5"
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
+
     </eightbitlab.com.blurview.BlurTarget>
 
-    <!-- Área onde os Fragments serão exibidos -->
+    <!-- Conteúdo dinâmico das telas -->
     <FrameLayout
         android:id="@+id/containerAdmin"
         android:layout_width="0dp"
@@ -45,49 +51,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Início -->
-        <TextView
+        <ImageView
             android:id="@+id/navInicio"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="⌂"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_nav_inicio"
+            android:contentDescription="Início" />
 
-        <!-- Empresas -->
-        <TextView
+        <ImageView
             android:id="@+id/navEmpresas"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="▦"
-            android:textColor="#D4CDE9"
-            android:textSize="22sp" />
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_nav_empresas"
+            android:contentDescription="Empresas" />
 
-        <!-- Profissionais -->
-        <TextView
+        <ImageView
             android:id="@+id/navProfissionais"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="♙"
-            android:textColor="#D4CDE9"
-            android:textSize="22sp" />
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_nav_profissionais"
+            android:contentDescription="Profissionais" />
 
-        <!-- Perfil -->
-        <TextView
+        <ImageView
             android:id="@+id/navPerfil"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="◎"
-            android:textColor="#D4CDE9"
-            android:textSize="22sp" />
+            android:padding="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_nav_perfil"
+            android:contentDescription="Perfil" />
 
     </LinearLayout>
 

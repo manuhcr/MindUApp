@@ -53,6 +53,7 @@ public class LoginAdmin extends AppCompatActivity {
         if (blurView != null && blurTarget != null) {
             blurView.setupWith(blurTarget)
                     .setBlurRadius(20f);
+
             aplicarEfeitoVidroLiquido(blurView);
         }
 

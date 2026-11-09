@@ -2,6 +2,8 @@
 package com.example.mindu;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,10 +55,10 @@ public class DashboardAdmin extends AppCompatActivity {
 
     private ActivityResultLauncher<Void> cameraLauncher;
     private FrameLayout containerAdmin;
-    private TextView navInicio;
-    private TextView navEmpresas;
-    private TextView navProfissionais;
-    private TextView navPerfil;
+    private ImageView navInicio;
+    private ImageView navEmpresas;
+    private ImageView navProfissionais;
+    private ImageView navPerfil;
 
     private RecyclerView recyclerProfissionais;
     private ProfissionaisAdapter profissionaisAdapter;
@@ -105,18 +109,44 @@ public class DashboardAdmin extends AppCompatActivity {
         navProfissionais = findViewById(R.id.navProfissionais);
         navPerfil = findViewById(R.id.navPerfil);
 
-        navInicio.setOnClickListener(v ->
-                mostrarTela(R.layout.content_inicio_admin));
+        navInicio.setOnClickListener(v -> {
+            atualizarNavegacao(navInicio);
+            mostrarTela(R.layout.content_inicio_admin);
+        });
 
-        navEmpresas.setOnClickListener(v -> mostrarEmpresas());
+        navEmpresas.setOnClickListener(v -> {
+            atualizarNavegacao(navEmpresas);
+            mostrarEmpresas();
+        });
 
-        navProfissionais.setOnClickListener(v -> mostrarProfissionais());
+        navProfissionais.setOnClickListener(v -> {
+            atualizarNavegacao(navProfissionais);
+            mostrarProfissionais();
+        });
 
-        navPerfil.setOnClickListener(v ->
-                mostrarTela(R.layout.content_perfil_admin));
+        navPerfil.setOnClickListener(v -> {
+            atualizarNavegacao(navPerfil);
+            mostrarTela(R.layout.content_perfil_admin);
+        });
 
+        atualizarNavegacao(navInicio);
         mostrarTela(R.layout.content_inicio_admin);
     }
+
+    private void atualizarNavegacao(ImageView selecionado) {
+
+        int corAtiva = Color.parseColor("#FFFFFF");
+        int corInativa = Color.parseColor("#D4CDE9");
+
+        navInicio.setColorFilter(corInativa);
+        navEmpresas.setColorFilter(corInativa);
+        navProfissionais.setColorFilter(corInativa);
+        navPerfil.setColorFilter(corInativa);
+
+        selecionado.setColorFilter(corAtiva);
+    }
+
+
 
     private void mostrarTela(int layout) {
 
@@ -126,6 +156,7 @@ public class DashboardAdmin extends AppCompatActivity {
         containerAdmin.addView(tela);
 
 
+
         if (layout == R.layout.content_inicio_admin) {
 
             txtTotalPendentes = tela.findViewById(R.id.txtTotalPendentes);
@@ -133,13 +164,80 @@ public class DashboardAdmin extends AppCompatActivity {
             txtTotalEmpresas = tela.findViewById(R.id.txtTotalEmpresas);
             txtTotalAgendamentos = tela.findViewById(R.id.txtTotalAgendamentos);
 
+            BlurTarget blurTarget = findViewById(R.id.blurTargetDashboardAdmin);
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardBoasVindasAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardPendentesAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardProfissionaisAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardEmpresasAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardAgendamentosAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardGerenciarEmpresasAdmin),
+                    blurTarget
+            );
+
+            aplicarEfeitoVidro(
+                    tela.findViewById(R.id.cardGerenciarProfissionaisAdmin),
+                    blurTarget
+            );
+
             carregarIndicadores();
+
+            TextView txtSaudacao = tela.findViewById(R.id.txtSaudacaoAdmin);
+
+            // Atalhos de acesso
+            BlurView cardEmpresas = tela.findViewById(
+                    R.id.cardGerenciarEmpresasAdmin
+            );
+
+            BlurView cardProfissionais = tela.findViewById(
+                    R.id.cardGerenciarProfissionaisAdmin
+            );
+
+            cardEmpresas.setOnClickListener(v -> mostrarEmpresas());
+
+            cardProfissionais.setOnClickListener(v -> mostrarProfissionais());
+
+
+            SharedPreferences prefs = getSharedPreferences("mindu", MODE_PRIVATE);
+            String nomeAdmin = prefs.getString("nomeAdmin", "");
+
+            if (nomeAdmin != null && !nomeAdmin.trim().isEmpty()) {
+                txtSaudacao.setText("Olá, " + nomeAdmin.trim() + "! 👋");
+            } else {
+                txtSaudacao.setText("Olá! 👋");
+            }
         }
+
         if (layout == R.layout.content_perfil_admin) {
 
             BlurView blurCard = tela.findViewById(R.id.blurCardPerfilAdmin);
 
             BlurTarget blurTarget = findViewById(R.id.blurTargetDashboardAdmin);
+
+            BlurView cardMinhaConta = tela.findViewById(R.id.cardMinhaContaAdmin);
+
+            BlurView cardSair = tela.findViewById(R.id.cardSairAdmin);
 
             txtNome = tela.findViewById(R.id.txtNomeAdmin);
             txtEmail = tela.findViewById(R.id.txtEmailAdmin);
@@ -167,6 +265,14 @@ public class DashboardAdmin extends AppCompatActivity {
             aplicarEfeitoVidro(blurCard, blurTarget);
 
             carregarPerfilAdmin(tela);
+
+            aplicarEfeitoVidro(cardMinhaConta, blurTarget);
+
+            cardMinhaConta.setOnClickListener(v -> mostrarDialogInfoContaAdmin());
+
+            aplicarEfeitoVidro(cardSair, blurTarget);
+
+            cardSair.setOnClickListener(v -> confirmarSaidaAdmin());
         }
     }
 
@@ -556,29 +662,38 @@ public class DashboardAdmin extends AppCompatActivity {
                 });
     }
 
+
+
     private void aplicarEfeitoVidro(
             BlurView blurView,
             BlurTarget blurTarget) {
 
         if (blurView == null || blurTarget == null) return;
 
-        float density = getResources()
-                .getDisplayMetrics().density;
+        float density = getResources().getDisplayMetrics().density;
 
-        GradientDrawable vidro = new GradientDrawable();
-        vidro.setShape(GradientDrawable.RECTANGLE);
-        vidro.setColor(Color.parseColor("#1F8294EF"));
-        vidro.setCornerRadius(24 * density);
-        vidro.setStroke(
+        GradientDrawable borda = new GradientDrawable();
+        borda.setShape(GradientDrawable.RECTANGLE);
+        borda.setCornerRadius(24 * density);
+        borda.setColor(Color.TRANSPARENT);
+        borda.setStroke(
                 Math.max(1, (int) density),
-                Color.parseColor("#99F5F3F7"));
+                Color.parseColor("#99FFFFFF")
+        );
 
-        blurView.setBackground(vidro);
+        blurView.setBackground(borda);
+
         blurView.setupWith(blurTarget)
-                .setBlurRadius(20f);
+                .setBlurRadius(25f);
+
+        blurView.setBackground(
+                getDrawable(R.drawable.bg_vidro)
+        );
 
         blurView.setOutlineProvider(
-                ViewOutlineProvider.BACKGROUND);
+                ViewOutlineProvider.BACKGROUND
+        );
+
         blurView.setClipToOutline(true);
         blurView.setElevation(4 * density);
     }
@@ -588,6 +703,8 @@ public class DashboardAdmin extends AppCompatActivity {
         TextView txtNome = tela.findViewById(R.id.txtNomeAdmin);
         TextView txtEmail = tela.findViewById(R.id.txtEmailAdmin);
         TextView txtInicial = tela.findViewById(R.id.txtInicialAdmin);
+
+
 
         RetrofitClient.getApiService(this)
                 .minhaConta()
@@ -679,6 +796,107 @@ public class DashboardAdmin extends AppCompatActivity {
             Log.e("MINDU_API", "Erro ao salvar foto do administrador", e);
             Toast.makeText(this, "Erro ao salvar a foto.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void mostrarDialogInfoContaAdmin() {
+
+        View dialogView = getLayoutInflater()
+                .inflate(R.layout.dialog_info_conta_admin, null);
+
+        TextView nome = dialogView.findViewById(R.id.dialogNomeAdmin);
+        TextView email = dialogView.findViewById(R.id.dialogEmailAdmin);
+
+        Button btnEditar = dialogView.findViewById(R.id.btnEditarContaAdmin);
+
+        nome.setText(txtNome.getText().toString());
+        email.setText(txtEmail.getText().toString());
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        dialog.getWindow();
+
+        btnEditar.setOnClickListener(v -> {
+            dialog.dismiss();
+            mostrarDialogEditarContaAdmin();
+        });
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(
+                    new android.graphics.drawable.ColorDrawable(
+                            android.graphics.Color.TRANSPARENT
+                    )
+            );
+
+            dialog.getWindow().setLayout(
+                    (int) (getResources().getDisplayMetrics().widthPixels * 0.88),
+                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+    }
+
+    private void mostrarDialogEditarContaAdmin() {
+
+        View dialogView = getLayoutInflater()
+                .inflate(R.layout.dialog_editar_conta_admin, null);
+
+        EditText edtNome = dialogView.findViewById(R.id.edtNomeAdmin);
+        EditText edtEmail = dialogView.findViewById(R.id.edtEmailAdmin);
+
+        Button btnSalvar = dialogView.findViewById(R.id.btnSalvarEdicaoAdmin);
+
+        edtNome.setText(txtNome.getText().toString());
+        edtEmail.setText(txtEmail.getText().toString());
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(
+                    android.R.color.transparent
+            );
+        }
+    }
+
+    private void confirmarSaidaAdmin() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Sair da conta")
+                .setMessage("Tem certeza de que deseja sair da sua conta?")
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("Sair", (dialog, which) -> {
+
+                    SharedPreferences prefs =
+                            getSharedPreferences("mindu", MODE_PRIVATE);
+
+                    prefs.edit()
+                            .remove("token")
+                            .remove("nomeAdmin")
+                            .remove("emailAdmin")
+                            .apply();
+
+                    Intent intent = new Intent(
+                            DashboardAdmin.this,
+                            LoginAdmin.class
+                    );
+
+                    intent.setFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    );
+
+                    startActivity(intent);
+                    finish();
+                })
+                .show();
     }
 
 }

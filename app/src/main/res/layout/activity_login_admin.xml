@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,10 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginAdmin">
 
-
-    <!-- ========================================================= -->
-    <!-- CONTEÚDO QUE SERÁ USADO COMO FUNDO DO BLUR               -->
-    <!-- ========================================================= -->
+    <!-- FUNDO: CONTEÚDO CAPTURADO PELO BLUR -->
 
     <eightbitlab.com.blurview.BlurTarget
         android:id="@+id/blurTargetAdmin"
@@ -27,20 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ================================================= -->
-            <!-- FUNDO                                             -->
-            <!-- ================================================= -->
-
-
-            <!-- ================================================= -->
-            <!-- TÍTULO                                            -->
-            <!-- ================================================= -->
+            <!-- IMAGEM DE FUNDO -->
 
             <ImageView
                 android:id="@+id/imgFundoAdmin"
-                android:layout_width="678dp"
-                android:layout_height="1103dp"
+                android:layout_width="513dp"
+                android:layout_height="968dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +37,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.997"
                 app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
+
+            <!-- TÍTULO -->
 
             <TextView
                 android:id="@+id/textView4"
@@ -65,10 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <!-- ================================================= -->
-            <!-- SUBTÍTULO                                         -->
-            <!-- ================================================= -->
+            <!-- SUBTÍTULO -->
 
             <TextView
                 android:id="@+id/textView3"
@@ -89,33 +76,25 @@
     </eightbitlab.com.blurview.BlurTarget>
 
 
-    <!-- ========================================================= -->
-    <!-- CARD DE VIDRO                                            -->
-    <!-- ========================================================= -->
+    <!-- CARD DE VIDRO: AGORA FORA DO BLURTARGET -->
 
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurCadastroAdmin"
         android:layout_width="294dp"
         android:layout_height="379dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="237dp"
         android:background="@android:color/transparent"
         app:blurOverlayColor="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutLoginAdmin"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ================================================= -->
-            <!-- CAMPO EMAIL                                       -->
-            <!-- ================================================= -->
+            <!-- CAMPO EMAIL -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputEmailAdmin"
@@ -148,9 +127,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- ================================================= -->
-            <!-- CAMPO SENHA                                       -->
-            <!-- ================================================= -->
+            <!-- CAMPO SENHA -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputSenhaAdmin"
@@ -184,9 +161,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- ================================================= -->
-            <!-- BOTÃO ENTRAR                                      -->
-            <!-- ================================================= -->
+            <!-- BOTÃO ENTRAR -->
 
             <Button
                 android:id="@+id/btnEntrarAdmin"
@@ -210,37 +185,48 @@
     </eightbitlab.com.blurview.BlurView>
 
 
-    <!-- ========================================================= -->
-    <!-- TEXTOS ABAIXO DO CARD                                    -->
-    <!-- ========================================================= -->
+    <!-- TEXTOS ABAIXO DO CARD -->
 
-    <TextView
-        android:id="@+id/textAcessoAdmin"
-        android:layout_width="wrap_content"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/caixaAcessoAdmin"
+        android:layout_width="294dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/plus_jakarta_sans_light"
-        android:text="Área exclusiva para"
-        android:textColor="#3E3545"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        android:layout_marginTop="30dp"
+        android:padding="14dp"
+        android:background="@drawable/bg_caixa"
+        app:layout_constraintTop_toBottomOf="@id/blurCadastroAdmin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/blurCadastroAdmin" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView
+            android:id="@+id/textAcessoAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans_light"
+            android:text="Área exclusiva para"
+            android:textColor="#3E3545"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textAdminMindU"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/plus_jakarta_sans_bold"
-        android:text="administradores da MindU"
-        android:textColor="#3E3545"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textAcessoAdmin" />
+        <TextView
+            android:id="@+id/textAdminMindU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:text="administradores da MindU"
+            android:textColor="#3E3545"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/textAcessoAdmin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
