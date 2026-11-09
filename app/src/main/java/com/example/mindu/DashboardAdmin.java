@@ -308,7 +308,7 @@ public class DashboardAdmin extends AppCompatActivity {
 
         // requisição de clientes pendentes
         RetrofitClient.getApiService(this)
-                .listarClientesAdmin("pendente")
+                .listarClientesAdmin("AGUARDANDO_APROVACAO")
                 .enqueue(new Callback<>() {
 
                     @Override
@@ -353,7 +353,7 @@ public class DashboardAdmin extends AppCompatActivity {
 
         // requisição de profissionais aprovados
         RetrofitClient.getApiService(this)
-                .listarProfissionais("aprovado")
+                .listarProfissionais("APROVADO")
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(
