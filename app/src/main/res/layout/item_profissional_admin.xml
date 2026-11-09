@@ -11,11 +11,11 @@
     <TextView
         android:id="@+id/txtNomeProfissional"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Nome do profissional"
-        android:textColor="#75689A"
+        android:textColor="#F8F8F8"
         android:textSize="17sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtStatusProfissional"
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="Status: PENDENTE"
-        android:textColor="#777777"
-        android:textSize="13sp"/>
+        android:textColor="#DEDADA"
+        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

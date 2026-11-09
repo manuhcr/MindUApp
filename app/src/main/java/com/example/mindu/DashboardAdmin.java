@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -32,6 +34,7 @@ import com.example.mindu.api.profissional.ProfissionalResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
@@ -78,6 +81,17 @@ public class DashboardAdmin extends AppCompatActivity {
     TextView txtNome;
     TextView txtEmail;
     TextView txtInicial;
+
+
+    private TextView btnPendentes;
+    private TextView btnAprovados;
+    private EditText edtBuscarProfissional;
+
+    private List<ProfissionalResponse> listaPendentes = new ArrayList<>();
+    private List<ProfissionalResponse> listaAprovados = new ArrayList<>();
+
+    private boolean mostrarPendentes = true;
+
 
     @SuppressLint("ThreadConstraint")
     @Override
@@ -276,20 +290,69 @@ public class DashboardAdmin extends AppCompatActivity {
         }
     }
 
-    private void mostrarProfissionais(){
+
+    private void mostrarProfissionais() {
+
         mostrarTela(R.layout.content_profissionais_admin);
 
         txtListaVazia = containerAdmin.findViewById(R.id.txtListaVazia);
-
         recyclerProfissionais = containerAdmin.findViewById(R.id.recyclerProfissionais);
 
+        btnPendentes = containerAdmin.findViewById(R.id.btnPendentes);
+        btnAprovados = containerAdmin.findViewById(R.id.btnAprovados);
+        edtBuscarProfissional = containerAdmin.findViewById(R.id.edtBuscarProfissional);
+
         recyclerProfissionais.setLayoutManager(
-                new LinearLayoutManager(this));
+                new LinearLayoutManager(this)
+        );
 
+        mostrarPendentes = true;
 
+        profissionaisAdapter = new ProfissionaisAdapter(
+                new ArrayList<>(),
+                (profissional, aprovado, position) -> {
+                    atualizarAprovacao(profissional, aprovado, position);
+                }
+        );
+
+        profissionaisAdapter.setMostrarAcoes(true);
+        recyclerProfissionais.setAdapter(profissionaisAdapter);
+
+        btnPendentes.setOnClickListener(v -> {
+            mostrarPendentes = true;
+            atualizarBotoesFiltro();
+            atualizarListaExibida();
+        });
+
+        btnAprovados.setOnClickListener(v -> {
+            mostrarPendentes = false;
+            atualizarBotoesFiltro();
+            atualizarListaExibida();
+        });
+
+        edtBuscarProfissional.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int before, int count) {
+
+                profissionaisAdapter.filtrar(s.toString());
+                atualizarEstadoLista();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        atualizarBotoesFiltro();
         carregarProfissionais();
-
     }
+
 
     private void mostrarEmpresas() {
 
@@ -441,47 +504,39 @@ public class DashboardAdmin extends AppCompatActivity {
                 });
 
     }
+
     private void carregarProfissionais() {
 
+        // Buscar profissionais pendentes
         RetrofitClient.getApiService(this)
                 .profissionaisPendentes()
                 .enqueue(new Callback<>() {
+
                     @Override
                     public void onResponse(
                             Call<List<ProfissionalResponse>> call,
                             Response<List<ProfissionalResponse>> response) {
-                        Log.d("MINDU_API", "Código: " + response.code());
 
-                        Log.d("MINDU_API", "Body: " + response.body());
-                        if (!response.isSuccessful()
-                                || response.body() == null) {
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            listaPendentes.clear();
+                            listaPendentes.addAll(response.body());
+
+                            atualizarBotoesFiltro();
+                            atualizarListaExibida();
+
+                            Log.d("MINDU_API",
+                                    "Total de pendentes: " + listaPendentes.size());
+
+                        } else {
+                            Log.e("MINDU_API",
+                                    "Erro ao carregar pendentes: " + response.code());
+
                             Toast.makeText(
                                     DashboardAdmin.this,
-                                    "Não foi possível carregar os profissionais.",
-                                    Toast.LENGTH_LONG).show();
-                        }else{
-                            List<ProfissionalResponse> profissionais =
-                                    response.body();
-                            if (profissionais.isEmpty()) {
-                                txtListaVazia.setVisibility(View.VISIBLE);
-                                recyclerProfissionais.setVisibility(View.GONE);
-
-                            } else {
-                                txtListaVazia.setVisibility(View.GONE);
-                                recyclerProfissionais.setVisibility(View.VISIBLE);
-                            }
-                            profissionaisAdapter = new ProfissionaisAdapter(
-
-                                    profissionais,
-                                    (profissional, aprovado, position) -> {
-                                        atualizarAprovacao(profissional, aprovado, position);
-                                    }
-                            );
-                            recyclerProfissionais.setAdapter(profissionaisAdapter);
-                            Log.d("MINDU_API", "Total de profissionais: "
-                                    + profissionais.size());
-
-
+                                    "Não foi possível carregar os pendentes.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         }
                     }
 
@@ -489,15 +544,148 @@ public class DashboardAdmin extends AppCompatActivity {
                     public void onFailure(
                             Call<List<ProfissionalResponse>> call,
                             Throwable t) {
-                        Toast.makeText(
-                                DashboardAdmin.this,
-                                "Erro de conexão ao carregar os profissionais.",
-                                Toast.LENGTH_LONG).show();
-                        return;
+
+                        Log.e("MINDU_API", "Erro ao carregar pendentes", t);
+                    }
+                });
+
+        // Buscar profissionais aprovados
+        RetrofitClient.getApiService(this)
+                .listarProfissionais("APROVADO")
+                .enqueue(new Callback<>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ProfissionalResponse>> call,
+                            Response<List<ProfissionalResponse>> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            listaAprovados.clear();
+                            listaAprovados.addAll(response.body());
+
+                            atualizarBotoesFiltro();
+                            atualizarListaExibida();
+
+                            Log.d("MINDU_API",
+                                    "Total de aprovados: " + listaAprovados.size());
+
+                        } else {
+                            Log.e("MINDU_API",
+                                    "Erro ao carregar aprovados: " + response.code());
+
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Não foi possível carregar os aprovados.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
                     }
 
+                    @Override
+                    public void onFailure(
+                            Call<List<ProfissionalResponse>> call,
+                            Throwable t) {
+
+                        Log.e("MINDU_API", "Erro ao carregar aprovados", t);
+                    }
                 });
     }
+
+
+    private void atualizarListaExibida() {
+
+        if (profissionaisAdapter == null) return;
+
+        List<ProfissionalResponse> listaAtual =
+                mostrarPendentes ? listaPendentes : listaAprovados;
+
+        profissionaisAdapter.atualizarLista(listaAtual);
+        profissionaisAdapter.setMostrarAcoes(mostrarPendentes);
+
+        if (edtBuscarProfissional != null) {
+            profissionaisAdapter.filtrar(
+                    edtBuscarProfissional.getText().toString()
+            );
+        }
+
+        atualizarEstadoLista();
+    }
+
+    private void atualizarBotoesFiltro() {
+
+        if (btnPendentes == null || btnAprovados == null) return;
+
+        btnPendentes.setText(
+                "Pendentes (" + listaPendentes.size() + ")"
+        );
+
+        btnAprovados.setText(
+                "Aprovados (" + listaAprovados.size() + ")"
+        );
+
+        if (mostrarPendentes) {
+
+            btnPendentes.setBackgroundResource(
+                    R.drawable.bg_filtro_selecionado
+            );
+
+            btnAprovados.setBackgroundResource(
+                    R.drawable.bg_filtro_normal
+            );
+
+            btnPendentes.setTextColor(Color.WHITE);
+            btnAprovados.setTextColor(Color.parseColor("#75689A"));
+
+        } else {
+
+            btnAprovados.setBackgroundResource(
+                    R.drawable.bg_filtro_selecionado
+            );
+
+            btnPendentes.setBackgroundResource(
+                    R.drawable.bg_filtro_normal
+            );
+
+            btnAprovados.setTextColor(Color.WHITE);
+            btnPendentes.setTextColor(Color.parseColor("#75689A"));
+        }
+    }
+
+    private void atualizarEstadoLista() {
+
+        if (profissionaisAdapter == null
+                || txtListaVazia == null
+                || recyclerProfissionais == null) {
+            return;
+        }
+
+        if (profissionaisAdapter.getItemCount() == 0) {
+
+            txtListaVazia.setVisibility(View.VISIBLE);
+            recyclerProfissionais.setVisibility(View.GONE);
+
+            String pesquisa = edtBuscarProfissional.getText().toString().trim();
+
+            if (!pesquisa.isEmpty()) {
+                txtListaVazia.setText("Nenhum profissional encontrado.");
+            } else if (mostrarPendentes) {
+                txtListaVazia.setText(
+                        "Não há profissionais pendentes de aprovação."
+                );
+            } else {
+                txtListaVazia.setText(
+                        "Não há profissionais aprovados."
+                );
+            }
+
+        } else {
+
+            txtListaVazia.setVisibility(View.GONE);
+            recyclerProfissionais.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     private void carregarEmpresas() {
 
@@ -618,13 +806,14 @@ public class DashboardAdmin extends AppCompatActivity {
                 .show();
     }
 
+
     private void atualizarAprovacao(
             ProfissionalResponse profissional,
-            boolean aprovado, int position) {
+            boolean aprovado,
+            int position) {
 
         RetrofitClient.getApiService(this)
-                .aprovarProfissional(
-                        profissional.getId(), aprovado)
+                .aprovarProfissional(profissional.getId(), aprovado)
                 .enqueue(new Callback<>() {
 
                     @Override
@@ -633,19 +822,27 @@ public class DashboardAdmin extends AppCompatActivity {
                             Response<ProfissionalResponse> response) {
 
                         if (response.isSuccessful()) {
-                            profissionaisAdapter.removerProfissional(position);
 
-                            if (profissionaisAdapter.getItemCount() == 0){
-                                txtListaVazia.setVisibility(View.VISIBLE);
-                                recyclerProfissionais.setVisibility(View.GONE);
-
-                            }
-                        } else {
                             Toast.makeText(
                                     DashboardAdmin.this,
-                                    "Não foi possível concluir a ação. "
-                                            + "Código: " + response.code(),
-                                    Toast.LENGTH_LONG).show();
+                                    aprovado
+                                            ? "Profissional aprovado!"
+                                            : "Profissional rejeitado!",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            carregarProfissionais();
+
+                        } else {
+
+                            Toast.makeText(
+                                    DashboardAdmin.this,
+                                    "Não foi possível concluir a ação. Código: "
+                                            + response.code(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            profissionaisAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -654,13 +851,20 @@ public class DashboardAdmin extends AppCompatActivity {
                             Call<ProfissionalResponse> call,
                             Throwable t) {
 
+                        Log.e("MINDU_API",
+                                "Erro ao atualizar aprovação", t);
+
                         Toast.makeText(
                                 DashboardAdmin.this,
                                 "Erro de conexão ao atualizar cadastro.",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        profissionaisAdapter.notifyDataSetChanged();
                     }
                 });
     }
+
 
 
 
