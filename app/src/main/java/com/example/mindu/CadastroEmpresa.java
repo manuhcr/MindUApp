@@ -288,6 +288,77 @@ public class CadastroEmpresa extends AppCompatActivity {
 
         request.setPlanoId(planoIdSelecionado);
 
+        if (camposVazios(new String[]{
+                request.getRazaoSocial(),
+                request.getNomeFantasia(),
+                request.getCnpj(),
+                request.getInscricaoEstadual(),
+                request.getResponsavel(),
+                request.getCep(),
+                request.getLogradouro(),
+                request.getNumero(),
+                request.getBairro(),
+                request.getCidade(),
+                request.getEstado(),
+                request.getEmailEmpresa(),
+                request.getTelefone(),
+                request.getSenha(),
+                request.getPlanoId()
+        })) {
+            Toast.makeText(
+                    this,
+                    "Preencha todos os campos antes de continuar.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+                }
+
+        if (request.getSenha().length() < 8) {
+            Toast.makeText(
+                    this,
+                    "A senha deve ter no mínimo 8 caracteres.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        if (request.getSenha().matches(".*\\d.*")) {
+            Toast.makeText(
+                    this,
+                    "A senha deve conter pelo menos um número"
+                    , Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        if (!request.getSenha().matches(".*[A-Z].*")) {
+            Toast.makeText(
+                    this,
+                    "A senha deve conter pelo menos uma letra maiúscula.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        if (!request.getSenha().matches(".*[a-z].*")) {
+            Toast.makeText(
+                    this,
+                    "A senha deve conter pelo menos uma letra minúscula.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        if (!request.getSenha().matches(".*[!@#$%^&*()_+].*")) {
+            Toast.makeText(
+                    this,
+                    "A senha deve conter pelo menos um caractere especial.",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+
         api.cadastrarEmpresa(request).enqueue(new Callback<EmpresaResponse>() {
 
             @Override

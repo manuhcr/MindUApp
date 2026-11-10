@@ -46,15 +46,38 @@ public class LoginEmpresa extends AppCompatActivity {
             String email = edtEmail.getText().toString().trim();
             String senha = edtSenha.getText().toString();
 
-            if (email.isEmpty() || senha.isEmpty()){
+            if (email.isEmpty()) {
+                edtEmail.setError("Informe seu e-mail");
+                edtEmail.requestFocus();
+                return;
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                edtEmail.setError("Informe um e-mail válido");
+                edtEmail.requestFocus();
+                return;
+            }
+
+            if (senha.isEmpty()) {
+                edtSenha.setError("Informe sua senha");
+                edtSenha.requestFocus();
+                return;
+            }
+
+
+            if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Preencha o e-mail e a senha!",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
+
             LoginRequest dados = new LoginRequest(email, senha);
 
-            api.login(dados).enqueue(new Callback<>() {
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> res) {
+            api.login(dados).enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call,
+                                       Response<LoginResponse> res) {
+
                     if (res.isSuccessful() && res.body() != null) {
                         String token = res.body().getToken();
 
@@ -66,12 +89,14 @@ public class LoginEmpresa extends AppCompatActivity {
                         Toast.makeText(LoginEmpresa.this,
                                 "Login realizado!", Toast.LENGTH_SHORT).show();
 
-                        Intent rotacionar = new Intent(LoginEmpresa.this, DashboardEmpresa.class);
-                        startActivity(rotacionar);
+                        Intent intent = new Intent(
+                                LoginEmpresa.this, DashboardEmpresa.class);
+                        startActivity(intent);
+
                     } else {
                         Toast.makeText(LoginEmpresa.this,
-                                "Não foi possível entrar. Confira os dados.",
-                                Toast.LENGTH_LONG).show();
+                                "E-mail ou senha incorretos!",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -83,7 +108,6 @@ public class LoginEmpresa extends AppCompatActivity {
                 }
             });
         });
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
