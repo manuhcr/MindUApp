@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.graphics.Color;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,7 +56,6 @@ public class ProfissionaisAdapter
 
         return new ProfissionalViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(
             @NonNull ProfissionalViewHolder holder,
@@ -63,14 +64,34 @@ public class ProfissionaisAdapter
         ProfissionalResponse profissional = profissionaisExibidos.get(position);
 
         holder.txtNomeProfissional.setText(profissional.getNome());
-        holder.txtStatusProfissional.setText(
-                "Status: " + profissional.getStatus()
-        );
+        holder.txtIdProfissional.setText("ID: " + profissional.getId());
 
-        // Os botões só aparecem na aba de pendentes
+        String status = profissional.getStatus() == null
+                ? ""
+                : profissional.getStatus().toUpperCase(Locale.ROOT);
+
+        holder.txtStatusProfissional.setText(status);
+
+        // Personaliza a etiqueta de acordo com o status
+        if (status.equals("APROVADO")) {
+            holder.txtStatusProfissional.setBackgroundResource(
+                    R.drawable.bg_status_aprovado
+            );
+            holder.txtStatusProfissional.setTextColor(
+                    Color.parseColor("#246B3B")
+            );
+        } else {
+            holder.txtStatusProfissional.setBackgroundResource(
+                    R.drawable.bg_status_pendente
+            );
+            holder.txtStatusProfissional.setTextColor(
+                    Color.parseColor("#8A6500")
+            );
+        }
+
+        // Ações aparecem somente para profissionais pendentes
         if (mostrarAcoes) {
-            holder.btnAprovar.setVisibility(View.VISIBLE);
-            holder.btnRejeitar.setVisibility(View.VISIBLE);
+            holder.layoutAcoesProfissional.setVisibility(View.VISIBLE);
 
             holder.btnAprovar.setEnabled(true);
             holder.btnRejeitar.setEnabled(true);
@@ -110,8 +131,7 @@ public class ProfissionaisAdapter
             });
 
         } else {
-            holder.btnAprovar.setVisibility(View.GONE);
-            holder.btnRejeitar.setVisibility(View.GONE);
+            holder.layoutAcoesProfissional.setVisibility(View.GONE);
         }
     }
 
@@ -168,6 +188,9 @@ public class ProfissionaisAdapter
         Button btnAprovar;
         Button btnRejeitar;
 
+        TextView txtIdProfissional;
+        LinearLayout layoutAcoesProfissional;
+
         public ProfissionalViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -175,6 +198,8 @@ public class ProfissionaisAdapter
             txtStatusProfissional = itemView.findViewById(R.id.txtStatusProfissional);
             btnAprovar = itemView.findViewById(R.id.btnAprovar);
             btnRejeitar = itemView.findViewById(R.id.btnRejeitar);
+            txtIdProfissional = itemView.findViewById(R.id.txtIdProfissional);
+            layoutAcoesProfissional = itemView.findViewById(R.id.layoutAcoesProfissional);
         }
     }
 

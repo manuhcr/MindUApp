@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindu.R;
 import com.example.mindu.api.cadastro.EmpresaResponse;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EmpresasAdapter
         extends RecyclerView.Adapter<EmpresasAdapter.EmpresasViewHolder> {
 
-    private List<EmpresaResponse> empresas;
+    private List<EmpresaResponse> empresasOriginais;
+    private List<EmpresaResponse> empresasExibidas;
 
     public interface OnExcluirEmpresaListener {
         void onExcluirEmpresa(String empresaId);
@@ -30,7 +33,6 @@ public class EmpresasAdapter
         TextView txtRazaoSocial;
         TextView txtIdEmpresa;
         TextView txtPlanoEmpresa;
-
         Button btnExcluirEmpresa;
 
         public EmpresasViewHolder(@NonNull View itemView) {
@@ -43,14 +45,15 @@ public class EmpresasAdapter
         }
     }
 
-
-
     public EmpresasAdapter(
             List<EmpresaResponse> empresas,
             OnExcluirEmpresaListener listener) {
 
-        this.empresas = empresas;
+        this.empresasOriginais = new ArrayList<>();
+        this.empresasExibidas = new ArrayList<>();
         this.listener = listener;
+
+        atualizarLista(empresas);
     }
 
     @NonNull
@@ -68,11 +71,13 @@ public class EmpresasAdapter
     public void onBindViewHolder(
             @NonNull EmpresasViewHolder holder, int position) {
 
-        EmpresaResponse empresa = empresas.get(position);
+        EmpresaResponse empresa = empresasExibidas.get(position);
 
         holder.txtIdEmpresa.setText("ID: " + empresa.id);
+
         holder.txtRazaoSocial.setText(
                 "Razão Social: " + empresa.razaoSocial);
+
         holder.txtPlanoEmpresa.setText(
                 "Plano: " + empresa.plano);
 
@@ -81,12 +86,52 @@ public class EmpresasAdapter
                 listener.onExcluirEmpresa(empresa.id);
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
-        return empresas != null ? empresas.size() : 0;
+        return empresasExibidas.size();
+    }
+
+    // Atualiza a lista completa
+    public void atualizarLista(List<EmpresaResponse> novaLista) {
+
+        empresasOriginais.clear();
+
+        if (novaLista != null) {
+            empresasOriginais.addAll(novaLista);
+        }
+
+        empresasExibidas.clear();
+        empresasExibidas.addAll(empresasOriginais);
+
+        notifyDataSetChanged();
+    }
+
+    // Pesquisa por razão social
+    public void filtrar(String texto) {
+
+        empresasExibidas.clear();
+
+        if (texto == null || texto.trim().isEmpty()) {
+
+            empresasExibidas.addAll(empresasOriginais);
+
+        } else {
+
+            String pesquisa = texto.toLowerCase(Locale.ROOT).trim();
+
+            for (EmpresaResponse empresa : empresasOriginais) {
+
+                if (empresa.razaoSocial != null &&
+                        empresa.razaoSocial.toLowerCase(Locale.ROOT)
+                                .contains(pesquisa)) {
+
+                    empresasExibidas.add(empresa);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 }

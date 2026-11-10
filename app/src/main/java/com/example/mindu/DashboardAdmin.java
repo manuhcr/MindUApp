@@ -92,6 +92,11 @@ public class DashboardAdmin extends AppCompatActivity {
 
     private boolean mostrarPendentes = true;
 
+    private EditText edtBuscarEmpresa;
+
+    private int totalClientesPendentes = 0;
+    private int totalProfissionaisPendentes = 0;
+
 
     @SuppressLint("ThreadConstraint")
     @Override
@@ -359,11 +364,41 @@ public class DashboardAdmin extends AppCompatActivity {
         mostrarTela(R.layout.content_empresas_admin);
 
         txtEmpresasVazio = containerAdmin.findViewById(R.id.txtEmpresasVazio);
-
         recyclerEmpresas = containerAdmin.findViewById(R.id.recyclerEmpresas);
+        edtBuscarEmpresa = containerAdmin.findViewById(R.id.edtBuscarEmpresa);
 
         recyclerEmpresas.setLayoutManager(
-                new LinearLayoutManager(this));
+                new LinearLayoutManager(this)
+        );
+
+        // Cria o adapter inicialmente vazio
+        empresasAdapter = new EmpresasAdapter(
+                new ArrayList<>(),
+                empresaId -> excluirEmpresa(empresaId)
+        );
+
+        recyclerEmpresas.setAdapter(empresasAdapter);
+
+        // Pesquisa em tempo real
+        edtBuscarEmpresa.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int before, int count) {
+
+                empresasAdapter.filtrar(s.toString());
+                atualizarEstadoEmpresas();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         carregarEmpresas();
     }
@@ -383,11 +418,9 @@ public class DashboardAdmin extends AppCompatActivity {
 
                             List<ClienteResponse> clientes = response.body();
 
-                            int totalClientesPendentes = clientes.size();
+                            totalClientesPendentes = clientes.size();
 
-                            txtTotalPendentes.setText(
-                                    String.valueOf(totalClientesPendentes)
-                            );
+                            atualizarTotalPendentes();
 
                         } else {
                             Toast.makeText(
@@ -503,6 +536,38 @@ public class DashboardAdmin extends AppCompatActivity {
                     }
                 });
 
+        RetrofitClient.getApiService(this)
+                .profissionaisPendentes()
+                .enqueue(new Callback<List<ProfissionalResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ProfissionalResponse>> call,
+                            Response<List<ProfissionalResponse>> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            totalProfissionaisPendentes = response.body().size();
+
+                            atualizarTotalPendentes();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<ProfissionalResponse>> call,
+                            Throwable t) {
+
+                        Log.e("MINDU_API", "Erro ao contar profissionais pendentes", t);
+                    }
+                });
+
+    }
+
+    private void atualizarTotalPendentes() {
+        int total = totalClientesPendentes + totalProfissionaisPendentes;
+
+        txtTotalPendentes.setText(String.valueOf(total));
     }
 
     private void carregarProfissionais() {
@@ -711,23 +776,9 @@ public class DashboardAdmin extends AppCompatActivity {
 
                             List<EmpresaResponse> empresas = response.body();
 
-                            if (empresas.isEmpty()) {
+                            empresasAdapter.atualizarLista(empresas);
 
-                                txtEmpresasVazio.setVisibility(View.VISIBLE);
-                                recyclerEmpresas.setVisibility(View.GONE);
-
-                            } else {
-
-                                txtEmpresasVazio.setVisibility(View.GONE);
-                                recyclerEmpresas.setVisibility(View.VISIBLE);
-                            }
-
-                            empresasAdapter = new EmpresasAdapter(
-                                    empresas,
-                                    empresaId -> excluirEmpresa(empresaId)
-                            );
-
-                            recyclerEmpresas.setAdapter(empresasAdapter);
+                            atualizarEstadoEmpresas();
 
                             Log.d("MINDU_API",
                                     "Total de empresas: " + empresas.size());
@@ -739,6 +790,9 @@ public class DashboardAdmin extends AppCompatActivity {
                             Call<List<EmpresaResponse>> call,
                             Throwable t) {
 
+                        Log.e("MINDU_API",
+                                "Erro ao carregar empresas", t);
+
                         Toast.makeText(
                                 DashboardAdmin.this,
                                 "Erro de conexão ao carregar empresas.",
@@ -746,7 +800,38 @@ public class DashboardAdmin extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
 
+    private void atualizarEstadoEmpresas() {
+
+        if (empresasAdapter == null
+                || txtEmpresasVazio == null
+                || recyclerEmpresas == null) {
+            return;
+        }
+
+        if (empresasAdapter.getItemCount() == 0) {
+
+            txtEmpresasVazio.setVisibility(View.VISIBLE);
+            recyclerEmpresas.setVisibility(View.GONE);
+
+            String pesquisa = edtBuscarEmpresa.getText().toString().trim();
+
+            if (!pesquisa.isEmpty()) {
+                txtEmpresasVazio.setText(
+                        "Nenhuma empresa encontrada."
+                );
+            } else {
+                txtEmpresasVazio.setText(
+                        "Nenhuma empresa cadastrada."
+                );
+            }
+
+        } else {
+
+            txtEmpresasVazio.setVisibility(View.GONE);
+            recyclerEmpresas.setVisibility(View.VISIBLE);
+        }
     }
 
     private void excluirEmpresa(String empresaId) {
