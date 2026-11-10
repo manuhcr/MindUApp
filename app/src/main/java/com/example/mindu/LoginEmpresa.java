@@ -65,6 +65,9 @@ public class LoginEmpresa extends AppCompatActivity {
 
                         Toast.makeText(LoginEmpresa.this,
                                 "Login realizado!", Toast.LENGTH_SHORT).show();
+
+                        Intent rotacionar = new Intent(LoginEmpresa.this, DashboardEmpresa.class);
+                        startActivity(rotacionar);
                     } else {
                         Toast.makeText(LoginEmpresa.this,
                                 "Não foi possível entrar. Confira os dados.",

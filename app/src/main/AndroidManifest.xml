@@ -22,7 +22,7 @@
             android:exported="false"
             android:theme="@style/Theme.MindU" />
         <activity
-            android:name=".ProfissionaisPendentes"
+            android:name=".DashboardEmpresa"
             android:exported="false" />
         <activity
             android:name=".LoginBeneficiario"

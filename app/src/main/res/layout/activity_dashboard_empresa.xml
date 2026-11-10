@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F3F7">
+
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/blurTargetDashboardEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Conteúdo dinâmico -->
+            <FrameLayout
+                android:id="@+id/containerEmpresa"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <!-- Navegação inferior -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#75689A"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/navInicioEmpresa"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_home"
+                    android:scaleType="fitCenter"
+                    android:padding="12dp"
+                    android:contentDescription="Início"/>
+
+                <ImageView
+                    android:id="@+id/navColaboradoresEmpresa"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_users"
+                    android:scaleType="fitCenter"
+                    android:padding="12dp"
+                    android:contentDescription="Colaboradores"/>
+
+                <ImageView
+                    android:id="@+id/navRelatoriosEmpresa"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_chart"
+                    android:scaleType="fitCenter"
+                    android:padding="12dp"
+                    android:contentDescription="Relatórios"/>
+
+                <ImageView
+                    android:id="@+id/navPerfilEmpresa"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_user"
+                    android:scaleType="fitCenter"
+                    android:padding="12dp"
+                    android:contentDescription="Perfil"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </eightbitlab.com.blurview.BlurTarget>
+
+</FrameLayout>
