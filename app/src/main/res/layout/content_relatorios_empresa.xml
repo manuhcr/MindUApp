@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="40dp">
+
+        <!-- CABEÇALHO -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Relatórios RH"
+            android:textColor="#75689A"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Acompanhe a participação da equipe e a utilização do benefício."
+            android:textColor="#777184"
+            android:textSize="13sp" />
+
+        <!-- UTILIZAÇÃO DO BENEFÍCIO -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Utilização do benefício"
+            android:textColor="#292535"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurRelatorioAderencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_vidro"
+            android:clipToOutline="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total de matrículas do convênio"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="#75689A"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progressoRelatorio"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="18dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressBackgroundTint="#E2DDEC"
+                    android:progressTint="#75689A" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtRelatorioUtilizadas"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0 utilizadas"
+                        android:textColor="#75689A"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtRelatorioDisponiveis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 disponíveis"
+                        android:textColor="#777184"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtRelatorioPercentual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="0% de utilização"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Aguardando indicadores..."
+                    android:textColor="#777184"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- ADESÃO DA EQUIPE -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="Participação da equipe"
+            android:textColor="#292535"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurRelatorioEquipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_vidro"
+            android:clipToOutline="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <!-- TOTAL DE COLABORADORES -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colaboradores cadastrados"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioTotalColaboradores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="#75689A"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#DCD6E6" />
+
+                <!-- APROVADOS -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colaboradores aprovados"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioColaboradores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="#75689A"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#DCD6E6" />
+
+                <!-- ATIVOS -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colaboradores ativos"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioAtivos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="#75689A"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#DCD6E6" />
+
+                <!-- COM MATRÍCULA UTILIZADA -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colaboradores com benefício utilizado"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioBeneficiarios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="#75689A"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progressoAdesaoEquipe"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="16dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressBackgroundTint="#E2DDEC"
+                    android:progressTint="#75689A" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioAdesao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="0% de participação"
+                    android:textColor="#75689A"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtRelatorioDescricaoEquipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Aguardando dados da equipe..."
+                    android:textColor="#777184"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnExportarRelatorioPDF"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:backgroundTint="#75689A"
+                android:text="Exportar relatório executivo (PDF)"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:drawableStart="@android:drawable/ic_menu_save"
+                android:drawablePadding="8dp" />
+
+        </LinearLayout>
+
+
+        <!-- OBSERVAÇÃO -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="28dp"
+            android:gravity="center"
+            android:text="Indicadores atualizados conforme os dados disponíveis no sistema."
+            android:textColor="#9993A5"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+</ScrollView>

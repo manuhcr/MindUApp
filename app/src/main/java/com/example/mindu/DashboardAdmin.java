@@ -46,7 +46,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.adapter.ProfissionaisAdapter;
-import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.adapter.EmpresasAdapter;
 import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 
@@ -374,7 +374,10 @@ public class DashboardAdmin extends AppCompatActivity {
         // Cria o adapter inicialmente vazio
         empresasAdapter = new EmpresasAdapter(
                 new ArrayList<>(),
-                empresaId -> excluirEmpresa(empresaId)
+
+                empresaId -> excluirEmpresa(empresaId),
+
+                empresa -> mostrarColaboradoresEmpresa(empresa)
         );
 
         recyclerEmpresas.setAdapter(empresasAdapter);
@@ -401,6 +404,12 @@ public class DashboardAdmin extends AppCompatActivity {
         });
 
         carregarEmpresas();
+    }
+
+    private void mostrarColaboradoresEmpresa(EmpresaResponse empresa) {
+        String id = empresa.id;
+
+        // Aqui vamos carregar os colaboradores da empresa selecionada.
     }
     private void carregarIndicadores() {
 
@@ -1187,5 +1196,35 @@ public class DashboardAdmin extends AppCompatActivity {
                 })
                 .show();
     }
+
+
+    private void abrirFichaColaborador(ClienteResponse colaborador) {
+
+        View view = getLayoutInflater().inflate(
+                R.layout.dialog_ficha_colaborador, null
+        );
+
+        TextView nome = view.findViewById(R.id.txtFichaNome);
+        TextView email = view.findViewById(R.id.txtFichaEmail);
+        TextView status = view.findViewById(R.id.txtFichaStatus);
+        TextView id = view.findViewById(R.id.txtFichaId);
+        Button fechar = view.findViewById(R.id.btnFecharFicha);
+
+        nome.setText(colaborador.getNome());
+        email.setText(colaborador.getEmail());
+        status.setText(colaborador.getStatus() == null
+                ? "Não informado"
+                : colaborador.getStatus());
+        id.setText(colaborador.getId());
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .create();
+
+        fechar.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
 
 }

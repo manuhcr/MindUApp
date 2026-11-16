@@ -1,4 +1,4 @@
-package com.example.mindu.api.cadastro;
+package com.example.mindu.api.empresas;
 
 public class EmpresaResponse {
     public String id;

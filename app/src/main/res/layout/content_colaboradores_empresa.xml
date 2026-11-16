@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="40dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Cabeçalho -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Colaboradores"
+        android:textColor="#75689A"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Pesquisa -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Gerencie os colaboradores vinculados à sua empresa."
+        android:textColor="#777777"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edtBuscarColaboradorEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:hint="Buscar colaborador..."
+        android:inputType="text"
+        android:paddingHorizontal="14dp"
+        android:singleLine="true" />
+
+    <!-- Abas -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPendentesEmpresa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#75689A"
+            android:text="Pendentes"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnAprovadosEmpresa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#D4CDE9"
+            android:text="Aprovados"
+            android:textAllCaps="false"
+            android:textColor="#75689A"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!-- Lista -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvColaboradoresEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="12dp" />
+
+        <TextView
+            android:id="@+id/txtColaboradoresEmpresaVazio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Nenhum colaborador encontrado."
+            android:textAlignment="center"
+            android:textColor="#777777"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>

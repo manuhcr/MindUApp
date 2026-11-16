@@ -1,4 +1,4 @@
-package com.example.mindu.api.cadastro;
+package com.example.mindu.api.empresas;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,16 +1,24 @@
+
 package com.example.mindu.api.dashboard;
 
 public class DashboardResponse {
 
-    public boolean getQuantidadeEmpresas() {
-        return false;
+    private int matriculasDisponiveis;
+    private int matriculasUsadas;
+
+    private int clientesAprovados;
+
+
+
+    public int getMatriculasDisponiveis() {
+        return matriculasDisponiveis;
     }
 
-    public boolean getQuantidadeProfissionais() {
-        return false;
+    public int getMatriculasUsadas() {
+        return matriculasUsadas;
     }
 
-    public boolean getQuantidadePendentes() {
-        return false;
+    public int getClientesAprovados() {
+        return clientesAprovados;
     }
 }

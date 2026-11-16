@@ -1,6 +1,5 @@
 package com.example.mindu;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -21,13 +20,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mindu.api.ApiService;
 import com.example.mindu.api.RetrofitClient;
-import com.example.mindu.api.cadastro.EmpresaRequest;
-import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.api.empresas.EmpresaRequest;
+import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.api.planos.PlanoResponse;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_chat_mila">
+
+    <!-- CABEÇALHO -->
+
+    <LinearLayout
+        android:id="@+id/headerMila"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="18dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_avatar_mila"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_chat"
+                android:contentDescription="Mila"/>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MILA"
+                android:textColor="#493D78"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtStatusMila"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Online agora"
+                android:textColor="#777184"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- HISTÓRICO DA CONVERSA -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMensagensMila"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="18dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/headerMila"
+        app:layout_constraintBottom_toTopOf="@id/layoutInteracaoMila"/>
+
+    <!-- ÁREA DE INTERAÇÃO -->
+
+    <LinearLayout
+        android:id="@+id/layoutInteracaoMila"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="14dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- SUGESTÕES -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUGESTÕES DE RESPOSTA"
+            android:textColor="#777184"
+            android:textSize="11sp"
+            android:textStyle="bold"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSugestaoBem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Estou bem 😊"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#493D78"/>
+
+                <Button
+                    android:id="@+id/btnSugestaoConversar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:text="Preciso conversar"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#493D78"/>
+
+                <Button
+                    android:id="@+id/btnSugestaoAnsiosa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:text="Me sinto ansiosa"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#493D78"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <!-- CAMPO DE MENSAGEM E ÁUDIO -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/edtMensagemMila"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:hint="Escreva uma mensagem..."
+                android:textSize="14sp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/bg_input_mila"
+                android:singleLine="true"
+                android:inputType="textCapSentences|textMultiLine"
+                android:imeOptions="actionSend"/>
+
+            <ImageButton
+                android:id="@+id/btnAudioMila"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_microphone"
+                android:background="@android:color/transparent"
+                android:contentDescription="Gravar áudio"
+                android:tint="#493D78"/>
+
+            <ImageButton
+                android:id="@+id/btnEnviarMila"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_send"
+                android:background="@drawable/bg_botao_enviar_mila"
+                android:contentDescription="Enviar mensagem"
+                android:tint="#FFFFFF"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

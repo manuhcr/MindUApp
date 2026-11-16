@@ -1,3 +1,4 @@
+
 package com.example.mindu.adapter;
 
 import android.view.LayoutInflater;
@@ -10,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.R;
-import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.api.empresas.EmpresaResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,19 @@ import java.util.Locale;
 public class EmpresasAdapter
         extends RecyclerView.Adapter<EmpresasAdapter.EmpresasViewHolder> {
 
-    private List<EmpresaResponse> empresasOriginais;
-    private List<EmpresaResponse> empresasExibidas;
+    private final List<EmpresaResponse> empresasOriginais;
+    private final List<EmpresaResponse> empresasExibidas;
 
     public interface OnExcluirEmpresaListener {
         void onExcluirEmpresa(String empresaId);
     }
 
-    private OnExcluirEmpresaListener listener;
+    public interface OnEmpresaClickListener {
+        void onEmpresaClick(EmpresaResponse empresa);
+    }
+
+    private final OnExcluirEmpresaListener excluirListener;
+    private final OnEmpresaClickListener clickListener;
 
     public class EmpresasViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,11 +53,14 @@ public class EmpresasAdapter
 
     public EmpresasAdapter(
             List<EmpresaResponse> empresas,
-            OnExcluirEmpresaListener listener) {
+            OnExcluirEmpresaListener excluirListener,
+            OnEmpresaClickListener clickListener) {
 
         this.empresasOriginais = new ArrayList<>();
         this.empresasExibidas = new ArrayList<>();
-        this.listener = listener;
+
+        this.excluirListener = excluirListener;
+        this.clickListener = clickListener;
 
         atualizarLista(empresas);
     }
@@ -74,16 +83,24 @@ public class EmpresasAdapter
         EmpresaResponse empresa = empresasExibidas.get(position);
 
         holder.txtIdEmpresa.setText("ID: " + empresa.id);
-
         holder.txtRazaoSocial.setText(
-                "Razão Social: " + empresa.razaoSocial);
-
+                "Razão Social: " + empresa.razaoSocial
+        );
         holder.txtPlanoEmpresa.setText(
-                "Plano: " + empresa.plano);
+                "Plano: " + empresa.plano
+        );
 
+        // Clique no cartão: visualizar colaboradores
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onEmpresaClick(empresa);
+            }
+        });
+
+        // Clique no botão: excluir empresa
         holder.btnExcluirEmpresa.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onExcluirEmpresa(empresa.id);
+            if (excluirListener != null) {
+                excluirListener.onExcluirEmpresa(empresa.id);
             }
         });
     }
@@ -93,7 +110,6 @@ public class EmpresasAdapter
         return empresasExibidas.size();
     }
 
-    // Atualiza a lista completa
     public void atualizarLista(List<EmpresaResponse> novaLista) {
 
         empresasOriginais.clear();
@@ -108,7 +124,6 @@ public class EmpresasAdapter
         notifyDataSetChanged();
     }
 
-    // Pesquisa por razão social
     public void filtrar(String texto) {
 
         empresasExibidas.clear();

@@ -1,7 +1,9 @@
 package com.example.mindu.api;
 
-import com.example.mindu.api.cadastro.EmpresaRequest;
-import com.example.mindu.api.cadastro.EmpresaResponse;
+import com.example.mindu.api.chat.ChatRequest;
+import com.example.mindu.api.chat.ChatResponse;
+import com.example.mindu.api.empresas.EmpresaRequest;
+import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.api.cliente.ClienteRequest;
 import com.example.mindu.api.cliente.ClienteResponse;
 import com.example.mindu.api.cliente.dados.DadosSensiveisRequest;
@@ -10,9 +12,8 @@ import com.example.mindu.api.login.LoginRequest;
 import com.example.mindu.api.login.LoginResponse;
 import com.example.mindu.api.login.MinhaContaResponse;
 import com.example.mindu.api.login.TrocaSenhaRequest;
-import com.example.mindu.api.matriculas.MatriculasResponse;
+import com.example.mindu.api.matriculas.MatriculaResponse;
 import com.example.mindu.api.planos.PlanoResponse;
-import com.example.mindu.api.profissional.ProfissionalRequest;
 import com.example.mindu.api.profissional.ProfissionalResponse;
 import com.example.mindu.api.profissional.agendamento.AgendamentoRequest;
 import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
@@ -46,6 +47,9 @@ public interface ApiService {
     @POST("v1/auth/login")
     Call<LoginResponse> login(@Body LoginRequest body);
 
+    @POST("v1/chat")
+    Call<ChatResponse> enviarMensagem(@Body ChatRequest body);
+
     @GET("v1/auth/me")
     Call<MinhaContaResponse> minhaConta();
 
@@ -55,14 +59,20 @@ public interface ApiService {
     @POST("v1/empresas")
     Call<EmpresaResponse> cadastrarEmpresa(@Body EmpresaRequest body);
 
+    @GET("v1/empresas/me")
+    Call<EmpresaResponse> minhaEmpresa();
+
+    @GET("v1/empresas/me/matriculas")
+    Call<List<MatriculaResponse>> minhasMatriculas();
+
     @POST("v1/empresas/{id}/matriculas")
-    Call<List<MatriculasResponse>> gerarMatriculas(
+    Call<List<MatriculaResponse>> gerarMatriculas(
             @Path("id") String empresaId,
             @Query("quantidade") int quantidade
     );
 
     @POST("v1/empresas/me/matriculas")
-    Call<List<MatriculasResponse>> gerarMinhasMatriculas(@Query("quantidade") int quantidade);
+    Call<List<MatriculaResponse>> gerarMinhasMatriculas(@Query("quantidade") int quantidade);
 
     @GET("v1/empresas/me/dashboard")
     Call<DashboardResponse> meuDashboard();
