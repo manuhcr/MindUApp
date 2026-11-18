@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_vidro">
+
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Entendendo o burnout"
+                android:textColor="#4B426D"
+                android:textSize="21sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
+                android:accessibilityHeading="true"/>
+
+            <ImageButton
+                android:id="@+id/btnFecharConteudoBurnout"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                android:contentDescription="Fechar conteúdo"
+                android:tint="#75689A"/>
+
+        </LinearLayout>
+
+        <!-- Introdução -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="O que é burnout?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="O burnout, também conhecido como esgotamento profissional, é um fenômeno relacionado ao estresse crônico no ambiente de trabalho que não foi administrado adequadamente. Pode afetar a saúde emocional, física e a relação da pessoa com suas atividades profissionais."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Sinais -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Quais são os sinais?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Cansaço físico e emocional frequente\n• Sensação de esgotamento mesmo após descansar\n• Dificuldade de concentração\n• Desmotivação em relação ao trabalho\n• Irritabilidade e alterações de humor\n• Distanciamento das atividades profissionais"
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Cuidados -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="O que pode ajudar?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Estabeleça limites entre trabalho e vida pessoal.\n• Faça pausas ao longo do expediente.\n• Evite assumir mais responsabilidades do que consegue realizar.\n• Converse com pessoas de confiança.\n• Busque apoio profissional quando necessário."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Dica prática -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Uma pausa também importa"
+                android:textColor="#75689A"
+                android:textSize="15sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Reserve alguns minutos para se afastar das tarefas, respirar e perceber como você está se sentindo. Lembre-se de que sua saúde não deve ficar em segundo plano."
+                android:textColor="#5E586B"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:fontFamily="@font/plus_jakarta_sans"/>
+
+        </LinearLayout>
+
+        <!-- Observação -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Lembre-se: este conteúdo é informativo e não substitui uma avaliação profissional. Se você apresenta sinais persistentes de esgotamento, procure apoio especializado."
+            android:textColor="#777184"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+    </LinearLayout>
+
+</ScrollView>

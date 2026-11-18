@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_vidro">
+
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cuidado com a ansiedade"
+                android:textColor="#4B426D"
+                android:textSize="21sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
+                android:accessibilityHeading="true"/>
+
+            <ImageButton
+                android:id="@+id/btnFecharConteudoAnsiedade"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                android:contentDescription="Fechar conteúdo"
+                android:tint="#75689A"/>
+
+        </LinearLayout>
+
+        <!-- Introdução -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Entendendo a ansiedade"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="A ansiedade é uma reação natural do organismo diante de situações que parecem desafiadoras ou ameaçadoras. Ela pode nos preparar para agir, mas, quando se torna intensa ou frequente, pode afetar o bem-estar e a rotina."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Sintomas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="O que você pode sentir?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Preocupação excessiva\n• Dificuldade de concentração\n• Inquietação e irritabilidade\n• Tensão muscular\n• Alterações no sono\n• Sensação de coração acelerado"
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Cuidados -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="O que pode ajudar?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Faça pequenas pausas durante o dia.\n• Experimente exercícios de respiração.\n• Organize suas tarefas por prioridade.\n• Converse com alguém de confiança.\n• Respeite seus limites e seu tempo."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Dica prática -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Um momento para você"
+                android:textColor="#75689A"
+                android:textSize="15sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Pare por alguns instantes. Inspire lentamente, solte o ar com calma e observe o ambiente ao seu redor. Não precisa resolver tudo agora: permita-se fazer uma pausa."
+                android:textColor="#5E586B"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:fontFamily="@font/plus_jakarta_sans"/>
+        </LinearLayout>
+
+        <!-- Observação -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Lembre-se: este conteúdo é informativo e não substitui uma avaliação profissional. Se a ansiedade estiver prejudicando sua rotina, procure apoio especializado."
+            android:textColor="#777184"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+    </LinearLayout>
+
+</ScrollView>

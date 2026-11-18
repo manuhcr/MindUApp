@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F7F5FA">
+
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/blurTargetDashboardBeneficiario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:paddingBottom="32dp">
+
+                <!-- HEADER -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtSaudacaoBeneficiario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Olá!"
+                            android:textColor="#75689A"
+                            android:textSize="24sp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
+                            android:accessibilityHeading="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sua jornada de cuidado começa aqui."
+                            android:textColor="#777184"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/plus_jakarta_sans" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnNotificacoesBeneficiario"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@android:drawable/ic_dialog_info"
+                        android:contentDescription="Abrir notificações"
+                        android:background="@drawable/bg_vidro"
+                        android:padding="13dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+                <!-- PRÓXIMA SESSÃO -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurProximaSessaoBeneficiario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_vidro"
+                    android:elevation="5dp"
+                    android:importantForAccessibility="no">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SUA JORNADA"
+                            android:textColor="#75689A"
+                            android:textSize="11sp"
+                            android:letterSpacing="0.12"
+                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Seu cuidado continua."
+                            android:textColor="#4B426D"
+                            android:textSize="19sp"
+                            android:layout_marginTop="7dp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+
+                        <TextView
+                            android:id="@+id/txtProximaSessaoBeneficiario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nenhuma sessão agendada"
+                            android:textColor="#777184"
+                            android:textSize="13sp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/plus_jakarta_sans" />
+
+                        <View
+                            android:layout_width="38dp"
+                            android:layout_height="3dp"
+                            android:layout_marginTop="16dp"
+                            android:background="#A99BC9" />
+
+                    </LinearLayout>
+
+                </eightbitlab.com.blurview.BlurView>
+
+                <!-- ACESSO RÁPIDO -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acesso rápido"
+                    android:textColor="#4B426D"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="14dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurAgendamentoRapido"
+                        android:layout_width="0dp"
+                        android:layout_height="130dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:id="@+id/btnAgendamentoRapido"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_calendar"
+                                android:contentDescription="Agendamento" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Agendamento"
+                                android:textColor="#4B426D"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Encontre um horário"
+                                android:textColor="#777184"
+                                android:textSize="11sp"
+                                android:fontFamily="@font/plus_jakarta_sans" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurBemEstarRapido"
+                        android:layout_width="0dp"
+                        android:layout_height="130dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_heart"
+                                android:contentDescription="Meu bem-estar" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Meu bem-estar"
+                                android:textColor="#4B426D"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cuide de você"
+                                android:textColor="#777184"
+                                android:textSize="11sp"
+                                android:fontFamily="@font/plus_jakarta_sans" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                </LinearLayout>
+
+                <!-- MOMENTO DE CUIDADO -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurBemEstarBeneficiario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="#75689A"
+                    android:elevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SEU MOMENTO DE CUIDADO"
+                            android:textColor="#EAE5F3"
+                            android:textSize="11sp"
+                            android:letterSpacing="0.1"
+                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cuidar de você também é prioridade."
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
+                            android:layout_marginTop="9dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reserve um momento para cuidar da sua saúde mental."
+                            android:textColor="#F0ECF6"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:layout_marginTop="7dp" />
+
+                        <Button
+                            android:id="@+id/btnAgendarSessao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agendar sessão"
+                            android:textColor="#4B426D"
+                            android:backgroundTint="#FFFFFF"
+                            android:layout_marginTop="16dp" />
+
+                    </LinearLayout>
+
+                </eightbitlab.com.blurview.BlurView>
+
+                <!-- CONTEÚDO DE APOIO -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conteúdo de apoio"
+                    android:textColor="#4B426D"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
+                    android:layout_marginTop="30dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Informação e acolhimento para o seu dia a dia."
+                    android:textColor="#777184"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- PRIMEIRA LINHA DE CONTEÚDOS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurConteudoAnsiedade"
+                        android:layout_width="0dp"
+                        android:layout_height="145dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_ansiedade" />
+
+                            <TextView
+                                android:id="@+id/cardConteudoAnsiedade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ANSIEDADE\n5 dicas para reduzir a ansiedade"
+                                android:textColor="#4B426D"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurConteudoBurnout"
+                        android:layout_width="0dp"
+                        android:layout_height="145dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="15dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_ansiedade"
+                                android:textSize="25sp" />
+
+                            <TextView
+                                android:id="@+id/cardConteudoBurnout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BURNOUT\nEntenda os sinais de esgotamento"
+                                android:textColor="#4B426D"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                </LinearLayout>
+
+                <!-- SEGUNDA LINHA DE CONTEÚDOS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="14dp">
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurConteudoAutocuidado"
+                        android:layout_width="0dp"
+                        android:layout_height="145dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="15dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_burnout"
+                                 />
+
+                            <TextView
+                                android:id="@+id/cardConteudoAutocuidado"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="AUTOCUIDADO\nPequenas atitudes no cotidiano"
+                                android:textColor="#4B426D"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                    <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blurConteudoSono"
+                        android:layout_width="0dp"
+                        android:layout_height="145dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/bg_vidro"
+                        android:elevation="4dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:padding="15dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_ansiedade"
+                                android:textSize="25sp" />
+
+                            <TextView
+                                android:id="@+id/cardConteudoSono"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SONO E DESCANSO\nCuide da sua qualidade de sono"
+                                android:textColor="#4B426D"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
+                                android:layout_marginTop="10dp" />
+
+                        </LinearLayout>
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                </LinearLayout>
+
+                <!-- BOTÃO PARA MAIS CONTEÚDOS -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Continue explorando conteúdos de bem-estar"
+                    android:textColor="#777184"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:id="@+id/btnVerOutrosConteudos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ver conteúdos de bem-estar"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#75689A"
+                    android:drawableEnd="@drawable/ic_arrow_rignt"
+                    android:fontFamily="@font/plus_jakarta_sans_bold" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </eightbitlab.com.blurview.BlurTarget>
+
+</LinearLayout>

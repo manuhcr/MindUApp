@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_vidro">
+
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Um momento para você"
+                android:textColor="#4B426D"
+                android:textSize="21sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
+                android:accessibilityHeading="true"/>
+
+            <ImageButton
+                android:id="@+id/btnFecharConteudoAutocuidado"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                android:contentDescription="Fechar conteúdo"
+                android:tint="#75689A"/>
+
+        </LinearLayout>
+
+        <!-- Introdução -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="O que é autocuidado?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Autocuidado é o conjunto de atitudes que adotamos para preservar nossa saúde e nosso bem-estar. Envolve reconhecer as próprias necessidades, respeitar limites e encontrar maneiras de cuidar do corpo e da mente no dia a dia."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Importância -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Por que o autocuidado é importante?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Ajuda a reconhecer suas necessidades.\n• Contribui para o equilíbrio emocional.\n• Incentiva hábitos mais saudáveis.\n• Ajuda a estabelecer limites pessoais.\n• Fortalece a relação consigo mesmo.\n• Pode melhorar a qualidade de vida."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Cuidados -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Como praticar no dia a dia?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Reserve um tempo para atividades que você gosta.\n• Mantenha uma rotina de alimentação e hidratação.\n• Respeite seus momentos de descanso.\n• Aprenda a dizer não quando necessário.\n• Converse sobre seus sentimentos.\n• Não tenha medo de pedir ajuda."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Dica prática -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seu pequeno compromisso"
+                android:textColor="#75689A"
+                android:textSize="15sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Escolha uma pequena atitude de cuidado para colocar em prática hoje. Pode ser fazer uma pausa, ouvir sua música favorita ou simplesmente reservar alguns minutos para descansar."
+                android:textColor="#5E586B"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:fontFamily="@font/plus_jakarta_sans"/>
+
+        </LinearLayout>
+
+        <!-- Observação -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Lembre-se: autocuidado não é egoísmo e não precisa ser perfeito. Este conteúdo é informativo e não substitui acompanhamento profissional quando necessário."
+            android:textColor="#777184"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+    </LinearLayout>
+
+</ScrollView>

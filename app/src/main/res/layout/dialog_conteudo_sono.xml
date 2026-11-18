@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_vidro">
+
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cuide da sua qualidade de sono"
+                android:textColor="#4B426D"
+                android:textSize="21sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
+                android:accessibilityHeading="true"/>
+
+            <ImageButton
+                android:id="@+id/btnFecharConteudoSono"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                android:contentDescription="Fechar conteúdo"
+                android:tint="#75689A"/>
+
+        </LinearLayout>
+
+        <!-- Introdução -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Por que dormir bem é importante?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="O sono é essencial para a recuperação física e mental. Durante o descanso, o organismo realiza processos importantes para a memória, a concentração, a imunidade e a regulação das emoções. Uma rotina de sono adequada contribui para a saúde e a qualidade de vida."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Sinais -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Como perceber que você não está descansando bem?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Cansaço frequente durante o dia.\n• Dificuldade para adormecer.\n• Despertares frequentes durante a noite.\n• Dificuldade de concentração.\n• Irritabilidade e alterações de humor.\n• Sensação de não ter descansado ao acordar."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Cuidados -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="O que pode ajudar?"
+            android:textColor="#75689A"
+            android:textSize="16sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="• Procure manter horários regulares para dormir e acordar.\n• Diminua a exposição às telas antes de dormir.\n• Mantenha o ambiente confortável, silencioso e escuro.\n• Evite consumir cafeína próximo ao horário de dormir.\n• Crie uma rotina tranquila antes de ir para a cama.\n• Respeite a necessidade de descanso do seu corpo."
+            android:textColor="#5E586B"
+            android:textSize="14sp"
+            android:lineSpacingExtra="7dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+        <!-- Dica prática -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prepare-se para descansar"
+                android:textColor="#75689A"
+                android:textSize="15sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Antes de dormir, experimente diminuir as luzes, deixar o celular de lado e realizar uma atividade relaxante. Permita que esse momento seja dedicado ao descanso, sem cobranças."
+                android:textColor="#5E586B"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:fontFamily="@font/plus_jakarta_sans"/>
+
+        </LinearLayout>
+
+        <!-- Observação -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Lembre-se: este conteúdo é informativo e não substitui uma avaliação profissional. Se as dificuldades para dormir forem frequentes ou prejudicarem sua rotina, procure orientação especializada."
+            android:textColor="#777184"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"/>
+
+    </LinearLayout>
+
+</ScrollView>
