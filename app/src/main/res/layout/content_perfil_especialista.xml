@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:background="#F7F5FA"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <!-- Cabeçalho -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil do especialista"
+            android:textColor="#4B426D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Conheça melhor seu profissional"
+            android:textColor="#777080"
+            android:textSize="13sp" />
+
+        <!-- Informações principais -->
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurInformacoesEspecialista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/imgFotoEspecialista"
+                    android:layout_width="104dp"
+                    android:layout_height="104dp"
+                    android:background="@drawable/bg_vidro"
+                    android:contentDescription="Foto do especialista"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_person" />
+
+                <TextView
+                    android:id="@+id/txtNomeEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="Dra. Amanda Rossi"
+                    android:textColor="#75689A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Dr. Lucas Prado" />
+
+                <TextView
+                    android:id="@+id/txtEspecialidadeEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="Psicoterapeuta Cognitivo"
+                    android:textColor="#777080"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtAvaliacaoEspecialista"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="★ 4.9  |  128 consultas"
+                    android:textColor="#75689A"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Sobre o profissional -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sobre o profissional"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSobreEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Conheça a trajetória e a experiência do profissional."
+                    android:textColor="#777080"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="5dp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Formação -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Formação e experiência"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtFormacaoEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Formação acadêmica e experiência profissional."
+                    android:textColor="#777080"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="5dp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Abordagem terapêutica -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Abordagem terapêutica"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtAbordagemEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Conheça a abordagem utilizada nos atendimentos."
+                    android:textColor="#777080"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="5dp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Disponibilidade -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Disponibilidade"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDisponibilidadeEspecialista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="📅 Hoje, às 15:30"
+                    android:textColor="#777080"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Botão de agendamento -->
+        <Button
+            android:id="@+id/btnAgendarSessaoEspecialista"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#75689A"
+            android:text="Agendar sessão"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>

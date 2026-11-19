@@ -5,192 +5,368 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:clipToPadding="false"
-    android:paddingBottom="90dp"
-    android:background="@android:color/transparent">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="22dp">
+        android:orientation="vertical">
 
-        <!-- Cabeçalho -->
+        <!-- CABEÇALHO -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:text="Meu perfil"
-            android:textColor="#75689A"
-            android:textSize="25sp"
-            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+            android:textColor="@color/mindu_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Gerencie as informações da sua conta"
-            android:textColor="#777184"
-            android:textSize="13sp"/>
+            android:layout_marginTop="6dp"
+            android:text="Informações da sua conta empresarial."
+            android:textColor="@color/mindu_text_secondary"
+            android:textSize="14sp"/>
 
-        <!-- Identificação -->
+        <!-- IDENTIFICAÇÃO DA EMPRESA -->
 
-        <eightbitlab.com.blurview.BlurView
+        <LinearLayout
             android:id="@+id/cardIdentificacaoEmpresaPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_vidro"
-            android:clipToOutline="true">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="24dp">
+            <FrameLayout
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@drawable/bg_avatar_admin">
 
                 <ImageView
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
-                    android:src="@drawable/ic_users"
-                    android:padding="17dp"
-                    android:background="@drawable/bg_nav_admin"
-                    android:contentDescription="Ícone da conta"/>
-
-                <TextView
-                    android:id="@+id/txtNomeEmpresaPerfil"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Nome da conta"
-                    android:textColor="#75689A"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"/>
+                    android:layout_height="match_parent"
+                    android:padding="17dp"
+                    android:src="@drawable/ic_users"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Empresa"/>
 
-                <TextView
-                    android:id="@+id/txtPlanoEmpresaPerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Tipo de conta"
-                    android:textColor="#777184"
-                    android:textSize="13sp"/>
+            </FrameLayout>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/txtNomeEmpresaPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Nome da empresa"
+                android:textColor="@color/mindu_text_primary"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
 
-        </eightbitlab.com.blurview.BlurView>
+            <TextView
+                android:id="@+id/txtPlanoEmpresaPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Plano contratado"
+                android:textColor="@color/mindu_text_secondary"
+                android:textSize="14sp"
+                android:gravity="center"/>
 
-        <!-- Dados da conta -->
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="12dp"
-            android:text="Dados da conta"
-            android:textColor="#75689A"
-            android:textSize="17sp"
-            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+        <!-- INFORMAÇÕES DA CONTA -->
 
         <eightbitlab.com.blurview.BlurView
             android:id="@+id/cardDadosContaEmpresaPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_vidro"
-            android:clipToOutline="true">
+            android:layout_marginTop="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="18dp">
+                android:padding="24dp"
+                android:textAlignment="center">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtEmailEmpresaPerfil"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="E-mail"
-                    android:textColor="#777184"
+                    android:layout_marginTop="2dp"
+                    android:text="EMAIL DA EMPRESA"
+                    android:textAlignment="center"
+                    android:textColor="@color/mindu_secondary"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/mindu_glass_divider"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:text="INFORMAÇÕES DA EMPRESA"
+                    android:textColor="@color/mindu_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Razão social"
+                    android:textColor="@color/mindu_text_secondary"
                     android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txtRazaoSocialPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="—"
-                    android:textColor="#75689A"
+                    android:layout_marginTop="3dp"
+                    android:text="Razão social da empresa"
+                    android:textColor="@color/mindu_text_primary"
                     android:textSize="15sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="#E8E3F0"/>
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Status da conta"
-                    android:textColor="#777184"
+                    android:layout_marginTop="14dp"
+                    android:text="Plano contratado"
+                    android:textColor="@color/mindu_text_secondary"
                     android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txtPlanoDetalhesPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="—"
-                    android:textColor="#75689A"
+                    android:layout_marginTop="3dp"
+                    android:text="Plano da empresa"
+                    android:textColor="@color/mindu_text_primary"
                     android:textSize="15sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"/>
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Status da conta"
+                    android:textColor="@color/mindu_text_secondary"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/txtStatusContaEmpresaPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Ativa"
+                    android:textColor="@color/mindu_success"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
         </eightbitlab.com.blurview.BlurView>
 
-        <!-- Suporte -->
+        <!-- DADOS DA CONTA -->
 
-        <TextView
-            android:layout_width="wrap_content"
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardMinhaContaEmpresa"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="12dp"
-            android:text="Ajuda e suporte"
-            android:textColor="#75689A"
-            android:textSize="17sp"
-            android:fontFamily="@font/plus_jakarta_sans_bold"/>
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dados da empresa"
+                        android:textColor="@color/mindu_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Informações cadastrais da empresa"
+                        android:textColor="@color/mindu_text_secondary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/mindu_primary"
+                    android:textSize="28sp"/>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- PLANO -->
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardPlanoEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meu plano"
+                        android:textColor="@color/mindu_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Consulte seu plano e benefícios"
+                        android:textColor="@color/mindu_text_secondary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/mindu_primary"
+                    android:textSize="28sp"/>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- SUPORTE -->
 
         <eightbitlab.com.blurview.BlurView
             android:id="@+id/cardSuporteEmpresaPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_vidro"
-            android:clipToOutline="true">
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Suporte"
+                        android:textColor="@color/mindu_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Entre em contato com a equipe MindU"
+                        android:textColor="@color/mindu_text_secondary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"
-                    android:text="Precisa de ajuda com a MindU?"
-                    android:textColor="#75689A"
-                    android:textSize="14sp" />
+                    android:text="›"
+                    android:textColor="@color/mindu_primary"
+                    android:textSize="28sp"/>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- SAIR DA CONTA -->
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardSairEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Entre em contato com nossa equipe para receber suporte."
-                    android:textColor="#777184"
-                    android:textSize="12sp"/>
+                    android:layout_weight="1"
+                    android:text="Sair da conta"
+                    android:textColor="@color/mindu_error"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/mindu_error"
+                    android:textSize="28sp"/>
 
             </LinearLayout>
 

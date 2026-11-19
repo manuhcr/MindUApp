@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F5FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Cabeçalho da sessão -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sala de atendimento"
+                    android:textColor="#4B426D"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtStatusConexao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="●  Aguardando conexão"
+                    android:textColor="#777080"
+                    android:textSize="12sp"
+                    tools:text="●  Conectado" />
+
+            </LinearLayout>
+
+            <eightbitlab.com.blurview.BlurView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_vidro">
+
+                <TextView
+                    android:id="@+id/txtCronometroSessao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="10dp"
+                    android:text="00:00"
+                    android:textColor="#75689A"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </eightbitlab.com.blurview.BlurView>
+
+        </LinearLayout>
+
+        <!-- Área principal de vídeo -->
+        <FrameLayout
+            android:id="@+id/containerVideoEspecialista"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_vidro">
+
+            <!-- Representação visual do vídeo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="#E7E1F0">
+
+                <ImageView
+                    android:id="@+id/imgFotoVideoEspecialista"
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:background="@drawable/bg_vidro"
+                    android:contentDescription="Foto do especialista"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_user" />
+
+                <TextView
+                    android:id="@+id/txtNomeVideoEspecialista"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Dra. Amanda Rossi"
+                    android:textColor="#4B426D"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Aguardando o início da chamada..."
+                    android:textColor="#777080"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Miniatura do beneficiário -->
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurVideoBeneficiario"
+                android:layout_width="112dp"
+                android:layout_height="150dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_vidro">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#D8D0E7">
+
+                    <ImageView
+                        android:id="@+id/imgVideoBeneficiario"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Prévia da câmera do beneficiário"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/ic_user" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="#99000000"
+                        android:gravity="center"
+                        android:padding="7dp"
+                        android:text="Você"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp" />
+
+                </FrameLayout>
+
+            </eightbitlab.com.blurview.BlurView>
+
+            <!-- Nome do profissional -->
+            <eightbitlab.com.blurview.BlurView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_vidro">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="13dp"
+                    android:paddingVertical="9dp"
+                    android:text="Dra. Amanda Rossi"
+                    android:textColor="#4B426D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </eightbitlab.com.blurview.BlurView>
+
+        </FrameLayout>
+
+        <!-- Informações da sessão -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sua sessão está preparada"
+                    android:textColor="#75689A"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Encontre um lugar tranquilo e confortável para seu atendimento."
+                    android:textColor="#777080"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="3dp" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Controles da chamada -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnMicrofone"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_botao_enviar_mila"
+                        android:contentDescription="Ativar ou desativar microfone"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_microphone"
+                        android:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Microfone"
+                        android:textColor="#777080"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnCamera"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_botao_enviar_mila"
+                        android:contentDescription="Ativar ou desativar câmera"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_camera"
+                        android:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Câmera"
+                        android:textColor="#777080"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnAlternarCamera"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_botao_enviar_mila"
+                        android:contentDescription="Alternar câmera"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_camera_flip"
+                        android:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Inverter"
+                        android:textColor="#777080"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnChatSessao"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_botao_enviar_mila"
+                        android:contentDescription="Abrir chat"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_chat"
+                        android:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Chat"
+                        android:textColor="#777080"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Encerrar atendimento -->
+        <Button
+            android:id="@+id/btnEncerrarSessao"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="@color/mindu_primary_dark"
+            android:text="Encerrar atendimento"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

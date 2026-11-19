@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F5FA"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <!-- Cabeçalho -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agendar sessão"
+            android:textColor="#4B426D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Escolha a melhor data e horário para você"
+            android:textColor="#777080"
+            android:textSize="13sp" />
+
+        <!-- Especialista selecionado -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imgEspecialistaSelecionado"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:background="@drawable/bg_vidro"
+                    android:contentDescription="Foto do especialista"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_person" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtNomeEspecialistaSelecionado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dra. Amanda Rossi"
+                        android:textColor="#75689A"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtEspecialidadeSelecionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Psicoterapeuta Cognitivo"
+                        android:textColor="#777080"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Escolha da data -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Escolha uma data"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Selecione o dia da sua sessão."
+                    android:textColor="#777080"
+                    android:textSize="12sp" />
+
+                <CalendarView
+                    android:id="@+id/calendarAgendamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:dateTextAppearance="@android:style/TextAppearance.Material.Small"
+                    android:firstDayOfWeek="2"
+                    android:showWeekNumber="false"
+                    android:weekDayTextAppearance="@android:style/TextAppearance.Material.Small" />
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Horários disponíveis -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Horários disponíveis"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Selecione um horário para continuar."
+                    android:textColor="#777080"
+                    android:textSize="12sp" />
+
+                <GridLayout
+                    android:id="@+id/gridHorarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:columnCount="3"
+                    android:rowCount="2">
+
+                    <Button
+                        android:id="@+id/btnHorario0900"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#EAE6F0"
+                        android:text="09:00"
+                        android:textAllCaps="false"
+                        android:textColor="#75689A"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnHorario1000"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#75689A"
+                        android:text="10:00"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnHorario1100"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#EAE6F0"
+                        android:text="11:00"
+                        android:textAllCaps="false"
+                        android:textColor="#75689A"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnHorario1400"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#EAE6F0"
+                        android:text="14:00"
+                        android:textAllCaps="false"
+                        android:textColor="#75689A"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnHorario1500"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#EAE6F0"
+                        android:text="15:00"
+                        android:textAllCaps="false"
+                        android:textColor="#75689A"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnHorario1600"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:backgroundTint="#EAE6F0"
+                        android:text="16:00"
+                        android:textAllCaps="false"
+                        android:textColor="#75689A"
+                        android:textSize="12sp" />
+
+                </GridLayout>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Modalidade -->
+        <eightbitlab.com.blurview.BlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_vidro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Modalidade da sessão"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/radioModalidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioOnline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#75689A"
+                        android:checked="true"
+                        android:text="Online"
+                        android:textColor="#5E586B"
+                        android:textSize="13sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioPresencial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#75689A"
+                        android:text="Presencial"
+                        android:textColor="#5E586B"
+                        android:textSize="13sp" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <!-- Continuar -->
+        <Button
+            android:id="@+id/btnContinuarAgendamento"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#75689A"
+            android:text="Continuar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>

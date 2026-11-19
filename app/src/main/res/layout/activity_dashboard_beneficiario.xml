@@ -8,7 +8,7 @@
 
     <!-- Fundo utilizado pelo BlurView -->
     <eightbitlab.com.blurview.BlurTarget
-        android:id="@+id/blurTargetDashboardAdmin"
+        android:id="@+id/blurTargetDashboardBeneficiario"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,17 +27,17 @@
 
     <!-- Conteúdo dinâmico das telas -->
     <FrameLayout
-        android:id="@+id/containerAdmin"
+        android:id="@+id/containerBeneficiario"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/navAdmin"
+        app:layout_constraintBottom_toTopOf="@id/navBeneficiario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Navegação inferior -->
     <LinearLayout
-        android:id="@+id/navAdmin"
+        android:id="@+id/navBeneficiario"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="20dp"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/navInicio"
+            android:id="@+id/navInicioBeneficiario"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -62,33 +62,33 @@
             android:contentDescription="Início" />
 
         <ImageView
-            android:id="@+id/navEmpresas"
+            android:id="@+id/navAgendamentosBeneficiario"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_nav_empresas"
-            android:contentDescription="Empresas" />
+            android:src="@drawable/ic_agendamentos"
+            android:contentDescription="Agendamentos" />
 
         <ImageView
-            android:id="@+id/navProfissionais"
+            android:id="@+id/navImediatoBeneficiario"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_nav_profissionais"
-            android:contentDescription="Profissionais" />
+            android:src="@drawable/ic_atendimento_imediato"
+            android:contentDescription="Atendimento imediato" />
 
         <ImageView
-            android:id="@+id/navPerfil"
+            android:id="@+id/navPerfilBeneficiario"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_nav_perfil"
+            android:src="@drawable/ic_user"
             android:contentDescription="Perfil" />
 
     </LinearLayout>

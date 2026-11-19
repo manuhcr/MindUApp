@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Paleta principal MindU -->
+    <color name="mindu_background">#F7F5FA</color>
+    <color name="mindu_primary">#75689A</color>
+    <color name="mindu_primary_dark">#4B426D</color>
+    <color name="mindu_secondary">#A99BC9</color>
+
+    <!-- Textos -->
+    <color name="mindu_text_primary">#4B426D</color>
+    <color name="mindu_text_secondary">#777080</color>
+    <color name="mindu_text_body">#5E586B</color>
+    <color name="mindu_text_hint">#9992A8</color>
+
+    <!-- Glassmorphism -->
+    <color name="mindu_glass_start">#94FFFFFF</color>
+    <color name="mindu_glass_end">#998294EF</color>
+    <color name="mindu_glass_divider">#5575689A</color>
+    <color name="mindu_glass_overlay">#1F8294EF</color>
+
+    <!-- Estados -->
+    <color name="mindu_success">#4D9B79</color>
+    <color name="mindu_warning">#E5A64B</color>
+    <color name="mindu_error">#C85D72</color>
+    <color name="mindu_neutral">#EAE6F0</color>
+
+    <!-- Sala online -->
+    <color name="mindu_video_background">#E7E1F0</color>
+    <color name="mindu_video_secondary">#D8D0E7</color>
+    <color name="mindu_video_overlay">#99000000</color>
+
+    <!-- Básicas -->
+    <color name="mindu_white">#FFFFFF</color>
+    <color name="mindu_black">#000000</color>
+    <color name="mindu_transparent">#00000000</color>
+
 </resources>
