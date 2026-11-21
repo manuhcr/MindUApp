@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -9,10 +10,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginBeneficiario">
 
-
-    <!-- ========================================================= -->
-    <!-- FUNDO + CONTEÚDO QUE SERÁ CAPTURADO PELO BLUR             -->
-    <!-- ========================================================= -->
+    <!-- FUNDO COM BLUR TARGET -->
 
     <eightbitlab.com.blurview.BlurTarget
         android:id="@+id/blurTargetCadastro"
@@ -27,10 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ================================================= -->
-            <!-- FUNDO                                             -->
-            <!-- ================================================= -->
+            <!-- IMAGEM DE FUNDO -->
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -45,10 +40,7 @@
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
 
-
-            <!-- ================================================= -->
-            <!-- TÍTULO                                            -->
-            <!-- ================================================= -->
+            <!-- TÍTULO -->
 
             <TextView
                 android:id="@+id/textView4"
@@ -57,7 +49,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="80dp"
                 android:fontFamily="@font/plus_jakarta_sans_bold"
-                android:text="Bem-vindo a MindU!"
+                android:text="Bem-vindo à MindU!"
                 android:textColor="#3D3642"
                 android:textSize="26sp"
                 android:textStyle="bold"
@@ -65,10 +57,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <!-- ================================================= -->
-            <!-- SUBTÍTULO                                         -->
-            <!-- ================================================= -->
+            <!-- SUBTÍTULO -->
 
             <TextView
                 android:id="@+id/textView3"
@@ -89,9 +78,7 @@
     </eightbitlab.com.blurview.BlurTarget>
 
 
-    <!-- ========================================================= -->
-    <!-- CARD DE VIDRO                                            -->
-    <!-- ========================================================= -->
+    <!-- CARD DE VIDRO -->
 
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurCadastroBeneficiario"
@@ -106,23 +93,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ================================================= -->
-            <!-- CAMPO MATRÍCULA                                   -->
-            <!-- ================================================= -->
+            <!-- CAMPO E-MAIL -->
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputMatricula"
+                android:id="@+id/inputEmail"
                 android:layout_width="230dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="80dp"
-                android:hint="Matrícula"
+                android:hint="E-mail"
                 android:textColorHint="#3E3545"
                 app:boxBackgroundColor="#55F5F3F7"
                 app:boxBackgroundMode="filled"
@@ -139,16 +122,14 @@
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
+                    android:inputType="textEmailAddress"
                     android:textColor="#3E3545"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- ================================================= -->
-            <!-- CAMPO SENHA                                       -->
-            <!-- ================================================= -->
+            <!-- CAMPO SENHA -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputSenha"
@@ -167,7 +148,7 @@
                 app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputMatricula">
+                app:layout_constraintTop_toBottomOf="@id/inputEmail">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtSenha"
@@ -180,9 +161,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- ================================================= -->
-            <!-- BOTÃO ENTRAR                                      -->
-            <!-- ================================================= -->
+            <!-- BOTÃO ENTRAR -->
 
             <Button
                 android:id="@+id/button"
@@ -197,7 +176,6 @@
                 android:textSize="12sp"
                 app:cornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputSenha" />
 
@@ -206,9 +184,7 @@
     </eightbitlab.com.blurview.BlurView>
 
 
-    <!-- ========================================================= -->
-    <!-- TEXTOS ABAIXO DO CARD                                    -->
-    <!-- ========================================================= -->
+    <!-- TEXTOS DE CADASTRO -->
 
     <TextView
         android:id="@+id/textPrimeiraVez"
@@ -223,7 +199,6 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/blurCadastroBeneficiario" />
-
 
     <TextView
         android:id="@+id/textCadastreOrg"
