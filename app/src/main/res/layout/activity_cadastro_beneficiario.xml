@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,11 +9,7 @@
     android:background="#F5F3F7"
     tools:context=".CadastroBeneficiario">
 
-
-    <!-- ========================================================= -->
-    <!-- FUNDO + CONTEÚDO CAPTURADO PELO BLUR                    -->
-    <!-- ========================================================= -->
-
+    <!-- Fundo + conteúdo capturado pelo Blur -->
     <eightbitlab.com.blurview.BlurTarget
         android:id="@+id/blurTargetCadastro"
         android:layout_width="match_parent"
@@ -27,27 +23,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- FUNDO -->
-
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="678dp"
-                android:layout_height="1103dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.797"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6" />
-
-
-            <!-- TÍTULO -->
-
-
-            <!-- SUBTÍTULO -->
+                android:src="@drawable/nova_cole__o_story_do_instagram_bege_marrom_6"
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -60,7 +42,6 @@
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,7 +55,6 @@
                 android:textColor="#3D3642"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.36"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView4" />
 
@@ -82,11 +62,7 @@
 
     </eightbitlab.com.blurview.BlurTarget>
 
-
-    <!-- ========================================================= -->
-    <!-- CARD DE VIDRO DO CADASTRO                                -->
-    <!-- ========================================================= -->
-
+    <!-- Card de vidro do cadastro -->
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurCadastroBeneficiario"
         android:layout_width="288dp"
@@ -100,17 +76,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.582">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ================================================= -->
-            <!-- NOME COMPLETO                                    -->
-            <!-- ================================================= -->
-
+            <!-- Nome completo -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputNome"
                 android:layout_width="215dp"
@@ -139,11 +110,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <!-- ================================================= -->
-            <!-- EMAIL                                             -->
-            <!-- ================================================= -->
-
+            <!-- E-mail -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputEmail"
                 android:layout_width="215dp"
@@ -172,44 +139,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <!-- ================================================= -->
-            <!-- EMPRESA                                           -->
-            <!-- ================================================= -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputEmpresa"
-                android:layout_width="215dp"
-                android:layout_height="54dp"
-                android:layout_marginTop="22dp"
-                android:hint="Qual sua empresa?"
-                android:textColorHint="#3E3545"
-                app:boxBackgroundColor="#55F5F3F7"
-                app:boxBackgroundMode="filled"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp"
-                app:hintTextColor="#3E3545"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputEmail">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtEmpresa"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"
-                    android:textColor="#3E3545"
-                    android:textSize="14sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <!-- ================================================= -->
-            <!-- MATRÍCULA                                        -->
-            <!-- ================================================= -->
-
+            <!-- Matrícula -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputMatricula"
                 android:layout_width="215dp"
@@ -226,28 +156,38 @@
                 app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputEmpresa">
+                app:layout_constraintTop_toBottomOf="@id/inputEmail">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtEmail"
+                    android:id="@+id/edtMatricula"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textColor="#3E3545"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Empresa identificada pela API -->
+            <TextView
+                android:id="@+id/txtEmpresaValidada"
+                android:layout_width="215dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="A empresa será identificada pela matrícula."
+                android:textColor="#75689A"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputMatricula" />
 
-            <!-- ================================================= -->
-            <!-- SENHA                                             -->
-            <!-- ================================================= -->
-
+            <!-- Senha -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputSenha"
                 android:layout_width="215dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="18dp"
                 android:hint="Crie sua senha"
                 android:textColorHint="#3E3545"
                 app:boxBackgroundColor="#55F5F3F7"
@@ -260,7 +200,7 @@
                 app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputMatricula">
+                app:layout_constraintTop_toBottomOf="@id/txtEmpresaValidada">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtSenha"
@@ -272,11 +212,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <!-- ================================================= -->
-            <!-- BOTÃO                                             -->
-            <!-- ================================================= -->
-
+            <!-- Botão -->
             <Button
                 android:id="@+id/button"
                 android:layout_width="168dp"
@@ -296,6 +232,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </eightbitlab.com.blurview.BlurView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

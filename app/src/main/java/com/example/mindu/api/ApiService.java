@@ -2,6 +2,7 @@ package com.example.mindu.api;
 
 import com.example.mindu.api.chat.ChatRequest;
 import com.example.mindu.api.chat.ChatResponse;
+import com.example.mindu.api.empresas.EmpresaDaMatriculaResponse;
 import com.example.mindu.api.empresas.EmpresaRequest;
 import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.api.cliente.ClienteRequest;
@@ -73,6 +74,11 @@ public interface ApiService {
 
     @POST("v1/empresas/me/matriculas")
     Call<List<MatriculaResponse>> gerarMinhasMatriculas(@Query("quantidade") int quantidade);
+
+    @GET("v1/empresas/validar-matricula")
+    Call<EmpresaDaMatriculaResponse> validarMatricula(
+            @Query("codigo") String codigo
+    );
 
     @GET("v1/empresas/me/dashboard")
     Call<DashboardResponse> meuDashboard();
