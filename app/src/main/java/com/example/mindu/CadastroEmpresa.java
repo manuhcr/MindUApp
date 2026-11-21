@@ -320,13 +320,13 @@ public class CadastroEmpresa extends AppCompatActivity {
             return;
         }
 
-        if (request.getSenha().matches(".*\\d.*")) {
-            Toast.makeText(
-                    this,
-                    "A senha deve conter pelo menos um número"
-                    , Toast.LENGTH_SHORT
-            ).show();
-            return;
+        if (!request.getSenha().matches(".*\\d.*")) {
+           Toast.makeText(
+                   this,
+                   "A senha deve conter pelo menos um número.",
+                   Toast.LENGTH_SHORT
+           ).show();
+           return;
         }
 
         if (!request.getSenha().matches(".*[A-Z].*")) {
