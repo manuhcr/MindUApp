@@ -16,31 +16,29 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.mindu.api.ApiService;
-import com.example.mindu.api.RetrofitClient;
-import com.example.mindu.api.login.LoginRequest;
-import com.example.mindu.api.login.LoginResponse;
+import com.example.mindu.api.login.MinhaContaResponse;
 import com.google.android.material.textfield.TextInputEditText;
 
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginEmpresa extends AppCompatActivity {
 
-    private ApiService api;
+    private LoginFlow loginFlow;
+    private Button btnEntrar;
+    private com.google.android.material.textfield.TextInputEditText edtEmail;
+    private com.google.android.material.textfield.TextInputEditText edtSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_empresa);
-        api = RetrofitClient.getApiService(this);
-        TextInputEditText edtEmail = findViewById(R.id.edtEmail);
-        TextInputEditText edtSenha = findViewById(R.id.edtSenha);
-        Button btnEntrar = findViewById(R.id.button);
+        LoginBackButton.attach(this);
+        loginFlow = new LoginFlow(this);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtSenha = findViewById(R.id.edtSenha);
+        btnEntrar = findViewById(R.id.button);
 
         btnEntrar.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
@@ -71,40 +69,15 @@ public class LoginEmpresa extends AppCompatActivity {
                 return;
             }
 
-            LoginRequest dados = new LoginRequest(email, senha);
-
-            api.login(dados).enqueue(new Callback<LoginResponse>() {
-                @Override
-                public void onResponse(Call<LoginResponse> call,
-                                       Response<LoginResponse> res) {
-
-                    if (res.isSuccessful() && res.body() != null) {
-                        String token = res.body().getToken();
-
-                        getSharedPreferences("mindu", MODE_PRIVATE)
-                                .edit()
-                                .putString("token", token)
-                                .apply();
-
-                        Toast.makeText(LoginEmpresa.this,
-                                "Login realizado!", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(
-                                LoginEmpresa.this, DashboardEmpresa.class);
-                        startActivity(intent);
-
-                    } else {
-                        Toast.makeText(LoginEmpresa.this,
-                                "E-mail ou senha incorretos!",
-                                Toast.LENGTH_SHORT).show();
-                    }
+            setLoading(true);
+            loginFlow.login(email, senha, "EMPRESA", new LoginFlow.Listener() {
+                @Override public void onSuccess(MinhaContaResponse account) {
+                    startActivity(new Intent(LoginEmpresa.this, DashboardEmpresa.class));
+                    finish();
                 }
-
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginEmpresa.this,
-                            "Erro de conexão: " + t.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                @Override public void onError(String message) {
+                    setLoading(false);
+                    Toast.makeText(LoginEmpresa.this, message, Toast.LENGTH_LONG).show();
                 }
             });
         });
@@ -125,6 +98,16 @@ public class LoginEmpresa extends AppCompatActivity {
             Intent rotacionar = new Intent(LoginEmpresa.this, CadastroEmpresa.class);
             startActivity(rotacionar);
         });
+    }
+
+    private void setLoading(boolean loading) {
+        btnEntrar.setEnabled(!loading);
+        btnEntrar.setText(loading ? "Entrando..." : "Entrar");
+    }
+
+    @Override protected void onDestroy() {
+        if (loginFlow != null) loginFlow.cancel();
+        super.onDestroy();
     }
 
     private void aplicarEfeitoVidroLiquido(View view) {

@@ -8,6 +8,7 @@ import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.api.cliente.ClienteRequest;
 import com.example.mindu.api.cliente.ClienteResponse;
 import com.example.mindu.api.cliente.dados.DadosSensiveisRequest;
+import com.example.mindu.api.cliente.dados.DadosSensiveisResponse;
 import com.example.mindu.api.dashboard.DashboardResponse;
 import com.example.mindu.api.login.LoginRequest;
 import com.example.mindu.api.login.LoginResponse;
@@ -50,6 +51,14 @@ public interface ApiService {
 
     @POST("v1/chat")
     Call<ChatResponse> enviarMensagem(@Body ChatRequest body);
+
+    @Multipart
+    @POST("v1/chat/audio")
+    Call<ChatResponse> enviarAudio(
+            @Part MultipartBody.Part file,
+            @Part("message") RequestBody message,
+            @Part("history") RequestBody historyJson
+    );
 
     @GET("v1/auth/me")
     Call<MinhaContaResponse> minhaConta();
@@ -100,6 +109,9 @@ public interface ApiService {
 
     @GET("v1/clientes/me")
     Call<ClienteResponse> meuPerfil();
+
+    @GET("v1/clientes/me/dados-sensiveis")
+    Call<DadosSensiveisResponse> meusDadosSensiveis();
 
     @PATCH("v1/clientes/me/dados-sensiveis")
     Call<ClienteResponse> completarMeuPerfil(@Body DadosSensiveisRequest body);
@@ -169,7 +181,7 @@ public interface ApiService {
     Call<List<ClienteResponse>> listarClientesAdmin(@Query("status") String status);
 
     @GET("v1/admin/empresas")
-    Call<List<EmpresaResponse>> listarEmpresas();
+    Call<List<EmpresaResponse>> listarEmpresas(@Query("ativo") Boolean ativo);
 
     @GET("v1/admin/agendamentos")
     Call<List<AgendamentoResponse>> listarAgendamentos();

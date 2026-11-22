@@ -255,15 +255,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
-                        android:text="Essas informações são opcionais e podem ser preenchidas depois."
+                        android:text="Tipo e áreas de atuação são opcionais. A carteirinha é obrigatória para solicitar aprovação."
                         android:textColor="#5E5665"
                         android:textSize="12sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputTipoProfissional"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:hint="Tipo de profissional (opcional)"
+                        app:endIconMode="dropdown_menu"
                         app:boxBackgroundColor="#55F5F3F7"
                         app:boxBackgroundMode="filled"
                         app:boxCornerRadiusBottomEnd="10dp"
@@ -272,21 +274,40 @@
                         app:boxCornerRadiusTopStart="10dp"
                         app:hintTextColor="#75689A">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/edtTipoProfissional"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textCapWords"
+                            android:inputType="none"
                             android:minHeight="52dp"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:textColor="#3E3545"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Áreas de atuação (opcional)"
+                        android:textColor="#75689A"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/groupTagsProfissional"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:singleLine="false"
+                        app:chipSpacingHorizontal="6dp"
+                        app:chipSpacingVertical="4dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:hint="Especialidades, separadas por vírgula (opcional)"
+                        android:hint="Digite uma área e pressione Enter ou vírgula"
                         app:boxBackgroundColor="#55F5F3F7"
                         app:boxBackgroundMode="filled"
                         app:boxCornerRadiusBottomEnd="10dp"
@@ -296,12 +317,12 @@
                         app:hintTextColor="#75689A">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edtTags"
+                            android:id="@+id/edtTagInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="top|start"
-                            android:inputType="textCapSentences|textMultiLine"
-                            android:minHeight="72dp"
+                            android:inputType="textCapSentences"
+                            android:imeOptions="actionDone"
+                            android:minHeight="52dp"
                             android:textColor="#3E3545"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -311,7 +332,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/plus_jakarta_sans_bold"
-                        android:text="Carteirinha profissional (opcional)"
+                        android:text="Carteirinha profissional (obrigatória, PNG ou JPEG até 5 MB)"
                         android:textColor="#3D3642"
                         android:textSize="14sp" />
 
@@ -322,7 +343,7 @@
                         android:layout_marginBottom="8dp"
                         android:backgroundTint="#D9D2E5"
                         android:fontFamily="@font/plus_jakarta_sans_bold"
-                        android:text="Selecionar imagem"
+                        android:text="Fotografar ou escolher imagem"
                         android:textAllCaps="false"
                         android:textColor="#3D3642"
                         app:cornerRadius="12dp" />

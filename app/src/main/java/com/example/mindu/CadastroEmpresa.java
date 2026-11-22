@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Patterns;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +61,7 @@ public class CadastroEmpresa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro_empresa);
+        LoginBackButton.attach(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -320,39 +322,26 @@ public class CadastroEmpresa extends AppCompatActivity {
             return;
         }
 
-        if (!request.getSenha().matches(".*\\d.*")) {
-           Toast.makeText(
-                   this,
-                   "A senha deve conter pelo menos um número.",
-                   Toast.LENGTH_SHORT
-           ).show();
-           return;
-        }
-
-        if (!request.getSenha().matches(".*[A-Z].*")) {
-            Toast.makeText(
-                    this,
-                    "A senha deve conter pelo menos uma letra maiúscula.",
-                    Toast.LENGTH_SHORT
-            ).show();
+        if (!Patterns.EMAIL_ADDRESS.matcher(request.getEmailEmpresa()).matches()) {
+            Toast.makeText(this, "Informe um e-mail válido.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        if (!request.getSenha().matches(".*[a-z].*")) {
-            Toast.makeText(
-                    this,
-                    "A senha deve conter pelo menos uma letra minúscula.",
-                    Toast.LENGTH_SHORT
-            ).show();
+        if (somenteDigitos(request.getCnpj()).length() != 14) {
+            Toast.makeText(this, "O CNPJ deve conter 14 dígitos.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        if (!request.getSenha().matches(".*[!@#$%^&*()_+].*")) {
-            Toast.makeText(
-                    this,
-                    "A senha deve conter pelo menos um caractere especial.",
-                    Toast.LENGTH_SHORT
-            ).show();
+        if (somenteDigitos(request.getCep()).length() != 8) {
+            Toast.makeText(this, "O CEP deve conter 8 dígitos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String telefone = request.getTelefone();
+        if (telefone != null && !telefone.trim().isEmpty()
+                && !(somenteDigitos(telefone).length() == 10 || somenteDigitos(telefone).length() == 11)) {
+            Toast.makeText(this, "Informe um telefone com DDD (10 ou 11 dígitos).", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (request.getEstado().length() != 2) {
+            Toast.makeText(this, "Informe a sigla do estado com 2 letras.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -409,6 +398,10 @@ public class CadastroEmpresa extends AppCompatActivity {
                 ).show();
             }
         });
+    }
+
+    private String somenteDigitos(String valor) {
+        return valor == null ? "" : valor.replaceAll("\\D", "");
     }
 
 

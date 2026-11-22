@@ -42,6 +42,7 @@ import retrofit2.Response;
 public class DashboardBeneficiario extends AppCompatActivity {
 
     private FrameLayout containerBeneficiario;
+    private FrameLayout fabMilaBeneficiario;
 
     private ImageView navInicio;
     private ImageView navAgendamentos;
@@ -59,7 +60,11 @@ public class DashboardBeneficiario extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!SessionManager.guard(this, "CLIENTE")) return;
         setContentView(R.layout.activity_dashboard_beneficiario);
+        fabMilaBeneficiario = findViewById(R.id.fabMilaBeneficiario);
+        fabMilaBeneficiario.setOnClickListener(v ->
+                startActivity(new android.content.Intent(DashboardBeneficiario.this, ChatMilaActivity.class)));
 
         inicializarComponentes();
         configurarNavegacao();
@@ -119,6 +124,15 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         containerBeneficiario.removeAllViews();
         containerBeneficiario.addView(tela);
+        if (fabMilaBeneficiario != null) {
+            fabMilaBeneficiario.setVisibility(
+                    layout == R.layout.content_inicio_beneficiario ? View.VISIBLE : View.GONE);
+        }
+
+        if (layout == R.layout.content_perfil_beneficiario) {
+            View sair = tela.findViewById(R.id.cardSairBeneficiario);
+            if (sair != null) sair.setOnClickListener(v -> SessionManager.logout(this));
+        }
 
         if (layout == R.layout.content_inicio_beneficiario) {
 

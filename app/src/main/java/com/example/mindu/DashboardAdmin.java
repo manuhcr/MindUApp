@@ -102,6 +102,7 @@ public class DashboardAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!SessionManager.guard(this, "ADMIN")) return;
         setContentView(R.layout.activity_dashboard_admin);
 
         cameraLauncher = registerForActivityResult(
@@ -490,7 +491,7 @@ public class DashboardAdmin extends AppCompatActivity {
 
         // requisição de empresas
         RetrofitClient.getApiService(this)
-                .listarEmpresas()
+                .listarEmpresas(true)
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(
@@ -764,7 +765,7 @@ public class DashboardAdmin extends AppCompatActivity {
     private void carregarEmpresas() {
 
         RetrofitClient.getApiService(this)
-                .listarEmpresas()
+                .listarEmpresas(true)
                 .enqueue(new Callback<>() {
 
                     @Override
@@ -1172,27 +1173,7 @@ public class DashboardAdmin extends AppCompatActivity {
                 })
                 .setPositiveButton("Sair", (dialog, which) -> {
 
-                    SharedPreferences prefs =
-                            getSharedPreferences("mindu", MODE_PRIVATE);
-
-                    prefs.edit()
-                            .remove("token")
-                            .remove("nomeAdmin")
-                            .remove("emailAdmin")
-                            .apply();
-
-                    Intent intent = new Intent(
-                            DashboardAdmin.this,
-                            LoginAdmin.class
-                    );
-
-                    intent.setFlags(
-                            Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    );
-
-                    startActivity(intent);
-                    finish();
+                    SessionManager.logout(DashboardAdmin.this);
                 })
                 .show();
     }

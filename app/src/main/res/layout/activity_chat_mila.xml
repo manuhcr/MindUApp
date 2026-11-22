@@ -28,7 +28,10 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_chat"
+                android:background="@drawable/bg_avatar_mila"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mila_light"
                 android:contentDescription="Mila"/>
 
         </FrameLayout>
@@ -52,7 +55,7 @@
                 android:id="@+id/txtStatusMila"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="● Online agora"
+                android:text="Chat de bem-estar"
                 android:textColor="#777184"
                 android:textSize="12sp"/>
 
@@ -161,6 +164,7 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_input_mila"
                 android:singleLine="true"
+                android:maxLength="4000"
                 android:inputType="textCapSentences|textMultiLine"
                 android:imeOptions="actionSend"/>
 
@@ -171,8 +175,19 @@
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_microphone"
                 android:background="@android:color/transparent"
-                android:contentDescription="Gravar áudio"
+                android:contentDescription="Toque para gravar; toque novamente para enviar"
                 android:tint="#493D78"/>
+
+            <ImageButton
+                android:id="@+id/btnCancelarAudioMila"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="2dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="@android:color/transparent"
+                android:contentDescription="Cancelar gravação"
+                android:tint="#B3261E"
+                android:visibility="gone"/>
 
             <ImageButton
                 android:id="@+id/btnEnviarMila"

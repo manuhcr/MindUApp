@@ -1,7 +1,6 @@
 package com.example.mindu;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -17,24 +16,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.mindu.api.RetrofitClient;
-import com.example.mindu.api.login.LoginRequest;
-import com.example.mindu.api.login.LoginResponse;
+import com.example.mindu.api.login.MinhaContaResponse;
 
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.http.Body;
 
 public class LoginAdmin extends AppCompatActivity {
+    private LoginFlow loginFlow;
+    private Button btnEntrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_admin);
+        LoginBackButton.attach(this);
+        loginFlow = new LoginFlow(this);
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -59,7 +56,7 @@ public class LoginAdmin extends AppCompatActivity {
 
         EditText edtEmail = findViewById(R.id.edtEmailAdmin);
         EditText edtSenha = findViewById(R.id.edtSenhaAdmin);
-        Button btnEntrar = findViewById(R.id.btnEntrarAdmin);
+        btnEntrar = findViewById(R.id.btnEntrarAdmin);
 
         btnEntrar.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
@@ -71,6 +68,12 @@ public class LoginAdmin extends AppCompatActivity {
                         "Preencha o e-mail e a senha",
                         Toast.LENGTH_SHORT
                 ).show();
+                return;
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                edtEmail.setError("Informe um e-mail válido");
+                edtEmail.requestFocus();
                 return;
             }
 
@@ -100,74 +103,23 @@ public class LoginAdmin extends AppCompatActivity {
 
 
     private void login(String email, String senha) {
-        RetrofitClient.getApiService(this)
-                .login(new LoginRequest(email, senha))
-                .enqueue(new Callback<LoginResponse>() {
+        btnEntrar.setEnabled(false);
+        btnEntrar.setText("Entrando...");
+        loginFlow.login(email, senha, "ADMIN", new LoginFlow.Listener() {
+            @Override public void onSuccess(MinhaContaResponse account) {
+                startActivity(new Intent(LoginAdmin.this, DashboardAdmin.class));
+                finish();
+            }
+            @Override public void onError(String message) {
+                btnEntrar.setEnabled(true);
+                btnEntrar.setText("Entrar");
+                Toast.makeText(LoginAdmin.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
-                    @Override
-                    public void onResponse(
-                            Call<LoginResponse> call,
-                            Response<LoginResponse> response) {
-
-                        if (response.isSuccessful()) {
-                            LoginResponse loginResponse = response.body();
-
-                            if (loginResponse != null
-                                    && loginResponse.getToken() != null) {
-
-                                String token = loginResponse.getToken();
-
-                                SharedPreferences prefs =
-                                        getSharedPreferences("mindu", MODE_PRIVATE);
-
-                                prefs.edit()
-                                        .putString("token", token)
-                                        .apply();
-
-                                // TODO: redirecionar para a tela correta
-                                Toast.makeText(
-                                        LoginAdmin.this,
-                                        "Login bem-sucedido",
-                                        Toast.LENGTH_SHORT
-                                ).show();
-                                Intent intent = new Intent(
-                                        LoginAdmin.this,
-                                        DashboardAdmin.class
-                                );
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(
-                                        LoginAdmin.this,
-                                        "Erro ao fazer login",
-                                        Toast.LENGTH_SHORT
-                                ).show();
-                            }
-
-                        } else {
-                            Toast.makeText(
-                                    LoginAdmin.this,
-                                    "Credenciais inválidas",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(
-                            Call<LoginResponse> call,
-                            Throwable t) {
-
-                        android.util.Log.e("MINDU_LOGIN", "Falha na requisição de login", t);
-
-                        Toast.makeText(
-                                LoginAdmin.this,
-                                "Erro: " + t.getClass().getSimpleName()
-                                        + " - " + t.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                });
-
+    @Override protected void onDestroy() {
+        if (loginFlow != null) loginFlow.cancel();
+        super.onDestroy();
     }
     }
