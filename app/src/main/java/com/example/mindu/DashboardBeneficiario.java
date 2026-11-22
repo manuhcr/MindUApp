@@ -48,6 +48,8 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
     private ProfissionaisAdapter profissionaisAdapter;
 
+    private ProfissionalResponse profissionalSelecionado;
+
     private String nomeBeneficiario = "";
 
     @Override
@@ -123,6 +125,11 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
             configurarBlurViews(tela, blurTargetDashboard);
             configurarAgendamentos(tela);
+
+        } else if (layout == R.layout.content_perfil_profissional) {
+
+            configurarBlurViews(tela, blurTargetDashboard);
+            configurarPerfilProfissional(tela);
         }
     }
     // Configura todos os BlurViews encontrados na tela
@@ -302,11 +309,9 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         profissionaisAdapter.setOnProfissionalClickListener(profissional -> {
 
-            Toast.makeText(
-                    this,
-                    profissional.getNome(),
-                    Toast.LENGTH_SHORT
-            ).show();
+            profissionalSelecionado = profissional;
+
+            abrirTela(R.layout.content_perfil_profissional);
 
         });
 
@@ -417,5 +422,62 @@ public class DashboardBeneficiario extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
+
+    private void configurarPerfilProfissional(View tela) {
+
+        if (profissionalSelecionado == null) {
+            Toast.makeText(
+                    this,
+                    "Não foi possível identificar o profissional.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            abrirTela(R.layout.content_agendamento_beneficiario);
+            return;
+        }
+
+        TextView txtNome = tela.findViewById(R.id.txtNomeProfissional);
+        TextView txtTipo = tela.findViewById(R.id.txtTipoProfissional);
+        TextView txtStatus = tela.findViewById(R.id.txtStatusProfissional);
+        TextView txtTags = tela.findViewById(R.id.txtTagsProfissional);
+        TextView txtModalidades = tela.findViewById(R.id.txtModalidadesProfissional);
+
+        txtNome.setText(profissionalSelecionado.getNome());
+
+        String tipo = profissionalSelecionado.getTipo();
+
+        txtTipo.setText(
+                tipo != null && !tipo.trim().isEmpty()
+                        ? tipo
+                        : "Profissional"
+        );
+
+        String status = profissionalSelecionado.getStatus();
+
+        if (status != null && !status.trim().isEmpty()) {
+            txtStatus.setText("Status: " + status);
+            txtStatus.setVisibility(View.VISIBLE);
+        } else {
+            txtStatus.setVisibility(View.GONE);
+        }
+
+        List<String> tags = profissionalSelecionado.getTags();
+
+        if (tags != null && !tags.isEmpty()) {
+            txtTags.setText(android.text.TextUtils.join(" • ", tags));
+        } else {
+            txtTags.setText("Nenhuma área de atuação informada.");
+        }
+
+        List<String> modalidades = profissionalSelecionado.getModalidades();
+
+        if (modalidades != null && !modalidades.isEmpty()) {
+            txtModalidades.setText(
+                    android.text.TextUtils.join(" • ", modalidades)
+            );
+        } else {
+            txtModalidades.setText("Modalidades não informadas.");
+        }
     }
 }
