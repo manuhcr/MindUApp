@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.adapter.ColaboradoresAdapter;
+import com.example.mindu.adapter.MatriculasAdapter;
 import com.example.mindu.adapter.MensagemAdapter;
 import com.example.mindu.api.ApiService;
 import com.example.mindu.api.RetrofitClient;
@@ -63,7 +64,7 @@ public class DashboardEmpresa extends AppCompatActivity {
 
     private ImageView navInicioEmpresa;
     private ImageView navColaboradoresEmpresa;
-    private ImageView navRelatoriosEmpresa;
+    private ImageView navMatriculasEmpresa;
     private ImageView navPerfilEmpresa;
 
     private RecyclerView rvColaboradoresEmpresa;
@@ -106,6 +107,22 @@ public class DashboardEmpresa extends AppCompatActivity {
 
     private byte[] pdfPendente;
 
+    // MATRÍCULAS DA EMPRESA
+
+    private RecyclerView rvMatriculasEmpresa;
+    private EditText edtQuantidadeMatriculas;
+    private Button btnGerarMatriculas;
+
+    private TextView txtTotalMatriculas;
+    private TextView txtMatriculasDisponiveis;
+    private TextView txtMatriculasUtilizadas;
+    private TextView txtListaMatriculasVazia;
+
+    private MatriculasAdapter matriculasAdapter;
+
+    private final List<MatriculaResponse> listaMatriculas =
+            new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +136,7 @@ public class DashboardEmpresa extends AppCompatActivity {
 
         navInicioEmpresa = findViewById(R.id.navInicioEmpresa);
         navColaboradoresEmpresa = findViewById(R.id.navColaboradoresEmpresa);
-        navRelatoriosEmpresa = findViewById(R.id.navRelatoriosEmpresa);
+        navMatriculasEmpresa = findViewById(R.id.navMatriculasEmpresa);
         navPerfilEmpresa = findViewById(R.id.navPerfilEmpresa);
 
         fabMila.setOnClickListener(v -> {
@@ -136,9 +153,9 @@ public class DashboardEmpresa extends AppCompatActivity {
             mostrarTela(R.layout.content_colaboradores_empresa);
         });
 
-        navRelatoriosEmpresa.setOnClickListener(v -> {
-            atualizarNavegacao(navRelatoriosEmpresa);
-            mostrarTela(R.layout.content_relatorios_empresa);
+        navMatriculasEmpresa.setOnClickListener(v -> {
+            atualizarNavegacao(navMatriculasEmpresa);
+            mostrarTela(R.layout.content_matriculas_empresa);
         });
 
         navPerfilEmpresa.setOnClickListener(v -> {
@@ -157,7 +174,7 @@ public class DashboardEmpresa extends AppCompatActivity {
 
         navInicioEmpresa.setColorFilter(corInativa);
         navColaboradoresEmpresa.setColorFilter(corInativa);
-        navRelatoriosEmpresa.setColorFilter(corInativa);
+        navMatriculasEmpresa.setColorFilter(corInativa);
         navPerfilEmpresa.setColorFilter(corInativa);
 
         selecionado.setColorFilter(corAtiva);
@@ -207,24 +224,23 @@ public class DashboardEmpresa extends AppCompatActivity {
 
             configurarTelaInicioEmpresa(tela);
 
-        } else if (layout == R.layout.content_relatorios_empresa) {
+        }  else if (layout == R.layout.content_matriculas_empresa) {
 
             BlurTarget blurTarget = findViewById(
                     R.id.blurTargetDashboardEmpresa
             );
 
             aplicarEfeitoVidro(
-                    tela.findViewById(R.id.blurRelatorioAderencia),
+                    tela.findViewById(R.id.blurResumoMatriculas),
                     blurTarget
             );
 
             aplicarEfeitoVidro(
-                    tela.findViewById(R.id.blurRelatorioEquipe),
+                    tela.findViewById(R.id.blurGerarMatriculas),
                     blurTarget
             );
 
-            configurarTelaRelatoriosEmpresa(tela);
-
+            configurarTelaMatriculas(tela);
         } else if (layout == R.layout.content_perfil_empresa) {
 
             BlurTarget blurTarget = findViewById(
@@ -1004,6 +1020,227 @@ public class DashboardEmpresa extends AppCompatActivity {
                 ).show();
             }
         }
+    }
+
+
+    private void configurarTelaMatriculas(View tela) {
+
+        rvMatriculasEmpresa = tela.findViewById(
+                R.id.rvMatriculasEmpresa
+        );
+
+        edtQuantidadeMatriculas = tela.findViewById(
+                R.id.edtQuantidadeMatriculas
+        );
+
+        btnGerarMatriculas = tela.findViewById(
+                R.id.btnGerarMatriculas
+        );
+
+        txtTotalMatriculas = tela.findViewById(
+                R.id.txtTotalMatriculas
+        );
+
+        txtMatriculasDisponiveis = tela.findViewById(
+                R.id.txtMatriculasDisponiveis
+        );
+
+        txtMatriculasUtilizadas = tela.findViewById(
+                R.id.txtMatriculasUtilizadas
+        );
+
+        txtListaMatriculasVazia = tela.findViewById(
+                R.id.txtListaMatriculasVazia
+        );
+
+        rvMatriculasEmpresa.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
+        matriculasAdapter = new MatriculasAdapter(
+                this,
+                listaMatriculas
+        );
+
+        rvMatriculasEmpresa.setAdapter(matriculasAdapter);
+
+        btnGerarMatriculas.setOnClickListener(v -> gerarNovasMatriculas());
+
+        carregarMatriculas();
+    }
+
+
+    private void carregarMatriculas() {
+
+        apiService.minhasMatriculas().enqueue(
+                new Callback<List<MatriculaResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<MatriculaResponse>> call,
+                            Response<List<MatriculaResponse>> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            listaMatriculas.clear();
+                            listaMatriculas.addAll(response.body());
+
+                            int total = listaMatriculas.size();
+                            int utilizadas = 0;
+
+                            for (MatriculaResponse matricula : listaMatriculas) {
+                                if (matricula.utilizada) {
+                                    utilizadas++;
+                                }
+                            }
+
+                            int disponiveis = total - utilizadas;
+
+                            txtTotalMatriculas.setText(
+                                    String.valueOf(total)
+                            );
+
+                            txtMatriculasUtilizadas.setText(
+                                    String.valueOf(utilizadas)
+                            );
+
+                            txtMatriculasDisponiveis.setText(
+                                    String.valueOf(disponiveis)
+                            );
+
+                            matriculasAdapter.notifyDataSetChanged();
+
+                            boolean vazia = listaMatriculas.isEmpty();
+
+                            txtListaMatriculasVazia.setVisibility(
+                                    vazia ? View.VISIBLE : View.GONE
+                            );
+
+                            rvMatriculasEmpresa.setVisibility(
+                                    vazia ? View.GONE : View.VISIBLE
+                            );
+
+                        } else {
+
+                            Toast.makeText(
+                                    DashboardEmpresa.this,
+                                    "Não foi possível carregar as matrículas.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<MatriculaResponse>> call,
+                            Throwable t) {
+
+                        Log.e("MATRICULAS_MINDU",
+                                "Erro ao carregar matrículas", t);
+
+                        Toast.makeText(
+                                DashboardEmpresa.this,
+                                "Erro de conexão ao carregar matrículas.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
+    }
+
+
+    private void gerarNovasMatriculas() {
+
+        String quantidadeTexto =
+                edtQuantidadeMatriculas.getText().toString().trim();
+
+        if (quantidadeTexto.isEmpty()) {
+
+            edtQuantidadeMatriculas.setError(
+                    "Informe a quantidade"
+            );
+
+            return;
+        }
+
+        int quantidade;
+
+        try {
+            quantidade = Integer.parseInt(quantidadeTexto);
+        } catch (NumberFormatException e) {
+            edtQuantidadeMatriculas.setError("Quantidade inválida");
+            return;
+        }
+
+        if (quantidade <= 0) {
+
+            edtQuantidadeMatriculas.setError(
+                    "Informe uma quantidade maior que zero"
+            );
+
+            return;
+        }
+
+        btnGerarMatriculas.setEnabled(false);
+
+        apiService.gerarMinhasMatriculas(quantidade).enqueue(
+                new Callback<List<MatriculaResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<MatriculaResponse>> call,
+                            Response<List<MatriculaResponse>> response) {
+
+                        btnGerarMatriculas.setEnabled(true);
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            edtQuantidadeMatriculas.setText("");
+
+                            Toast.makeText(
+                                    DashboardEmpresa.this,
+                                    response.body().size()
+                                            + " matrícula(s) gerada(s)!",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            carregarMatriculas();
+
+                        } else if (response.code() == 400) {
+
+                            Toast.makeText(
+                                    DashboardEmpresa.this,
+                                    "Quantidade superior às vagas disponíveis no plano.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        } else {
+
+                            Toast.makeText(
+                                    DashboardEmpresa.this,
+                                    "Não foi possível gerar as matrículas. Código: "
+                                            + response.code(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<MatriculaResponse>> call,
+                            Throwable t) {
+
+                        btnGerarMatriculas.setEnabled(true);
+
+                        Log.e("MATRICULAS_MINDU",
+                                "Erro ao gerar matrículas", t);
+
+                        Toast.makeText(
+                                DashboardEmpresa.this,
+                                "Erro de conexão ao gerar matrículas.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
     }
 
     // =========================================================

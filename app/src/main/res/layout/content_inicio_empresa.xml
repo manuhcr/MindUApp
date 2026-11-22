@@ -357,20 +357,6 @@
 
         </LinearLayout>
 
-        <!-- SUPORTE -->
-
-        <Button
-            android:id="@+id/btnFalarConsultor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#493D78"
-            android:text="Falar com Consultor MindU"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp" />
-
     </LinearLayout>
 
 </ScrollView>

@@ -28,6 +28,9 @@
             android:name=".LoginBeneficiario"
             android:exported="false" />
         <activity
+            android:name=".DashboardBeneficiario"
+            android:exported="false" />
+        <activity
             android:name=".LoginEmpresa"
             android:exported="false" />
         <activity

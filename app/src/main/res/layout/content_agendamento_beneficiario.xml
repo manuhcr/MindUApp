@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F5FA">
+    android:background="@android:color/transparent">
 
     <ScrollView
         android:id="@+id/scrollAgendamento"
@@ -15,13 +14,12 @@
         android:paddingBottom="90dp">
 
         <LinearLayout
-            android:id="@+id/blurTargetAgendamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="22dp">
 
-            <!-- Cabeçalho -->
+            <!-- CABEÇALHO -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,11 +37,11 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/plus_jakarta_sans"/>
 
-            <!-- Navegação -->
+            <!-- NAVEGAÇÃO -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="23dp"
                 android:scrollbars="none">
 
                 <LinearLayout
@@ -55,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
                         android:gravity="center"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="17dp"
                         android:background="@drawable/bg_vidro"
                         android:text="Agendamentos"
                         android:textColor="#75689A"
@@ -65,9 +63,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="9dp"
                         android:gravity="center"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="17dp"
+                        android:background="@drawable/bg_vidro"
                         android:text="Meus"
                         android:textColor="#777184"
                         android:textSize="12sp"
@@ -76,9 +75,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="9dp"
                         android:gravity="center"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="17dp"
+                        android:background="@drawable/bg_vidro"
                         android:text="Gerenciar"
                         android:textColor="#777184"
                         android:textSize="12sp"
@@ -87,9 +87,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="9dp"
                         android:gravity="center"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="17dp"
+                        android:background="@drawable/bg_vidro"
                         android:text="Imediato"
                         android:textColor="#777184"
                         android:textSize="12sp"
@@ -98,44 +99,52 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- Busca -->
-            <LinearLayout
+            <!-- BUSCA -->
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurBuscaProfissionais"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="24dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_vidro">
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/bg_vidro"
+                android:elevation="4dp">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_search"
-                    android:tint="#75689A"
-                    android:contentDescription="Buscar"/>
-
-                <EditText
-                    android:id="@+id/edtBuscarProfissional"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="Buscar especialista ou terapia..."
-                    android:textColor="#4B426D"
-                    android:textColorHint="#9992A8"
-                    android:textSize="13sp"
-                    android:singleLine="true"
-                    android:fontFamily="@font/plus_jakarta_sans"/>
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_search"
+                        android:tint="#75689A"
+                        android:contentDescription="Buscar"/>
 
-            <!-- Filtros -->
+                    <EditText
+                        android:id="@+id/edtBuscarProfissional"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="11dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Buscar especialista ou terapia..."
+                        android:textColor="#4B426D"
+                        android:textColorHint="#9992A8"
+                        android:textSize="13sp"
+                        android:singleLine="true"
+                        android:fontFamily="@font/plus_jakarta_sans"/>
+
+                </LinearLayout>
+
+            </eightbitlab.com.blurview.BlurView>
+
+            <!-- TÍTULO DA LISTA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -152,20 +161,20 @@
                     android:id="@+id/btnFiltrarProfissionais"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Filtrar por  >"
+                    android:padding="9dp"
+                    android:text="Filtrar por  ›"
                     android:textColor="#75689A"
                     android:textSize="12sp"
                     android:fontFamily="@font/plus_jakarta_sans_bold"/>
 
             </LinearLayout>
 
-            <!-- Lista de profissionais -->
+            <!-- LISTA -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProfissionais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="13dp"
                 android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
                 android:overScrollMode="never"/>
@@ -183,6 +192,7 @@
                 android:fontFamily="@font/plus_jakarta_sans"/>
 
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

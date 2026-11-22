@@ -146,8 +146,11 @@ public interface ApiService {
     @GET("v1/profissionais/{id}")
     Call<ProfissionalDetalheResponse> detalhes(@Path("id") String id);
 
-    @POST("v1/profissionais/{id}/horarios-disponiveis")
-    Call<List<LocalDateTime>> horarios(@Path("id") String id, @Body ConsultaHorariosRequest body);
+    @GET("v1/profissionais/{id}/horarios-disponiveis")
+    Call<List<String>> horarios(
+            @Path("id") String id,
+            @Query("data") String data
+    );
 
     @GET("v1/profissionais/{id}/foto")
     Call<ResponseBody> foto(@Path("id") String id);

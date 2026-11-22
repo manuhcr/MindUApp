@@ -1,13 +1,39 @@
 
 package com.example.mindu;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mindu.adapter.ProfissionaisAdapter;
+import com.example.mindu.api.RetrofitClient;
+import com.example.mindu.api.login.MinhaContaResponse;
+import com.example.mindu.api.profissional.ProfissionalResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import eightbitlab.com.blurview.BlurTarget;
+import eightbitlab.com.blurview.BlurView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardBeneficiario extends AppCompatActivity {
 
@@ -18,6 +44,12 @@ public class DashboardBeneficiario extends AppCompatActivity {
     private ImageView navImediato;
     private ImageView navPerfil;
 
+    private BlurTarget blurTargetDashboard;
+
+    private ProfissionaisAdapter profissionaisAdapter;
+
+    private String nomeBeneficiario = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +59,35 @@ public class DashboardBeneficiario extends AppCompatActivity {
         configurarNavegacao();
 
         abrirTela(R.layout.content_inicio_beneficiario);
+
+        carregarNomeBeneficiario();
     }
 
     private void inicializarComponentes() {
 
-        containerBeneficiario = findViewById(R.id.containerBeneficiario);
+        containerBeneficiario = findViewById(
+                R.id.containerBeneficiario
+        );
 
-        navInicio = findViewById(R.id.navInicioBeneficiario);
-        navAgendamentos = findViewById(R.id.navAgendamentosBeneficiario);
-        navImediato = findViewById(R.id.navImediatoBeneficiario);
-        navPerfil = findViewById(R.id.navPerfilBeneficiario);
+        navInicio = findViewById(
+                R.id.navInicioBeneficiario
+        );
+
+        navAgendamentos = findViewById(
+                R.id.navAgendamentosBeneficiario
+        );
+
+        navImediato = findViewById(
+                R.id.navImediatoBeneficiario
+        );
+
+        navPerfil = findViewById(
+                R.id.navPerfilBeneficiario
+        );
+
+        blurTargetDashboard = findViewById(
+                R.id.blurTargetDashboardBeneficiario
+        );
     }
 
     private void configurarNavegacao() {
@@ -54,6 +105,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
                 abrirTela(R.layout.content_perfil_beneficiario));
     }
 
+    // Abre as telas dentro do container
     private void abrirTela(int layout) {
 
         View tela = LayoutInflater.from(this)
@@ -61,5 +113,309 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         containerBeneficiario.removeAllViews();
         containerBeneficiario.addView(tela);
+
+        if (layout == R.layout.content_inicio_beneficiario) {
+
+            configurarBlurViews(tela, blurTargetDashboard);
+            atualizarSaudacao();
+
+        } else if (layout == R.layout.content_agendamento_beneficiario) {
+
+            configurarBlurViews(tela, blurTargetDashboard);
+            configurarAgendamentos(tela);
+        }
+    }
+    // Configura todos os BlurViews encontrados na tela
+    private void configurarBlurViews(View view, BlurTarget target) {
+
+        if (view == null || target == null) {
+            return;
+        }
+
+        if (view instanceof BlurView) {
+
+            // Preserva o card roxo de bem-estar
+            if (view.getId() != R.id.blurBemEstarBeneficiario) {
+
+                BlurView blurView = (BlurView) view;
+
+                blurView.setupWith(target)
+                        .setBlurRadius(20f);
+
+                aplicarEfeitoVidroLiquido(blurView);
+            }
+        }
+
+        if (view instanceof ViewGroup) {
+
+            ViewGroup grupo = (ViewGroup) view;
+
+            for (int i = 0; i < grupo.getChildCount(); i++) {
+
+                configurarBlurViews(
+                        grupo.getChildAt(i),
+                        target
+                );
+            }
+        }
+    }
+
+    // Aplica o visual de vidro líquido
+    private void aplicarEfeitoVidroLiquido(View view) {
+
+        if (view == null) {
+            return;
+        }
+
+        GradientDrawable liquidGlass = new GradientDrawable();
+
+        liquidGlass.setShape(GradientDrawable.RECTANGLE);
+
+        liquidGlass.setOrientation(
+                GradientDrawable.Orientation.TL_BR
+        );
+
+        liquidGlass.setColor(
+                Color.parseColor("#1F8294EF")
+        );
+
+        float density = view.getContext()
+                .getResources()
+                .getDisplayMetrics()
+                .density;
+
+        liquidGlass.setCornerRadius(24 * density);
+
+        int strokeWidthPx = (int) (1 * density);
+
+        liquidGlass.setStroke(
+                strokeWidthPx,
+                Color.parseColor("#99F5F3F7")
+        );
+
+        view.setBackground(liquidGlass);
+
+        view.setOutlineProvider(
+                ViewOutlineProvider.BACKGROUND
+        );
+
+        view.setClipToOutline(true);
+
+        view.setElevation(5 * density);
+    }
+
+    // Busca os dados da pessoa autenticada
+    private void carregarNomeBeneficiario() {
+
+        RetrofitClient.getApiService(this)
+                .minhaConta()
+                .enqueue(new Callback<MinhaContaResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<MinhaContaResponse> call,
+                            Response<MinhaContaResponse> response
+                    ) {
+
+                        if (response.isSuccessful()
+                                && response.body() != null) {
+
+                            String nome = response.body().getNome();
+
+                            if (nome != null && !nome.trim().isEmpty()) {
+
+                                nomeBeneficiario = nome.trim();
+
+                                atualizarSaudacao();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<MinhaContaResponse> call,
+                            Throwable t
+                    ) {
+
+                        Toast.makeText(
+                                DashboardBeneficiario.this,
+                                "Não foi possível carregar seu nome.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
+    }
+
+    // Atualiza a saudação na tela inicial
+    private void atualizarSaudacao() {
+
+        if (containerBeneficiario == null) {
+            return;
+        }
+
+        TextView txtSaudacao = containerBeneficiario.findViewById(
+                R.id.txtSaudacaoBeneficiario
+        );
+
+        if (txtSaudacao != null) {
+
+            if (nomeBeneficiario.isEmpty()) {
+
+                txtSaudacao.setText("Olá!");
+
+            } else {
+
+                txtSaudacao.setText(
+                        "Olá, " + nomeBeneficiario + "!"
+                );
+            }
+        }
+    }
+
+    // Configura a lista de profissionais
+    private void configurarAgendamentos(View tela) {
+
+        RecyclerView rvProfissionais = tela.findViewById(
+                R.id.rvProfissionais
+        );
+
+        EditText edtBuscar = tela.findViewById(
+                R.id.edtBuscarProfissional
+        );
+
+        TextView txtNenhum = tela.findViewById(
+                R.id.txtNenhumProfissional
+        );
+
+        rvProfissionais.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
+        rvProfissionais.setHasFixedSize(true);
+
+        profissionaisAdapter = new ProfissionaisAdapter(
+                new ArrayList<>(),
+                null
+        );
+
+        profissionaisAdapter.setModoBeneficiario(true);
+
+        profissionaisAdapter.setOnProfissionalClickListener(profissional -> {
+
+            Toast.makeText(
+                    this,
+                    profissional.getNome(),
+                    Toast.LENGTH_SHORT
+            ).show();
+
+        });
+
+        rvProfissionais.setAdapter(profissionaisAdapter);
+
+        txtNenhum.setVisibility(View.GONE);
+
+        // Pesquisa pelo nome
+        edtBuscar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s,
+                    int start,
+                    int count,
+                    int after
+            ) {
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s,
+                    int start,
+                    int before,
+                    int count
+            ) {
+
+                profissionaisAdapter.filtrar(s.toString());
+
+                txtNenhum.setVisibility(
+                        profissionaisAdapter.getItemCount() == 0
+                                ? View.VISIBLE
+                                : View.GONE
+                );
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        carregarProfissionais(txtNenhum);
+    }
+
+    // Busca os profissionais disponíveis
+    private void carregarProfissionais(TextView txtNenhum) {
+
+        RetrofitClient.getApiService(this)
+                .buscar(null, null, null)
+                .enqueue(new Callback<List<ProfissionalResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ProfissionalResponse>> call,
+                            Response<List<ProfissionalResponse>> response
+                    ) {
+
+                        if (response.isSuccessful()
+                                && response.body() != null) {
+
+                            List<ProfissionalResponse> profissionais =
+                                    response.body();
+
+                            profissionaisAdapter.atualizarLista(
+                                    profissionais
+                            );
+
+                            if (profissionais.isEmpty()) {
+
+                                txtNenhum.setText(
+                                        "Nenhum profissional disponível no momento."
+                                );
+
+                                txtNenhum.setVisibility(View.VISIBLE);
+
+                            } else {
+
+                                txtNenhum.setVisibility(View.GONE);
+                            }
+
+                        } else {
+
+                            txtNenhum.setText(
+                                    "Não foi possível carregar os profissionais."
+                            );
+
+                            txtNenhum.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<ProfissionalResponse>> call,
+                            Throwable t
+                    ) {
+
+                        txtNenhum.setText(
+                                "Erro de conexão. Tente novamente."
+                        );
+
+                        txtNenhum.setVisibility(View.VISIBLE);
+
+                        Toast.makeText(
+                                DashboardBeneficiario.this,
+                                "Erro ao carregar profissionais: "
+                                        + t.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                });
     }
 }

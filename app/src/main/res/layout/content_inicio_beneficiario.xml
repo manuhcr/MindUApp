@@ -4,33 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F7F5FA">
+    android:background="@android:color/transparent">
 
     <eightbitlab.com.blurview.BlurTarget
-        android:id="@+id/blurTargetDashboardBeneficiario"
+        android:id="@+id/blurTargetConteudoInicio"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:fillViewport="true"
-            android:clipToPadding="false">
+            android:paddingBottom="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="22dp"
-                android:paddingBottom="32dp">
+                android:padding="22dp">
 
-                <!-- HEADER -->
+                <!-- CABEÇALHO -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="26dp"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="24dp">
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -42,32 +42,33 @@
                             android:id="@+id/txtSaudacaoBeneficiario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
                             android:text="Olá!"
                             android:textColor="#75689A"
-                            android:textSize="24sp"
-                            android:fontFamily="@font/plus_jakarta_sans_bold"
-                            android:accessibilityHeading="true" />
+                            android:textSize="25sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Sua jornada de cuidado começa aqui."
                             android:textColor="#777184"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/plus_jakarta_sans" />
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
                     <ImageView
                         android:id="@+id/btnNotificacoesBeneficiario"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@android:drawable/ic_dialog_info"
-                        android:contentDescription="Abrir notificações"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
                         android:background="@drawable/bg_vidro"
-                        android:padding="13dp"
                         android:clickable="true"
-                        android:focusable="true" />
+                        android:contentDescription="Abrir notificações"
+                        android:focusable="true"
+                        android:padding="12dp"
+                        android:src="@android:drawable/ic_dialog_info"
+                        android:tint="#75689A" />
 
                 </LinearLayout>
 
@@ -77,47 +78,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_vidro"
-                    android:elevation="5dp"
-                    android:importantForAccessibility="no">
+                    android:elevation="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="21dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SUA JORNADA"
-                            android:textColor="#75689A"
-                            android:textSize="11sp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
                             android:letterSpacing="0.12"
-                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+                            android:text="SUA JORNADA"
+                            android:textColor="#8A7CB1"
+                            android:textSize="11sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
                             android:text="Seu cuidado continua."
                             android:textColor="#4B426D"
-                            android:textSize="19sp"
-                            android:layout_marginTop="7dp"
-                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/txtProximaSessaoBeneficiario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Nenhuma sessão agendada"
                             android:textColor="#777184"
-                            android:textSize="13sp"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/plus_jakarta_sans" />
+                            android:textSize="13sp" />
 
                         <View
-                            android:layout_width="38dp"
+                            android:layout_width="42dp"
                             android:layout_height="3dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="17dp"
                             android:background="#A99BC9" />
 
                     </LinearLayout>
@@ -128,60 +128,61 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="14dp"
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
                     android:text="Acesso rápido"
                     android:textColor="#4B426D"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginBottom="14dp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:orientation="horizontal">
 
                     <eightbitlab.com.blurview.BlurView
                         android:id="@+id/blurAgendamentoRapido"
                         android:layout_width="0dp"
-                        android:layout_height="130dp"
-                        android:layout_weight="1"
+                        android:layout_height="140dp"
                         android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:id="@+id/btnAgendamentoRapido"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
-                            android:padding="16dp">
+                            android:orientation="vertical"
+                            android:padding="17dp">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:contentDescription="Agendamento"
                                 android:src="@drawable/ic_calendar"
-                                android:contentDescription="Agendamento" />
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="Agendamento"
                                 android:textColor="#4B426D"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Encontre um horário"
                                 android:textColor="#777184"
-                                android:textSize="11sp"
-                                android:fontFamily="@font/plus_jakarta_sans" />
+                                android:textSize="11sp" />
 
                         </LinearLayout>
 
@@ -190,43 +191,45 @@
                     <eightbitlab.com.blurview.BlurView
                         android:id="@+id/blurBemEstarRapido"
                         android:layout_width="0dp"
-                        android:layout_height="130dp"
-                        android:layout_weight="1"
+                        android:layout_height="140dp"
                         android:layout_marginStart="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
-                            android:padding="16dp">
+                            android:orientation="vertical"
+                            android:padding="17dp">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:contentDescription="Meu bem-estar"
                                 android:src="@drawable/ic_heart"
-                                android:contentDescription="Meu bem-estar" />
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="Meu bem-estar"
                                 android:textColor="#4B426D"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Cuide de você"
                                 android:textColor="#777184"
-                                android:textSize="11sp"
-                                android:fontFamily="@font/plus_jakarta_sans" />
+                                android:textSize="11sp" />
 
                         </LinearLayout>
 
@@ -239,7 +242,7 @@
                     android:id="@+id/blurBemEstarBeneficiario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="25dp"
                     android:background="#75689A"
                     android:elevation="5dp">
 
@@ -247,107 +250,109 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="21dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
+                            android:letterSpacing="0.1"
                             android:text="SEU MOMENTO DE CUIDADO"
                             android:textColor="#EAE5F3"
-                            android:textSize="11sp"
-                            android:letterSpacing="0.1"
-                            android:fontFamily="@font/plus_jakarta_sans_bold" />
+                            android:textSize="11sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
                             android:text="Cuidar de você também é prioridade."
                             android:textColor="#FFFFFF"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/plus_jakarta_sans_bold"
-                            android:layout_marginTop="9dp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Reserve um momento para cuidar da sua saúde mental."
                             android:textColor="#F0ECF6"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/plus_jakarta_sans"
-                            android:layout_marginTop="7dp" />
+                            android:textSize="12sp" />
 
                         <Button
                             android:id="@+id/btnAgendarSessao"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Agendar sessão"
-                            android:textColor="#4B426D"
+                            android:layout_marginTop="17dp"
                             android:backgroundTint="#FFFFFF"
-                            android:layout_marginTop="16dp" />
+                            android:fontFamily="@font/plus_jakarta_sans_bold"
+                            android:text="Agendar sessão"
+                            android:textAllCaps="false"
+                            android:textColor="#4B426D" />
 
                     </LinearLayout>
 
                 </eightbitlab.com.blurview.BlurView>
 
-                <!-- CONTEÚDO DE APOIO -->
+                <!-- CONTEÚDOS -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="31dp"
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
                     android:text="Conteúdo de apoio"
                     android:textColor="#4B426D"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"
-                    android:layout_marginTop="30dp" />
+                    android:textSize="19sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Informação e acolhimento para o seu dia a dia."
                     android:textColor="#777184"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="14dp" />
+                    android:textSize="12sp" />
 
-                <!-- PRIMEIRA LINHA DE CONTEÚDOS -->
+                <!-- PRIMEIRA LINHA -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:orientation="horizontal">
 
                     <eightbitlab.com.blurview.BlurView
                         android:id="@+id/blurConteudoAnsiedade"
                         android:layout_width="0dp"
                         android:layout_height="145dp"
-                        android:layout_weight="1"
                         android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:padding="15dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/ic_ansiedade" />
+                            <ImageView
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:src="@drawable/ic_ansiedade"
+                                android:contentDescription="Ansiedade" />
 
                             <TextView
                                 android:id="@+id/cardConteudoAnsiedade"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="ANSIEDADE\n5 dicas para reduzir a ansiedade"
                                 android:textColor="#4B426D"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -357,35 +362,35 @@
                         android:id="@+id/blurConteudoBurnout"
                         android:layout_width="0dp"
                         android:layout_height="145dp"
-                        android:layout_weight="1"
                         android:layout_marginStart="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:padding="15dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/ic_ansiedade"
-                                android:textSize="25sp" />
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:src="@drawable/ic_burnout"
+                                android:contentDescription="Burnout" />
 
                             <TextView
                                 android:id="@+id/cardConteudoBurnout"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="BURNOUT\nEntenda os sinais de esgotamento"
                                 android:textColor="#4B426D"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -393,47 +398,46 @@
 
                 </LinearLayout>
 
-                <!-- SEGUNDA LINHA DE CONTEÚDOS -->
+                <!-- SEGUNDA LINHA -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="14dp">
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
 
                     <eightbitlab.com.blurview.BlurView
                         android:id="@+id/blurConteudoAutocuidado"
                         android:layout_width="0dp"
                         android:layout_height="145dp"
-                        android:layout_weight="1"
                         android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:padding="15dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/ic_burnout"
-                                 />
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:src="@drawable/ic_burnout"
+                                android:contentDescription="Autocuidado" />
 
                             <TextView
                                 android:id="@+id/cardConteudoAutocuidado"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="AUTOCUIDADO\nPequenas atitudes no cotidiano"
                                 android:textColor="#4B426D"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -443,35 +447,35 @@
                         android:id="@+id/blurConteudoSono"
                         android:layout_width="0dp"
                         android:layout_height="145dp"
-                        android:layout_weight="1"
                         android:layout_marginStart="7dp"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_vidro"
-                        android:elevation="4dp"
                         android:clickable="true"
+                        android:elevation="4dp"
                         android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:padding="15dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/ic_ansiedade"
-                                android:textSize="25sp" />
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:src="@drawable/ic_ansiedade"
+                                android:contentDescription="Sono e descanso" />
 
                             <TextView
                                 android:id="@+id/cardConteudoSono"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/plus_jakarta_sans_bold"
                                 android:text="SONO E DESCANSO\nCuide da sua qualidade de sono"
                                 android:textColor="#4B426D"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/plus_jakarta_sans_bold"
-                                android:layout_marginTop="10dp" />
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -479,27 +483,27 @@
 
                 </LinearLayout>
 
-                <!-- BOTÃO PARA MAIS CONTEÚDOS -->
+                <!-- MAIS CONTEÚDOS -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Continue explorando conteúdos de bem-estar"
                     android:textColor="#777184"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/btnVerOutrosConteudos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ver conteúdos de bem-estar"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
                     android:backgroundTint="#75689A"
                     android:drawableEnd="@drawable/ic_arrow_rignt"
-                    android:fontFamily="@font/plus_jakarta_sans_bold" />
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
+                    android:text="Ver conteúdos de bem-estar"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
 

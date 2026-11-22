@@ -72,7 +72,7 @@
             android:contentDescription="Colaboradores"/>
 
         <ImageView
-            android:id="@+id/navRelatoriosEmpresa"
+            android:id="@+id/navMatriculasEmpresa"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
