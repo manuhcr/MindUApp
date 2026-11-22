@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.example.mindu.api.profissional.ProfissionalResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
@@ -130,8 +134,14 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
             configurarBlurViews(tela, blurTargetDashboard);
             configurarPerfilProfissional(tela);
+
+        } else if (layout == R.layout.content_escolher_horario) {
+
+            configurarBlurViews(tela, blurTargetDashboard);
+            configurarTelaAgendamento(tela);
         }
     }
+
     // Configura todos os BlurViews encontrados na tela
     private void configurarBlurViews(View view, BlurTarget target) {
 
@@ -424,9 +434,11 @@ public class DashboardBeneficiario extends AppCompatActivity {
                 });
     }
 
+    // Configura o perfil do profissional selecionado
     private void configurarPerfilProfissional(View tela) {
 
         if (profissionalSelecionado == null) {
+
             Toast.makeText(
                     this,
                     "Não foi possível identificar o profissional.",
@@ -456,28 +468,161 @@ public class DashboardBeneficiario extends AppCompatActivity {
         String status = profissionalSelecionado.getStatus();
 
         if (status != null && !status.trim().isEmpty()) {
+
             txtStatus.setText("Status: " + status);
             txtStatus.setVisibility(View.VISIBLE);
+
         } else {
+
             txtStatus.setVisibility(View.GONE);
         }
 
         List<String> tags = profissionalSelecionado.getTags();
 
         if (tags != null && !tags.isEmpty()) {
-            txtTags.setText(android.text.TextUtils.join(" • ", tags));
+
+            txtTags.setText(
+                    android.text.TextUtils.join(" • ", tags)
+            );
+
         } else {
+
             txtTags.setText("Nenhuma área de atuação informada.");
         }
 
         List<String> modalidades = profissionalSelecionado.getModalidades();
 
         if (modalidades != null && !modalidades.isEmpty()) {
+
             txtModalidades.setText(
                     android.text.TextUtils.join(" • ", modalidades)
             );
+
         } else {
+
             txtModalidades.setText("Modalidades não informadas.");
+        }
+
+        // Abre a tela de escolha de horário
+        View btnAgendar = tela.findViewById(
+                R.id.btnAgendarSessaoProfissional
+        );
+
+        btnAgendar.setOnClickListener(v ->
+                abrirTela(R.layout.content_escolher_horario)
+        );
+    }
+
+    // Configura a tela de escolha de horário
+    private void configurarTelaAgendamento(View tela) {
+
+        if (profissionalSelecionado == null) {
+
+            Toast.makeText(
+                    this,
+                    "Nenhum profissional selecionado.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            abrirTela(R.layout.content_agendamento_beneficiario);
+            return;
+        }
+
+        // Dados do profissional selecionado
+        TextView txtNome = tela.findViewById(
+                R.id.txtNomeEspecialistaSelecionado
+        );
+
+        TextView txtEspecialidade = tela.findViewById(
+                R.id.txtEspecialidadeSelecionada
+        );
+
+        txtNome.setText(profissionalSelecionado.getNome());
+
+        String tipo = profissionalSelecionado.getTipo();
+
+        txtEspecialidade.setText(
+                tipo != null && !tipo.trim().isEmpty()
+                        ? tipo
+                        : "Profissional"
+        );
+
+        // Impede selecionar datas anteriores a hoje
+        CalendarView calendario = tela.findViewById(
+                R.id.calendarAgendamento
+        );
+
+        calendario.setMinDate(System.currentTimeMillis());
+
+        // Verifica as modalidades disponíveis
+        RadioGroup radioModalidade = tela.findViewById(
+                R.id.radioModalidade
+        );
+
+        RadioButton radioOnline = tela.findViewById(
+                R.id.radioOnline
+        );
+
+        RadioButton radioPresencial = tela.findViewById(
+                R.id.radioPresencial
+        );
+
+        List<String> modalidades =
+                profissionalSelecionado.getModalidades();
+
+        boolean ofereceOnline = false;
+        boolean oferecePresencial = false;
+
+        if (modalidades != null) {
+
+            for (String modalidade : modalidades) {
+
+                if (modalidade == null) {
+                    continue;
+                }
+
+                String valor = modalidade.trim().toLowerCase(Locale.ROOT);
+
+                if (valor.contains("online")) {
+                    ofereceOnline = true;
+                }
+
+                if (valor.contains("presencial")) {
+                    oferecePresencial = true;
+                }
+            }
+        }
+
+        radioOnline.setVisibility(
+                ofereceOnline ? View.VISIBLE : View.GONE
+        );
+
+        radioPresencial.setVisibility(
+                oferecePresencial ? View.VISIBLE : View.GONE
+        );
+
+        if (ofereceOnline || oferecePresencial) {
+
+            radioModalidade.setVisibility(View.VISIBLE);
+
+            if (ofereceOnline) {
+
+                radioOnline.setChecked(true);
+
+            } else {
+
+                radioPresencial.setChecked(true);
+            }
+
+        } else {
+
+            radioModalidade.setVisibility(View.GONE);
+
+            Toast.makeText(
+                    this,
+                    "Este profissional não possui modalidades informadas.",
+                    Toast.LENGTH_LONG
+            ).show();
         }
     }
 }
