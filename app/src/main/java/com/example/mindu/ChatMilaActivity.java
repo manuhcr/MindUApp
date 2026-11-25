@@ -85,6 +85,7 @@ public class ChatMilaActivity extends AppCompatActivity {
         microphoneButton = findViewById(R.id.btnAudioMila);
         cancelAudioButton = findViewById(R.id.btnCancelarAudioMila);
         status = findViewById(R.id.txtStatusMila);
+        findViewById(R.id.btnVoltarChatMila).setOnClickListener(v -> finish());
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MensagemAdapter(messages);

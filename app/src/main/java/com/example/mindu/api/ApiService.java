@@ -17,6 +17,8 @@ import com.example.mindu.api.login.TrocaSenhaRequest;
 import com.example.mindu.api.matriculas.MatriculaResponse;
 import com.example.mindu.api.planos.PlanoResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
+import com.example.mindu.api.profissional.ProfissionalPerfilRequest;
+import com.example.mindu.api.profissional.agendamento.LinkOnlineRequest;
 import com.example.mindu.api.profissional.agendamento.AgendamentoRequest;
 import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 import com.example.mindu.api.profissional.agendamento.ReagendarRequest;
@@ -144,6 +146,12 @@ public interface ApiService {
     @PATCH("v1/profissionais/{id}/aprovacao")
     Call<ProfissionalResponse> aprovarProfissional(@Path("id") String id, @Query("aprovado") boolean aprovado);
 
+    @GET("v1/profissionais/me")
+    Call<ProfissionalResponse> meuPerfilProfissional();
+
+    @PATCH("v1/profissionais/{id}")
+    Call<ProfissionalResponse> atualizarPerfilProfissional(@Path("id") String id, @Body ProfissionalPerfilRequest body);
+
     @POST("v1/profissionais/{id}/locais")
     Call<LocalResponse> adicionarLocal(@Path("id") String id, @Body LocalRequest body);
 
@@ -166,6 +174,13 @@ public interface ApiService {
 
     @GET("v1/profissionais/{id}/foto")
     Call<ResponseBody> foto(@Path("id") String id);
+
+    @Multipart
+    @PATCH("v1/profissionais/{id}/perfil")
+    Call<ResponseBody> atualizarFotoProfissional(
+            @Path("id") String id,
+            @Part MultipartBody.Part foto
+    );
 
     @GET("v1/profissionais/{id}/banner")
     Call<ResponseBody> banner(@Path("id") String id);
@@ -207,6 +222,12 @@ public interface ApiService {
 
     @PATCH("v1/agendamentos/{id}/horario")
     Call<AgendamentoResponse> reagendar(@Path("id") String id, @Body ReagendarRequest body);
+
+    @PATCH("v1/agendamentos/{id}/link-online")
+    Call<AgendamentoResponse> definirLinkOnline(@Path("id") String id, @Body LinkOnlineRequest body);
+
+    @PATCH("v1/agendamentos/{id}/realizacao")
+    Call<AgendamentoResponse> marcarRealizado(@Path("id") String id);
 
 
 }

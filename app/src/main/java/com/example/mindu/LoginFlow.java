@@ -57,23 +57,17 @@ final class LoginFlow {
                             return;
                         }
                         String status = account.getStatus();
-                        if (("CLIENTE".equals(expectedType) || "PROFISSIONAL".equals(expectedType))
-                                && !"APROVADO".equalsIgnoreCase(value(status))) {
+                        if (("PROFISSIONAL".equals(expectedType) && "REJEITADO".equalsIgnoreCase(value(status)))
+                                || ("CLIENTE".equals(expectedType) && "REJEITADO".equalsIgnoreCase(value(status)))) {
                             SessionManager.clear(activity);
-                            if ("PROFISSIONAL".equals(expectedType) && "PENDENTE".equalsIgnoreCase(value(status))) {
-                                listener.onError("Seu cadastro profissional está aguardando aprovação.");
-                            } else if ("PROFISSIONAL".equals(expectedType) && "REJEITADO".equalsIgnoreCase(value(status))) {
-                                listener.onError("Seu cadastro profissional foi recusado. Entre em contato com o suporte do MindU.");
-                            } else if ("CLIENTE".equals(expectedType) && "AGUARDANDO_APROVACAO".equalsIgnoreCase(value(status))) {
-                                listener.onError("Sua conta ainda aguarda aprovação da empresa.");
-                            } else if ("CLIENTE".equals(expectedType) && "REJEITADO".equalsIgnoreCase(value(status))) {
-                                listener.onError("O acesso desta conta foi recusado pela empresa.");
-                            } else {
-                                listener.onError("Sua conta ainda não está aprovada.");
-                            }
+                            listener.onError("REJEITADO".equalsIgnoreCase(value(status))
+                                    ? ("CLIENTE".equals(expectedType)
+                                        ? "O acesso desta conta foi recusado pela empresa."
+                                        : "Seu cadastro profissional foi recusado. Entre em contato com o suporte do MindU.")
+                                    : "Sua conta ainda não está aprovada.");
                             return;
                         }
-                        SessionManager.save(activity, token, account.getTipo(), status);
+                        SessionManager.save(activity, token, account.getTipo(), status, account.getId());
                         listener.onSuccess(account);
                     }
 

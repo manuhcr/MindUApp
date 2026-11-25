@@ -107,8 +107,7 @@ public class LoginAdmin extends AppCompatActivity {
         btnEntrar.setText("Entrando...");
         loginFlow.login(email, senha, "ADMIN", new LoginFlow.Listener() {
             @Override public void onSuccess(MinhaContaResponse account) {
-                startActivity(new Intent(LoginAdmin.this, DashboardAdmin.class));
-                finish();
+                AccountNavigator.open(LoginAdmin.this, account);
             }
             @Override public void onError(String message) {
                 btnEntrar.setEnabled(true);

@@ -42,17 +42,41 @@
             android:padding="24dp">
 
             <FrameLayout
+                android:id="@+id/areaFotoEmpresa"
                 android:layout_width="76dp"
                 android:layout_height="76dp"
-                android:background="@drawable/bg_avatar_admin">
+                android:background="@drawable/bg_avatar_admin"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
+                    android:id="@+id/imgFotoEmpresa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="17dp"
-                    android:src="@drawable/ic_users"
-                    android:scaleType="centerInside"
-                    android:contentDescription="Empresa"/>
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:contentDescription="Foto de perfil da empresa" />
+
+                <TextView
+                    android:id="@+id/txtInicialEmpresa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="E"
+                    android:textColor="@color/mindu_primary"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btnCameraEmpresa"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_camera_admin"
+                    android:contentDescription="Alterar foto de perfil"
+                    android:padding="5dp"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:tint="@color/mindu_white" />
 
             </FrameLayout>
 

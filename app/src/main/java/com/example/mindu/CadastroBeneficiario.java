@@ -56,11 +56,13 @@ public class CadastroBeneficiario extends AppCompatActivity {
 
     private Call<EmpresaDaMatriculaResponse> chamadaValidacao;
     private Call<ClienteResponse> chamadaCadastro;
+    private LoginFlow cadastroLoginFlow;
 
     @Override
     protected void onDestroy() {
         if (chamadaValidacao != null) chamadaValidacao.cancel();
         if (chamadaCadastro != null) chamadaCadastro.cancel();
+        if (cadastroLoginFlow != null) cadastroLoginFlow.cancel();
         super.onDestroy();
     }
 
@@ -404,11 +406,18 @@ public class CadastroBeneficiario extends AppCompatActivity {
                         if (response.isSuccessful()
                                 && response.body() != null) {
 
-                            Toast.makeText(
-                                    CadastroBeneficiario.this,
-                                    "Cadastro realizado com sucesso!",
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            cadastroLoginFlow = new LoginFlow(CadastroBeneficiario.this);
+                            cadastroLoginFlow.login(request.getEmail(), request.getSenha(), "CLIENTE",
+                                    new LoginFlow.Listener() {
+                                        @Override public void onSuccess(com.example.mindu.api.login.MinhaContaResponse account) {
+                                            AccountNavigator.open(CadastroBeneficiario.this, account);
+                                        }
+                                        @Override public void onError(String message) {
+                                            Toast.makeText(CadastroBeneficiario.this,
+                                                    "Cadastro realizado. O login automático falhou; entre pela tela de login.",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
                         } else {
 

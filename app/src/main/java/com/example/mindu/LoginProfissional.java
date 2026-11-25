@@ -81,10 +81,7 @@ public class LoginProfissional extends AppCompatActivity {
         btnEntrar.setText("Entrando...");
         loginFlow.login(email, senha, "PROFISSIONAL", new LoginFlow.Listener() {
             @Override public void onSuccess(MinhaContaResponse account) {
-                Intent intent = new Intent(LoginProfissional.this, DashboardProfissional.class);
-                intent.putExtra("nome_profissional", account.getNome());
-                startActivity(intent);
-                finish();
+                AccountNavigator.open(LoginProfissional.this, account);
             }
             @Override public void onError(String message) {
                 btnEntrar.setEnabled(true);

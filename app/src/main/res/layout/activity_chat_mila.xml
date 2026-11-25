@@ -6,35 +6,33 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_chat_mila">
 
-    <!-- CABEÇALHO -->
-
     <LinearLayout
         android:id="@+id/headerMila"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingHorizontal="18dp"
+        android:paddingHorizontal="14dp"
         android:background="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
+        <ImageButton
+            android:id="@+id/btnVoltarChatMila"
+            android:layout_width="40dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Voltar"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#493D78" />
+
+        <ImageView
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:background="@drawable/bg_avatar_mila"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_avatar_mila"
-                android:clipToOutline="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mila_light"
-                android:contentDescription="Mila"/>
-
-        </FrameLayout>
+            android:layout_marginStart="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mila_light"
+            android:contentDescription="Mila" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -49,7 +47,7 @@
                 android:text="MILA"
                 android:textColor="#493D78"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtStatusMila"
@@ -57,13 +55,9 @@
                 android:layout_height="wrap_content"
                 android:text="Chat de bem-estar"
                 android:textColor="#777184"
-                android:textSize="12sp"/>
-
+                android:textSize="12sp" />
         </LinearLayout>
-
     </LinearLayout>
-
-    <!-- HISTÓRICO DA CONVERSA -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMensagensMila"
@@ -74,9 +68,7 @@
         android:paddingVertical="18dp"
         android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/headerMila"
-        app:layout_constraintBottom_toTopOf="@id/layoutInteracaoMila"/>
-
-    <!-- ÁREA DE INTERAÇÃO -->
+        app:layout_constraintBottom_toTopOf="@id/layoutInteracaoMila" />
 
     <LinearLayout
         android:id="@+id/layoutInteracaoMila"
@@ -88,15 +80,13 @@
         android:paddingBottom="14dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- SUGESTÕES -->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SUGESTÕES DE RESPOSTA"
             android:textColor="#777184"
             android:textSize="11sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -117,7 +107,7 @@
                     android:textAllCaps="false"
                     android:textSize="11sp"
                     android:backgroundTint="#FFFFFF"
-                    android:textColor="#493D78"/>
+                    android:textColor="#493D78" />
 
                 <Button
                     android:id="@+id/btnSugestaoConversar"
@@ -128,7 +118,7 @@
                     android:textAllCaps="false"
                     android:textSize="11sp"
                     android:backgroundTint="#FFFFFF"
-                    android:textColor="#493D78"/>
+                    android:textColor="#493D78" />
 
                 <Button
                     android:id="@+id/btnSugestaoAnsiosa"
@@ -139,13 +129,9 @@
                     android:textAllCaps="false"
                     android:textSize="11sp"
                     android:backgroundTint="#FFFFFF"
-                    android:textColor="#493D78"/>
-
+                    android:textColor="#493D78" />
             </LinearLayout>
-
         </HorizontalScrollView>
-
-        <!-- CAMPO DE MENSAGEM E ÁUDIO -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,7 +152,7 @@
                 android:singleLine="true"
                 android:maxLength="4000"
                 android:inputType="textCapSentences|textMultiLine"
-                android:imeOptions="actionSend"/>
+                android:imeOptions="actionSend" />
 
             <ImageButton
                 android:id="@+id/btnAudioMila"
@@ -176,7 +162,7 @@
                 android:src="@drawable/ic_microphone"
                 android:background="@android:color/transparent"
                 android:contentDescription="Toque para gravar; toque novamente para enviar"
-                android:tint="#493D78"/>
+                android:tint="#493D78" />
 
             <ImageButton
                 android:id="@+id/btnCancelarAudioMila"
@@ -187,7 +173,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="Cancelar gravação"
                 android:tint="#B3261E"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/btnEnviarMila"
@@ -197,10 +183,7 @@
                 android:src="@drawable/ic_send"
                 android:background="@drawable/bg_botao_enviar_mila"
                 android:contentDescription="Enviar mensagem"
-                android:tint="#FFFFFF"/>
-
+                android:tint="#FFFFFF" />
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

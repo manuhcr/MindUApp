@@ -105,7 +105,11 @@ public class LoginBeneficiario extends AppCompatActivity {
         setLoading(true);
         loginFlow.login(email, senha, "CLIENTE", new LoginFlow.Listener() {
             @Override public void onSuccess(com.example.mindu.api.login.MinhaContaResponse account) {
-                verificarDadosSensiveis();
+                if ("AGUARDANDO_APROVACAO".equalsIgnoreCase(account.getStatus())) {
+                    AccountNavigator.open(LoginBeneficiario.this, account);
+                } else {
+                    verificarDadosSensiveis();
+                }
             }
             @Override public void onError(String message) {
                 setLoading(false);

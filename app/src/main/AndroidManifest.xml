@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,9 @@
             android:theme="@style/Theme.MindU" />
         <activity
             android:name=".DashboardProfissional"
+            android:exported="false" />
+        <activity
+            android:name=".ContaPendenteActivity"
             android:exported="false" />
         <activity
             android:name=".DashboardEmpresa"

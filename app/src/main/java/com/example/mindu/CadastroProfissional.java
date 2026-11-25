@@ -68,6 +68,7 @@ public class CadastroProfissional extends AppCompatActivity {
     private ApiService apiService;
     private Button btnCriarConta;
     private retrofit2.Call<ProfissionalResponse> cadastroCall;
+    private LoginFlow cadastroLoginFlow;
     private ChipGroup groupTags;
     private EditText campoTag;
     private final Set<String> tagsSelecionadas = new LinkedHashSet<>();
@@ -244,6 +245,7 @@ public class CadastroProfissional extends AppCompatActivity {
 
     @Override protected void onDestroy() {
         if (cadastroCall != null) cadastroCall.cancel();
+        if (cadastroLoginFlow != null) cadastroLoginFlow.cancel();
         if (!isChangingConfigurations()) apagarArquivoCapturado();
         super.onDestroy();
     }
@@ -433,13 +435,17 @@ public class CadastroProfissional extends AppCompatActivity {
                                 if (isFinishing() || isDestroyed()) return;
                                 restaurarBotaoCadastro();
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(
-                                            CadastroProfissional.this,
-                                            "Cadastro enviado. Aguarde a aprovação do MindU.",
-                                            Toast.LENGTH_LONG
-                                    ).show();
-
-                                    finish();
+                                    cadastroLoginFlow = new LoginFlow(CadastroProfissional.this);
+                                    cadastroLoginFlow.login(email, senha, "PROFISSIONAL", new LoginFlow.Listener() {
+                                        @Override public void onSuccess(com.example.mindu.api.login.MinhaContaResponse account) {
+                                            AccountNavigator.open(CadastroProfissional.this, account);
+                                        }
+                                        @Override public void onError(String message) {
+                                            Toast.makeText(CadastroProfissional.this,
+                                                    "Cadastro enviado. O login automático falhou; entre pela tela de login.",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
                                 } else {
                                     Log.e("CADASTRO_PRO", "Código: " + response.code());

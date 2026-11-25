@@ -81,6 +81,7 @@ public class DashboardEmpresa extends AppCompatActivity {
     private String buscaAtual = "";
 
     private FrameLayout fabMila;
+    private ProfilePhotoController profilePhotoController;
 
     // Dados dos relatórios
     private boolean relatorioCarregado = false;
@@ -119,7 +120,8 @@ public class DashboardEmpresa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (!SessionManager.guard(this, "EMPRESA")) return;
         setContentView(R.layout.activity_dashboard_empresa);
-
+        MilaFab.attach(this);
+        profilePhotoController = new ProfilePhotoController(this, false, savedInstanceState);
         fabMila = findViewById(R.id.fabMila);
 
         apiService = RetrofitClient.getApiService(this);
@@ -130,10 +132,6 @@ public class DashboardEmpresa extends AppCompatActivity {
         navColaboradoresEmpresa = findViewById(R.id.navColaboradoresEmpresa);
         navMatriculasEmpresa = findViewById(R.id.navMatriculasEmpresa);
         navPerfilEmpresa = findViewById(R.id.navPerfilEmpresa);
-
-        fabMila.setOnClickListener(v -> {
-            startActivity(new Intent(DashboardEmpresa.this, ChatMilaActivity.class));
-        });
 
         navInicioEmpresa.setOnClickListener(v -> {
             atualizarNavegacao(navInicioEmpresa);
@@ -1630,6 +1628,10 @@ public class DashboardEmpresa extends AppCompatActivity {
         TextView txtStatus =
                 tela.findViewById(R.id.txtPlanoDetalhesPerfil);
 
+        profilePhotoController.bind(tela.findViewById(R.id.areaFotoEmpresa),
+                tela.findViewById(R.id.imgFotoEmpresa),
+                tela.findViewById(R.id.txtInicialEmpresa), null);
+
         apiService.minhaConta().enqueue(
                 new Callback<MinhaContaResponse>() {
 
@@ -1643,6 +1645,9 @@ public class DashboardEmpresa extends AppCompatActivity {
                             MinhaContaResponse conta = response.body();
 
                             txtNome.setText(conta.getNome());
+                            TextView initial = tela.findViewById(R.id.txtInicialEmpresa);
+                            if (initial != null && conta.getNome() != null && !conta.getNome().trim().isEmpty())
+                                initial.setText(conta.getNome().trim().substring(0, 1).toUpperCase());
                             txtEmail.setText(conta.getEmail());
                             txtTipo.setText(conta.getTipo());
 
@@ -1676,6 +1681,11 @@ public class DashboardEmpresa extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        if (profilePhotoController != null) profilePhotoController.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     // =========================================================

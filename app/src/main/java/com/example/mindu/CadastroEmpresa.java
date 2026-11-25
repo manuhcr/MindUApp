@@ -48,6 +48,7 @@ public class CadastroEmpresa extends AppCompatActivity {
     private View progressoEtapa2;
 
     private ApiService api;
+    private LoginFlow cadastroLoginFlow;
 
     private MaterialAutoCompleteTextView campoPlano;
 
@@ -371,11 +372,18 @@ public class CadastroEmpresa extends AppCompatActivity {
                             .putString("empresaId", empresa.id)
                             .apply();
 
-                    Toast.makeText(
-                            CadastroEmpresa.this,
-                            "Empresa cadastrada com sucesso!",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    cadastroLoginFlow = new LoginFlow(CadastroEmpresa.this);
+                    cadastroLoginFlow.login(request.getEmailEmpresa(), request.getSenha(), "EMPRESA",
+                            new LoginFlow.Listener() {
+                                @Override public void onSuccess(com.example.mindu.api.login.MinhaContaResponse account) {
+                                    AccountNavigator.open(CadastroEmpresa.this, account);
+                                }
+                                @Override public void onError(String message) {
+                                    Toast.makeText(CadastroEmpresa.this,
+                                            "Empresa cadastrada. O login automático falhou; entre pela tela de login.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
 
                 } else {
                     Toast.makeText(
@@ -402,6 +410,11 @@ public class CadastroEmpresa extends AppCompatActivity {
 
     private String somenteDigitos(String valor) {
         return valor == null ? "" : valor.replaceAll("\\D", "");
+    }
+
+    @Override protected void onDestroy() {
+        if (cadastroLoginFlow != null) cadastroLoginFlow.cancel();
+        super.onDestroy();
     }
 
 

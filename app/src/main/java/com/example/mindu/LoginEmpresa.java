@@ -72,8 +72,7 @@ public class LoginEmpresa extends AppCompatActivity {
             setLoading(true);
             loginFlow.login(email, senha, "EMPRESA", new LoginFlow.Listener() {
                 @Override public void onSuccess(MinhaContaResponse account) {
-                    startActivity(new Intent(LoginEmpresa.this, DashboardEmpresa.class));
-                    finish();
+                    AccountNavigator.open(LoginEmpresa.this, account);
                 }
                 @Override public void onError(String message) {
                     setLoading(false);
