@@ -48,6 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindu.adapter.ProfissionaisAdapter;
 import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.adapter.EmpresasAdapter;
+import com.example.mindu.adapter.ColaboradoresAdapter;
 import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 
 public class DashboardAdmin extends AppCompatActivity {
@@ -75,6 +76,12 @@ public class DashboardAdmin extends AppCompatActivity {
     private RecyclerView recyclerEmpresas;
     private EmpresasAdapter empresasAdapter;
     private TextView txtEmpresasVazio;
+    private RecyclerView rvColaboradoresAdmin;
+    private TextView txtColaboradoresAdminVazio;
+    private EditText edtBuscarColaboradorAdmin;
+    private ColaboradoresAdapter colaboradoresAdminAdapter;
+    private final List<ClienteResponse> clientesAdmin = new ArrayList<>();
+    private String empresaIdFiltroAdmin;
 
     private TextView txtTotalAgendamentos;
 
@@ -220,7 +227,8 @@ public class DashboardAdmin extends AppCompatActivity {
             cardEmpresas.setOnClickListener(v -> mostrarEmpresas());
 
             cardProfissionais.setOnClickListener(v -> mostrarProfissionais());
-
+            View btnColaboradores = tela.findViewById(R.id.btnColaboradoresAdmin);
+            if (btnColaboradores != null) btnColaboradores.setOnClickListener(v -> mostrarColaboradoresAdmin());
 
             TextView txtSaudacao = tela.findViewById(R.id.txtSaudacaoAdmin);
 
@@ -267,6 +275,80 @@ public class DashboardAdmin extends AppCompatActivity {
     @Override protected void onSaveInstanceState(Bundle outState) {
         if (profilePhotoController != null) profilePhotoController.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    private void mostrarColaboradoresAdmin() {
+        mostrarColaboradoresAdmin(null);
+    }
+
+    private void mostrarColaboradoresAdmin(String empresaId) {
+        empresaIdFiltroAdmin = empresaId;
+        View tela = getLayoutInflater().inflate(R.layout.content_colaboradores_admin, containerAdmin, false);
+        containerAdmin.removeAllViews();
+        containerAdmin.addView(tela);
+        View voltar = tela.findViewById(R.id.btnVoltarColaboradoresAdmin);
+        if (voltar != null) voltar.setOnClickListener(v -> {
+            atualizarNavegacao(navInicio);
+            mostrarTela(R.layout.content_inicio_admin);
+        });
+        rvColaboradoresAdmin = tela.findViewById(R.id.rvColaboradoresAdmin);
+        txtColaboradoresAdminVazio = tela.findViewById(R.id.txtColaboradoresVazio);
+        edtBuscarColaboradorAdmin = tela.findViewById(R.id.edtBuscarColaborador);
+        rvColaboradoresAdmin.setLayoutManager(new LinearLayoutManager(this));
+        clientesAdmin.clear();
+        colaboradoresAdminAdapter = new ColaboradoresAdapter(new ArrayList<>(),
+                ColaboradoresAdapter.Modo.CONSULTA, null, null);
+        rvColaboradoresAdmin.setAdapter(colaboradoresAdminAdapter);
+        txtColaboradoresAdminVazio.setText("Carregando colaboradores…");
+        txtColaboradoresAdminVazio.setVisibility(View.VISIBLE);
+        rvColaboradoresAdmin.setVisibility(View.GONE);
+
+        edtBuscarColaboradorAdmin.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                aplicarFiltroColaboradoresAdmin();
+            }
+            @Override public void afterTextChanged(Editable s) { }
+        });
+        RetrofitClient.getApiService(this).listarClientesAdmin(null).enqueue(new Callback<List<ClienteResponse>>() {
+            @Override public void onResponse(Call<List<ClienteResponse>> call, Response<List<ClienteResponse>> response) {
+                clientesAdmin.clear();
+                if (!response.isSuccessful() || response.body() == null) {
+                    txtColaboradoresAdminVazio.setText("Não foi possível carregar colaboradores.");
+                    txtColaboradoresAdminVazio.setVisibility(View.VISIBLE);
+                    rvColaboradoresAdmin.setVisibility(View.GONE);
+                    return;
+                }
+                for (ClienteResponse cliente : response.body()) if (cliente != null) clientesAdmin.add(cliente);
+                aplicarFiltroColaboradoresAdmin();
+            }
+            @Override public void onFailure(Call<List<ClienteResponse>> call, Throwable t) {
+                txtColaboradoresAdminVazio.setText("Falha de conexão ao carregar colaboradores.");
+                txtColaboradoresAdminVazio.setVisibility(View.VISIBLE);
+                rvColaboradoresAdmin.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void aplicarFiltroColaboradoresAdmin() {
+        if (colaboradoresAdminAdapter == null || txtColaboradoresAdminVazio == null) return;
+        String termo = edtBuscarColaboradorAdmin == null ? "" : edtBuscarColaboradorAdmin.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
+        List<ClienteResponse> exibidos = new ArrayList<>();
+        for (ClienteResponse cliente : clientesAdmin) {
+            if (cliente == null) continue;
+            String nome = cliente.getNome() == null ? "" : cliente.getNome().toLowerCase(java.util.Locale.ROOT);
+            String email = cliente.getEmail() == null ? "" : cliente.getEmail().toLowerCase(java.util.Locale.ROOT);
+            boolean empresaCorresponde = empresaIdFiltroAdmin == null
+                    || empresaIdFiltroAdmin.equals(cliente.getEmpresaId());
+            if (empresaCorresponde && (termo.isEmpty() || nome.contains(termo) || email.contains(termo))) exibidos.add(cliente);
+        }
+        colaboradoresAdminAdapter.atualizarLista(exibidos);
+        boolean vazio = exibidos.isEmpty();
+        txtColaboradoresAdminVazio.setText(termo.isEmpty()
+                ? "Nenhum colaborador encontrado."
+                : "Nenhum colaborador corresponde à busca.");
+        txtColaboradoresAdminVazio.setVisibility(vazio ? View.VISIBLE : View.GONE);
+        rvColaboradoresAdmin.setVisibility(vazio ? View.GONE : View.VISIBLE);
     }
 
     private void mostrarProfissionais() {
@@ -376,13 +458,14 @@ public class DashboardAdmin extends AppCompatActivity {
             }
         });
 
+        txtEmpresasVazio.setText("Carregando empresas…");
+        txtEmpresasVazio.setVisibility(View.VISIBLE);
+        recyclerEmpresas.setVisibility(View.GONE);
         carregarEmpresas();
     }
 
     private void mostrarColaboradoresEmpresa(EmpresaResponse empresa) {
-        String id = empresa.id;
-
-        // Aqui vamos carregar os colaboradores da empresa selecionada.
+        mostrarColaboradoresAdmin(empresa == null ? null : empresa.id);
     }
     private void carregarIndicadores() {
 
@@ -462,6 +545,11 @@ public class DashboardAdmin extends AppCompatActivity {
                 );
 
         // requisição de empresas
+        if (txtEmpresasVazio != null) {
+            txtEmpresasVazio.setText("Carregando empresas…");
+            txtEmpresasVazio.setVisibility(View.VISIBLE);
+            recyclerEmpresas.setVisibility(View.GONE);
+        }
         RetrofitClient.getApiService(this)
                 .listarEmpresas(true)
                 .enqueue(new Callback<>() {
@@ -748,11 +836,9 @@ public class DashboardAdmin extends AppCompatActivity {
                         if (!response.isSuccessful()
                                 || response.body() == null) {
 
-                            Toast.makeText(
-                                    DashboardAdmin.this,
-                                    "Não foi possível carregar as empresas.",
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            txtEmpresasVazio.setText("Não foi possível carregar as empresas.");
+                            txtEmpresasVazio.setVisibility(View.VISIBLE);
+                            recyclerEmpresas.setVisibility(View.GONE);
 
                         } else {
 
@@ -775,11 +861,9 @@ public class DashboardAdmin extends AppCompatActivity {
                         Log.e("MINDU_API",
                                 "Erro ao carregar empresas", t);
 
-                        Toast.makeText(
-                                DashboardAdmin.this,
-                                "Erro de conexão ao carregar empresas.",
-                                Toast.LENGTH_LONG
-                        ).show();
+                        txtEmpresasVazio.setText("Falha de conexão ao carregar empresas.");
+                        txtEmpresasVazio.setVisibility(View.VISIBLE);
+                        recyclerEmpresas.setVisibility(View.GONE);
                     }
                 });
     }
@@ -974,12 +1058,12 @@ public class DashboardAdmin extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("mindu", MODE_PRIVATE);
 
         // Exibe primeiro o nome salvo, se existir
-        String nomeSalvo = prefs.getString("nomeAdmin", "");
+        String nomeSalvo = SessionManager.getName(this);
 
         if (nomeSalvo != null && !nomeSalvo.trim().isEmpty()) {
-            txtSaudacao.setText("Olá, " + nomeSalvo.trim() + "! 👋");
+            txtSaudacao.setText(SaudacaoFormatter.format(nomeSalvo) + " 👋");
         } else {
-            txtSaudacao.setText("Olá! 👋");
+            txtSaudacao.setText(SaudacaoFormatter.format(null) + " 👋");
         }
 
         // Busca os dados atualizados na API
@@ -1000,7 +1084,8 @@ public class DashboardAdmin extends AppCompatActivity {
 
                                 nome = nome.trim();
 
-                                txtSaudacao.setText("Olá, " + nome + "! 👋");
+                                txtSaudacao.setText(SaudacaoFormatter.format(nome) + " 👋");
+                                SessionManager.saveName(DashboardAdmin.this, nome);
 
                                 prefs.edit()
                                         .putString("nomeAdmin", nome)

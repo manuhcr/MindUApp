@@ -80,12 +80,17 @@ public class EmpresasAdapter
 
         EmpresaResponse empresa = empresasExibidas.get(position);
 
-        holder.txtRazaoSocial.setText(
-                "Razão Social: " + empresa.razaoSocial
-        );
-        holder.txtPlanoEmpresa.setText(
-                "Plano: " + empresa.plano
-        );
+        if (empresa == null) {
+            holder.txtRazaoSocial.setText("Empresa não informada");
+            holder.txtPlanoEmpresa.setText("");
+            holder.btnExcluirEmpresa.setEnabled(false);
+            holder.itemView.setOnClickListener(null);
+            holder.btnExcluirEmpresa.setOnClickListener(null);
+            return;
+        }
+        holder.btnExcluirEmpresa.setEnabled(empresa.id != null && !empresa.id.trim().isEmpty());
+        holder.txtRazaoSocial.setText("Razão Social: " + (empresa.razaoSocial == null ? "Não informada" : empresa.razaoSocial));
+        holder.txtPlanoEmpresa.setText("Plano: " + (empresa.plano == null ? "Não informado" : empresa.plano));
 
         // Clique no cartão: visualizar colaboradores
         holder.itemView.setOnClickListener(v -> {
@@ -112,7 +117,7 @@ public class EmpresasAdapter
         empresasOriginais.clear();
 
         if (novaLista != null) {
-            empresasOriginais.addAll(novaLista);
+            for (EmpresaResponse empresa : novaLista) if (empresa != null) empresasOriginais.add(empresa);
         }
 
         empresasExibidas.clear();

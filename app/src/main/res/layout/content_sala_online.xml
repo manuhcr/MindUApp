@@ -43,6 +43,14 @@
                     android:textColor="#777080"
                     android:textSize="12sp"
                     tools:text="●  Conectado" />
+                <TextView
+                    android:id="@+id/txtInfoSessaoSala"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Modalidade • Dia e hora"
+                    android:textColor="#777080"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -346,4 +354,30 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/preCallOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_modal_solido"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:visibility="gone">
+        <ProgressBar
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminateTint="#75689A" />
+        <TextView
+            android:id="@+id/txtPreCallMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:gravity="center"
+            android:text="Sua consulta marcada começa em 5 minutos"
+            android:textColor="#4B426D"
+            android:textSize="17sp" />
+    </LinearLayout>
 </RelativeLayout>

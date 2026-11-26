@@ -67,7 +67,8 @@ final class LoginFlow {
                                     : "Sua conta ainda não está aprovada.");
                             return;
                         }
-                        SessionManager.save(activity, token, account.getTipo(), status, account.getId());
+                        SessionManager.save(activity, token, account.getTipo(), status,
+                                account.getId(), account.getNome());
                         listener.onSuccess(account);
                     }
 

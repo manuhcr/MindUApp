@@ -35,9 +35,9 @@
     <LinearLayout
         android:id="@+id/navProfissional"
         android:layout_width="0dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_nav_admin"
         android:gravity="center"
@@ -74,16 +74,15 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▦"
-                android:textColor="#75689A"
-                android:textSize="24sp" />
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_agendamentos"
+                android:contentDescription="Agenda" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/navProntuariosProfissional"
+            android:id="@+id/navDisponibilidadeProfissional"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -95,12 +94,12 @@
             <ImageView
                 android:layout_width="23dp"
                 android:layout_height="23dp"
-                android:src="@drawable/ic_users"
+                android:src="@drawable/ic_calendar"
                 android:contentDescription="@null" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/navHonorariosProfissional"
+            android:id="@+id/navPerfilProfissional"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -112,8 +111,32 @@
             <ImageView
                 android:layout_width="23dp"
                 android:layout_height="23dp"
-                android:src="@drawable/ic_chart"
+                android:src="@drawable/ic_nav_perfil"
                 android:contentDescription="@null" />
         </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fabMilaProfissional"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/bg_fab_mila"
+        android:padding="3dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="12dp"
+        android:contentDescription="Abrir conversa com a Mila"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navProfissional">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_avatar_mila"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mila_light"
+            android:contentDescription="Mila" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

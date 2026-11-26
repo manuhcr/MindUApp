@@ -85,7 +85,7 @@ public class ContaPendenteActivity extends AppCompatActivity {
                 }
                 String type = SessionManager.getType(ContaPendenteActivity.this);
                 SessionManager.save(ContaPendenteActivity.this, SessionManager.getToken(ContaPendenteActivity.this),
-                        account.getTipo(), account.getStatus(), account.getId());
+                        account.getTipo(), account.getStatus(), account.getId(), account.getNome());
                 String status = account.getStatus() == null ? "" : account.getStatus().trim();
                 if ("APROVADO".equalsIgnoreCase(status)) {
                     AccountNavigator.open(ContaPendenteActivity.this, account);

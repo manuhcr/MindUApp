@@ -1,134 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:fillViewport="true"
-    android:clipToPadding="false"
-    android:padding="20dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
         android:orientation="vertical"
-        android:paddingBottom="24dp">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="MindU Profissional"
             android:textColor="#75689A"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold" />
 
         <TextView
             android:id="@+id/txtSaudacaoProfissional"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Olá, profissional! Que bom ter você por aqui."
-            android:textColor="#777184"
-            android:textSize="14sp" />
+            android:text="Olá!"
+            android:textColor="#292535"
+            android:textSize="25sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="Resumo do seu dia"
-            android:textColor="#292535"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal">
-
-            <eightbitlab.com.blurview.BlurView
-                android:id="@+id/blurSessoesHojeProfissional"
-                android:layout_width="0dp"
-                android:layout_height="132dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_vidro">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sessões hoje"
-                        android:textColor="#777184"
-                        android:textSize="12sp" />
-                    <TextView
-                        android:id="@+id/txtSessoesHojeProfissional"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="0"
-                        android:textColor="#75689A"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Atendimentos"
-                        android:textColor="#777184"
-                        android:textSize="11sp" />
-                </LinearLayout>
-            </eightbitlab.com.blurview.BlurView>
-
-            <eightbitlab.com.blurview.BlurView
-                android:id="@+id/blurPacientesAtivosProfissional"
-                android:layout_width="0dp"
-                android:layout_height="132dp"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_vidro">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pacientes ativos"
-                        android:textColor="#777184"
-                        android:textSize="12sp" />
-                    <TextView
-                        android:id="@+id/txtPacientesAtivosProfissional"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="0"
-                        android:textColor="#75689A"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Em acompanhamento"
-                        android:textColor="#777184"
-                        android:textSize="11sp" />
-                </LinearLayout>
-            </eightbitlab.com.blurview.BlurView>
-        </LinearLayout>
+            android:layout_marginTop="4dp"
+            android:text="Organize seus atendimentos e seu espaço de cuidado."
+            android:textColor="#777184"
+            android:textSize="13sp"
+            android:fontFamily="@font/plus_jakarta_sans" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Próxima sessão"
+            android:text="Resumo do dia"
             android:textColor="#292535"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="19sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold" />
 
         <eightbitlab.com.blurview.BlurView
-            android:id="@+id/blurProximaSessaoProfissional"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -139,75 +59,124 @@
                 android:orientation="vertical"
                 android:padding="18dp">
                 <TextView
-                    android:id="@+id/txtNomeProximoPaciente"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nenhuma sessão próxima"
-                    android:textColor="#75689A"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="Atendimentos agendados para hoje"
+                    android:textColor="#777184"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/plus_jakarta_sans" />
                 <TextView
-                    android:id="@+id/txtDataProximaSessao"
+                    android:id="@+id/txtResumoDiaProfissional"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:text="Os próximos atendimentos aparecerão aqui."
-                    android:textColor="#777184"
-                    android:textSize="13sp" />
+                    android:text="Carregando agenda…"
+                    android:textColor="#4B426D"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/plus_jakarta_sans_bold" />
                 <TextView
-                    android:id="@+id/txtModalidadeProximaSessao"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtProximoAtendimentoProfissional"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Modalidade"
-                    android:textColor="#75689A"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="5dp"
+                    android:text="Buscando próximo atendimento…"
+                    android:textColor="#777184"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/plus_jakarta_sans" />
             </LinearLayout>
         </eightbitlab.com.blurview.BlurView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="24dp"
             android:text="Acesso rápido"
             android:textColor="#292535"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="19sp"
+            android:fontFamily="@font/plus_jakarta_sans_bold" />
 
-        <LinearLayout
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardAgendaProfissionalHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/btnAtalhoAgendaProfissional"
-                android:layout_width="0dp"
-                android:layout_height="88dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_vidro"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="▦\nMinha agenda"
-                android:textColor="#75689A"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/btnAtalhoProntuariosProfissional"
-                android:layout_width="0dp"
-                android:layout_height="88dp"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_vidro"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="▤\nProntuários"
-                android:textColor="#75689A"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:background="@drawable/bg_vidro">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_agendamentos"
+                    android:contentDescription="@null" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Minha agenda" android:textColor="#4B426D" android:textSize="15sp"
+                        android:fontFamily="@font/plus_jakarta_sans_bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp" android:text="Ver horários e iniciar atendimentos"
+                        android:textColor="#777184" android:textSize="12sp" android:fontFamily="@font/plus_jakarta_sans" />
+                </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_rignt" android:contentDescription="Abrir agenda" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardDisponibilidadeProfissionalHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_vidro">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
+                <ImageView android:layout_width="36dp" android:layout_height="36dp"
+                    android:src="@drawable/ic_calendar" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Disponibilidade" android:textColor="#4B426D" android:textSize="15sp"
+                        android:fontFamily="@font/plus_jakarta_sans_bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp" android:text="Defina os horários de atendimento"
+                        android:textColor="#777184" android:textSize="12sp" android:fontFamily="@font/plus_jakarta_sans" />
+                </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_rignt" android:contentDescription="Abrir disponibilidade" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/cardPerfilProfissionalHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_vidro">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
+                <ImageView android:layout_width="36dp" android:layout_height="36dp"
+                    android:src="@drawable/ic_user" android:contentDescription="@null" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Meu perfil" android:textColor="#4B426D" android:textSize="15sp"
+                        android:fontFamily="@font/plus_jakarta_sans_bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp" android:text="Atualize sua foto e apresentação"
+                        android:textColor="#777184" android:textSize="12sp" android:fontFamily="@font/plus_jakarta_sans" />
+                </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_rignt" android:contentDescription="Abrir perfil" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

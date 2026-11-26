@@ -407,6 +407,13 @@
 
         </eightbitlab.com.blurview.BlurView>
 
+        <Button
+            android:id="@+id/btnColaboradoresAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Ver colaboradores" />
+
     </LinearLayout>
 
 </ScrollView>

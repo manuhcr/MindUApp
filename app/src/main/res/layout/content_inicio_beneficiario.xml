@@ -341,8 +341,9 @@
                             <ImageView
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
-                                android:src="@drawable/ic_ansiedade"
-                                android:contentDescription="Ansiedade" />
+                                android:src="@drawable/ic_conteudo_ansiedade"
+                                android:contentDescription="Ansiedade"
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:id="@+id/cardConteudoAnsiedade"
@@ -379,8 +380,9 @@
                             <ImageView
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
-                                android:src="@drawable/ic_burnout"
-                                android:contentDescription="Burnout" />
+                                android:src="@drawable/ic_conteudo_burnout"
+                                android:contentDescription="Burnout"
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:id="@+id/cardConteudoBurnout"
@@ -426,8 +428,9 @@
                             <ImageView
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
-                                android:src="@drawable/ic_burnout"
-                                android:contentDescription="Autocuidado" />
+                                android:src="@drawable/ic_conteudo_autocuidado"
+                                android:contentDescription="Autocuidado"
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:id="@+id/cardConteudoAutocuidado"
@@ -464,8 +467,9 @@
                             <ImageView
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
-                                android:src="@drawable/ic_ansiedade"
-                                android:contentDescription="Sono e descanso" />
+                                android:src="@drawable/ic_conteudo_sono"
+                                android:contentDescription="Sono e descanso"
+                                android:tint="#75689A" />
 
                             <TextView
                                 android:id="@+id/cardConteudoSono"

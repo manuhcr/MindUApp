@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_vidro"
+    android:orientation="vertical"
+    android:padding="14dp">
+    <TextView
+        android:id="@+id/txtAgendamentoInfoCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#292535"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/btnSalaAgendamentoCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entrar na Consulta (Visão Cliente)"
+        android:textAllCaps="false"
+        android:backgroundTint="#75689A"
+        android:textColor="#FFFFFF" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/btnCancelarAgendamentoCliente" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Cancelar" android:textSize="11sp" />
+        <Button android:id="@+id/btnRemarcarAgendamentoCliente" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Remarcar" android:textSize="11sp" />
+    </LinearLayout>
+</LinearLayout>

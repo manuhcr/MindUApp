@@ -12,6 +12,7 @@ import com.example.mindu.R;
 import com.example.mindu.api.chat.ChatTurn;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class MensagemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -21,7 +22,7 @@ public class MensagemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final List<ChatTurn> mensagens;
 
     public MensagemAdapter(List<ChatTurn> mensagens) {
-        this.mensagens = mensagens;
+        this.mensagens = mensagens == null ? new ArrayList<>() : mensagens;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class MensagemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ChatTurn mensagem = mensagens.get(position);
 
-        if ("user".equals(mensagem.getRole())) {
+        if (mensagem != null && "user".equals(mensagem.getRole())) {
             return TIPO_USUARIO;
         }
 
@@ -66,7 +67,8 @@ public class MensagemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         MensagemViewHolder mensagemHolder =
                 (MensagemViewHolder) holder;
 
-        mensagemHolder.txtMensagem.setText(mensagem.getContent());
+        mensagemHolder.txtMensagem.setText(mensagem == null || mensagem.getContent() == null
+                ? "" : mensagem.getContent());
     }
 
     @Override

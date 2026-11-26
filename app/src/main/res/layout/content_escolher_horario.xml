@@ -200,6 +200,22 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <RadioButton
+                        android:id="@+id/radioOnline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Online"
+                        android:textColor="#4B426D"
+                        android:visibility="gone" />
+
+                    <RadioButton
+                        android:id="@+id/radioPresencial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Presencial"
+                        android:textColor="#4B426D"
+                        android:visibility="gone" />
+
                 </RadioGroup>
 
             </LinearLayout>

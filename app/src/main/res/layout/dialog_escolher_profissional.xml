@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_vidro"
+    android:orientation="vertical"
+    android:padding="24dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Escolha um profissional"
+        android:textColor="#4B426D"
+        android:textSize="21sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="É preciso escolher um profissional antes de agendar uma sessão."
+        android:textColor="#777184"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/btnBuscarProfissionalDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#75689A"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Buscar profissional"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/btnFecharProfissionalDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#EAE5F3"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Fechar"
+        android:textAllCaps="false"
+        android:textColor="#4B426D" />
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_vidro"
+    android:orientation="vertical"
+    android:padding="14dp">
+    <TextView
+        android:id="@+id/txtAgendamentoInfoProfissional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#292535"
+        android:textSize="14sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/btnLinkAgendamentoProfissional" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Link online" android:textSize="10sp" />
+        <Button android:id="@+id/btnRealizadaAgendamentoProfissional" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Realizada" android:textSize="10sp" />
+        <Button android:id="@+id/btnCancelarAgendamentoProfissional" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Cancelar" android:textSize="10sp" />
+    </LinearLayout>
+    <Button android:id="@+id/btnIniciarConsultaProfissional"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:text="Iniciar Consulta" android:textAllCaps="false"
+        android:backgroundTint="#75689A" android:textColor="#FFFFFF" />
+    <Button android:id="@+id/btnDemoSessaoProfissional"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Iniciar Sessão (Visão Profissional)" android:textAllCaps="false"
+        android:backgroundTint="#E7E1F0" android:textColor="#4B426D" />
+</LinearLayout>

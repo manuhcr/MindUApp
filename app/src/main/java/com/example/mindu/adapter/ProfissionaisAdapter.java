@@ -248,7 +248,7 @@ public class ProfissionaisAdapter
         profissionaisOriginais.clear();
 
         if (lista != null) {
-            profissionaisOriginais.addAll(lista);
+            for (ProfissionalResponse profissional : lista) if (profissional != null) profissionaisOriginais.add(profissional);
         }
 
         aplicarPesquisa();
@@ -270,6 +270,7 @@ public class ProfissionaisAdapter
 
         for (ProfissionalResponse profissional : profissionaisOriginais) {
 
+            if (profissional == null) continue;
             String nome = profissional.getNome();
 
             if (nome != null

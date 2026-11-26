@@ -44,7 +44,8 @@ public class ColaboradoresAdapter extends RecyclerView.Adapter<ColaboradoresAdap
             OnColaboradorClickListener clickListener,
             OnColaboradorAcaoListener acaoListener) {
 
-        this.colaboradores = new ArrayList<>(colaboradores);
+        this.colaboradores = new ArrayList<>();
+        if (colaboradores != null) for (ClienteResponse item : colaboradores) if (item != null) this.colaboradores.add(item);
         this.modo = modo;
         this.clickListener = clickListener;
         this.acaoListener = acaoListener;
@@ -67,8 +68,18 @@ public class ColaboradoresAdapter extends RecyclerView.Adapter<ColaboradoresAdap
 
         ClienteResponse colaborador = colaboradores.get(position);
 
-        holder.txtNome.setText(colaborador.getNome());
-        holder.txtEmail.setText(colaborador.getEmail());
+        if (colaborador == null) {
+            holder.txtNome.setText("Colaborador não informado");
+            holder.txtEmail.setText("");
+            holder.txtStatus.setText("Não informado");
+            holder.containerAcoes.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(null);
+            holder.btnAprovar.setOnClickListener(null);
+            holder.btnReprovar.setOnClickListener(null);
+            return;
+        }
+        holder.txtNome.setText(colaborador.getNome() == null ? "Nome não informado" : colaborador.getNome());
+        holder.txtEmail.setText(colaborador.getEmail() == null ? "E-mail não informado" : colaborador.getEmail());
 
         String status = colaborador.getStatus();
 
@@ -111,7 +122,7 @@ public class ColaboradoresAdapter extends RecyclerView.Adapter<ColaboradoresAdap
 
     public void atualizarLista(List<ClienteResponse> novaLista) {
         colaboradores.clear();
-        colaboradores.addAll(novaLista);
+        if (novaLista != null) for (ClienteResponse item : novaLista) if (item != null) colaboradores.add(item);
         notifyDataSetChanged();
     }
 

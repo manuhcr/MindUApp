@@ -37,7 +37,7 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/plus_jakarta_sans"/>
 
-            <!-- NAVEGAÇÃO -->
+            <!-- Filtros por tipo, no mesmo estilo de pílulas usado no app -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,52 +50,63 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/chipTipoTodos"
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
+                        android:background="@drawable/bg_filtro_selecionado"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="17dp"
-                        android:background="@drawable/bg_vidro"
-                        android:text="Agendamentos"
+                        android:text="Todos"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/plus_jakarta_sans_bold" />
+
+                    <TextView
+                        android:id="@+id/chipTipoPsicologo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="9dp"
+                        android:background="@drawable/bg_filtro_normal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingHorizontal="17dp"
+                        android:text="Psicólogo"
                         android:textColor="#75689A"
                         android:textSize="12sp"
-                        android:fontFamily="@font/plus_jakarta_sans_bold"/>
+                        android:fontFamily="@font/plus_jakarta_sans" />
 
                     <TextView
+                        android:id="@+id/chipTipoPsiquiatra"
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
                         android:layout_marginStart="9dp"
+                        android:background="@drawable/bg_filtro_normal"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="17dp"
-                        android:background="@drawable/bg_vidro"
-                        android:text="Meus"
-                        android:textColor="#777184"
+                        android:text="Psiquiatra"
+                        android:textColor="#75689A"
                         android:textSize="12sp"
-                        android:fontFamily="@font/plus_jakarta_sans"/>
+                        android:fontFamily="@font/plus_jakarta_sans" />
 
                     <TextView
+                        android:id="@+id/chipTipoTerapeuta"
                         android:layout_width="wrap_content"
                         android:layout_height="42dp"
                         android:layout_marginStart="9dp"
+                        android:background="@drawable/bg_filtro_normal"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="17dp"
-                        android:background="@drawable/bg_vidro"
-                        android:text="Gerenciar"
-                        android:textColor="#777184"
+                        android:text="Terapeuta"
+                        android:textColor="#75689A"
                         android:textSize="12sp"
-                        android:fontFamily="@font/plus_jakarta_sans"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:layout_marginStart="9dp"
-                        android:gravity="center"
-                        android:paddingHorizontal="17dp"
-                        android:background="@drawable/bg_vidro"
-                        android:text="Imediato"
-                        android:textColor="#777184"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/plus_jakarta_sans"/>
-
+                        android:fontFamily="@font/plus_jakarta_sans" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -141,33 +152,14 @@
             </eightbitlab.com.blurview.BlurView>
 
             <!-- TÍTULO DA LISTA -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Especialistas disponíveis"
-                    android:textColor="#4B426D"
-                    android:textSize="17sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"/>
-
-                <TextView
-                    android:id="@+id/btnFiltrarProfissionais"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="9dp"
-                    android:text="Filtrar por  ›"
-                    android:textColor="#75689A"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/plus_jakarta_sans_bold"/>
-
-            </LinearLayout>
+                android:text="Especialistas disponíveis"
+                android:textColor="#4B426D"
+                android:textSize="17sp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"/>
 
             <!-- LISTA -->
             <androidx.recyclerview.widget.RecyclerView

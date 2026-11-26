@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_modal_solido"
+    android:orientation="vertical"
+    android:padding="24dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Profissional indisponível"
+        android:textColor="#4B426D"
+        android:textSize="21sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Este profissional está indisponível no momento. Escolha outro profissional ou tente novamente mais tarde."
+        android:textColor="#777184"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/btnVoltarProfissionalIndisponivel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#75689A"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="Voltar"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

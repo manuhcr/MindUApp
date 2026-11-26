@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.adapter.ProfissionaisAdapter;
+import com.example.mindu.adapter.MinhasConsultasAdapter;
 import com.example.mindu.api.RetrofitClient;
 import com.example.mindu.api.login.MinhaContaResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
@@ -72,7 +73,9 @@ public class DashboardBeneficiario extends AppCompatActivity {
     private ProfilePhotoController profilePhotoController;
     private String dataHoraSelecionada;
     private String filtroTipo = "";
-    private String filtroArea = "";
+    private boolean carregandoProfissionais;
+    private String erroCarregamentoProfissionais;
+    private final List<ProfissionalResponse> profissionaisDisponiveis = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +129,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
         navAgendamentos.setOnClickListener(v ->
                 abrirTela(R.layout.content_agendamento_beneficiario));
 
-        navImediato.setOnClickListener(v ->
-                abrirTela(R.layout.content_sala_online));
+        navImediato.setOnClickListener(v -> mostrarMinhasConsultas());
 
         navPerfil.setOnClickListener(v ->
                 abrirTela(R.layout.content_perfil_beneficiario));
@@ -141,7 +143,10 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         containerBeneficiario.removeAllViews();
         containerBeneficiario.addView(tela);
-        if (fabMilaBeneficiario != null) fabMilaBeneficiario.setVisibility(View.VISIBLE);
+        if (fabMilaBeneficiario != null) fabMilaBeneficiario.setVisibility(
+                layout == R.layout.content_agendamento_beneficiario
+                        || layout == R.layout.content_sala_online ? View.GONE : View.VISIBLE);
+        if (layout == R.layout.content_sala_online) { mostrarMinhasConsultas(); return; }
 
         if (layout == R.layout.content_perfil_beneficiario) {
             View sair = tela.findViewById(R.id.cardSairBeneficiario);
@@ -151,11 +156,14 @@ public class DashboardBeneficiario extends AppCompatActivity {
                     tela.findViewById(R.id.txtInicialBeneficiario), nomeBeneficiario);
         }
 
-        if (layout == R.layout.content_sala_online) configurarSalaOnline(tela);
-
         if (layout == R.layout.content_inicio_beneficiario) {
+            View acessoAgendamento = tela.findViewById(R.id.blurAgendamentoRapido);
+            if (acessoAgendamento != null) acessoAgendamento.setOnClickListener(v -> abrirAgendamento());
+            View btnAgendarSessao = tela.findViewById(R.id.btnAgendarSessao);
+            if (btnAgendarSessao != null) btnAgendarSessao.setOnClickListener(v -> abrirAgendamento());
 
             configurarBlurViews(tela, blurTargetDashboard);
+            configurarConteudosBemEstar(tela);
             atualizarSaudacao();
 
         } else if (layout == R.layout.content_agendamento_beneficiario) {
@@ -173,6 +181,54 @@ public class DashboardBeneficiario extends AppCompatActivity {
             configurarBlurViews(tela, blurTargetDashboard);
             configurarTelaAgendamento(tela);
         }
+    }
+
+    private void abrirAgendamento() {
+        if (profissionalSelecionado != null) {
+            abrirTela(R.layout.content_escolher_horario);
+            return;
+        }
+
+        View modal = LayoutInflater.from(this).inflate(R.layout.dialog_escolher_profissional, null, false);
+        android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
+                .setView(modal)
+                .create();
+        View buscar = modal.findViewById(R.id.btnBuscarProfissionalDialog);
+        View fechar = modal.findViewById(R.id.btnFecharProfissionalDialog);
+        if (buscar != null) buscar.setOnClickListener(v -> {
+            dialog.dismiss();
+            abrirTela(R.layout.content_agendamento_beneficiario);
+        });
+        if (fechar != null) fechar.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+    }
+
+    private void configurarConteudosBemEstar(View tela) {
+        configurarConteudo(tela, R.id.blurConteudoAnsiedade,
+                R.layout.dialog_conteudo_ansiedade, R.id.btnFecharConteudoAnsiedade);
+        configurarConteudo(tela, R.id.blurConteudoBurnout,
+                R.layout.dialog_conteudo_burnout, R.id.btnFecharConteudoBurnout);
+        configurarConteudo(tela, R.id.blurConteudoAutocuidado,
+                R.layout.dialog_conteudo_autocuidado, R.id.btnFecharConteudoAutocuidado);
+        configurarConteudo(tela, R.id.blurConteudoSono,
+                R.layout.dialog_conteudo_sono, R.id.btnFecharConteudoSono);
+    }
+
+    private void configurarConteudo(View tela, int cardId, int layoutId, int closeId) {
+        View card = tela.findViewById(cardId);
+        if (card == null) return;
+        card.setOnClickListener(v -> {
+            View conteudo = LayoutInflater.from(this).inflate(layoutId, null, false);
+            android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
+                    .setView(conteudo)
+                    .create();
+            View fechar = conteudo.findViewById(closeId);
+            if (fechar != null) fechar.setOnClickListener(button -> dialog.dismiss());
+            dialog.show();
+        });
     }
 
     @Override protected void onSaveInstanceState(Bundle outState) {
@@ -261,6 +317,13 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
     // Busca os dados da pessoa autenticada
     private void carregarNomeBeneficiario() {
+        String nomeSessao = SessionManager.getName(this);
+        if (nomeSessao != null && !nomeSessao.trim().isEmpty()) {
+            nomeBeneficiario = nomeSessao.trim();
+            TextView initial = findViewById(R.id.txtInicialBeneficiario);
+            if (initial != null) initial.setText(nomeBeneficiario.substring(0, 1).toUpperCase());
+            atualizarSaudacao();
+        }
 
         RetrofitClient.getApiService(this)
                 .minhaConta()
@@ -280,6 +343,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
                             if (nome != null && !nome.trim().isEmpty()) {
 
                                 nomeBeneficiario = nome.trim();
+                                SessionManager.saveName(DashboardBeneficiario.this, nomeBeneficiario);
                                 TextView initial = findViewById(R.id.txtInicialBeneficiario);
                                 if (initial != null) initial.setText(nomeBeneficiario.substring(0, 1).toUpperCase());
 
@@ -294,11 +358,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
                             Throwable t
                     ) {
 
-                        Toast.makeText(
-                                DashboardBeneficiario.this,
-                                "Não foi possível carregar seu nome.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        // Mantém o nome salvo na sessão quando /me falha.
                     }
                 });
     }
@@ -316,16 +376,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         if (txtSaudacao != null) {
 
-            if (nomeBeneficiario.isEmpty()) {
-
-                txtSaudacao.setText("Olá!");
-
-            } else {
-
-                txtSaudacao.setText(
-                        "Olá, " + nomeBeneficiario + "!"
-                );
-            }
+            txtSaudacao.setText(SaudacaoFormatter.format(nomeBeneficiario));
         }
     }
 
@@ -344,6 +395,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
                 R.id.txtNenhumProfissional
         );
 
+        if (rvProfissionais == null || edtBuscar == null || txtNenhum == null) return;
         rvProfissionais.setLayoutManager(
                 new LinearLayoutManager(this)
         );
@@ -367,10 +419,10 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
         rvProfissionais.setAdapter(profissionaisAdapter);
 
-        View filter = tela.findViewById(R.id.btnFiltrarProfissionais);
-        if (filter != null) filter.setOnClickListener(v -> mostrarFiltros(txtNenhum));
+        configurarChipsTipo(tela, txtNenhum);
         Button minhasConsultas = new Button(this);
         minhasConsultas.setText("Minhas consultas");
+        estilizarBotaoMindU(minhasConsultas);
         minhasConsultas.setOnClickListener(v -> mostrarMinhasConsultas());
         ViewGroup listContainer = (ViewGroup) rvProfissionais.getParent();
         if (listContainer != null) listContainer.addView(minhasConsultas, listContainer.indexOfChild(rvProfissionais));
@@ -398,12 +450,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
             ) {
 
                 profissionaisAdapter.filtrar(s.toString());
-
-                txtNenhum.setVisibility(
-                        profissionaisAdapter.getItemCount() == 0
-                                ? View.VISIBLE
-                                : View.GONE
-                );
+                atualizarEstadoProfissionais(txtNenhum);
             }
 
             @Override
@@ -416,69 +463,36 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
     // Busca os profissionais disponíveis
     private void carregarProfissionais(TextView txtNenhum) {
-
-        RetrofitClient.getApiService(this)
-                .buscar(null, null, filtroArea.isEmpty() ? null : filtroArea)
+        carregandoProfissionais = true;
+        erroCarregamentoProfissionais = null;
+        atualizarEstadoProfissionais(txtNenhum);
+        RetrofitClient.getApiService(this).buscar(null, null, null)
                 .enqueue(new Callback<List<ProfissionalResponse>>() {
-
                     @Override
-                    public void onResponse(
-                            Call<List<ProfissionalResponse>> call,
-                            Response<List<ProfissionalResponse>> response
-                    ) {
-
-                        if (response.isSuccessful()
-                                && response.body() != null) {
-
-                            List<ProfissionalResponse> profissionais = new ArrayList<>();
-                            for (ProfissionalResponse item : response.body()) {
-                                if (filtroTipo.isEmpty() || filtroTipo.equalsIgnoreCase(item.getTipo())) profissionais.add(item);
-                            }
-
-                            profissionaisAdapter.atualizarLista(
-                                    profissionais
-                            );
-
-                            if (profissionais.isEmpty()) {
-
-                                txtNenhum.setText(
-                                        "Nenhum profissional disponível no momento."
-                                );
-
-                                txtNenhum.setVisibility(View.VISIBLE);
-
-                            } else {
-
-                                txtNenhum.setVisibility(View.GONE);
-                            }
-
-                        } else {
-
-                            txtNenhum.setText(
-                                    "Não foi possível carregar os profissionais."
-                            );
-
-                            txtNenhum.setVisibility(View.VISIBLE);
+                    public void onResponse(Call<List<ProfissionalResponse>> call,
+                                           Response<List<ProfissionalResponse>> response) {
+                        carregandoProfissionais = false;
+                        profissionaisDisponiveis.clear();
+                        if (!response.isSuccessful() || response.body() == null) {
+                            erroCarregamentoProfissionais = "Não foi possível carregar os profissionais. Tente novamente.";
+                            if (profissionaisAdapter != null) profissionaisAdapter.atualizarLista(new ArrayList<>());
+                            atualizarEstadoProfissionais(txtNenhum);
+                            return;
                         }
+                        for (ProfissionalResponse item : response.body()) {
+                            if (item != null) profissionaisDisponiveis.add(item);
+                        }
+                        erroCarregamentoProfissionais = null;
+                        aplicarFiltroTipo(txtNenhum);
                     }
 
                     @Override
-                    public void onFailure(
-                            Call<List<ProfissionalResponse>> call,
-                            Throwable t
-                    ) {
-
-                        txtNenhum.setText(
-                                "Erro de conexão. Tente novamente."
-                        );
-
-                        txtNenhum.setVisibility(View.VISIBLE);
-
-                        Toast.makeText(
-                                DashboardBeneficiario.this,
-                                "Falha de conexão ao carregar profissionais. Tente novamente.",
-                                Toast.LENGTH_LONG
-                        ).show();
+                    public void onFailure(Call<List<ProfissionalResponse>> call, Throwable t) {
+                        carregandoProfissionais = false;
+                        erroCarregamentoProfissionais = "Falha de conexão. Tente novamente.";
+                        profissionaisDisponiveis.clear();
+                        if (profissionaisAdapter != null) profissionaisAdapter.atualizarLista(new ArrayList<>());
+                        atualizarEstadoProfissionais(txtNenhum);
                     }
                 });
     }
@@ -560,21 +574,17 @@ public class DashboardBeneficiario extends AppCompatActivity {
         btnAgendar.setOnClickListener(v ->
                 abrirTela(R.layout.content_escolher_horario)
         );
-        carregarDetalhesProfissional(tela, profissionalSelecionado.getId());
+        String profissionalId = profissionalSelecionado.getId();
+        if (profissionalId != null && !profissionalId.trim().isEmpty()) {
+            carregarDetalhesProfissional(tela, profissionalId);
+        }
     }
 
     // Configura a tela de escolha de horário
     private void configurarTelaAgendamento(View tela) {
 
         if (profissionalSelecionado == null) {
-
-            Toast.makeText(
-                    this,
-                    "Nenhum profissional selecionado.",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            abrirTela(R.layout.content_agendamento_beneficiario);
+            mostrarProfissionalIndisponivel();
             return;
         }
 
@@ -605,20 +615,15 @@ public class DashboardBeneficiario extends AppCompatActivity {
         calendario.setMinDate(System.currentTimeMillis());
 
         // Verifica as modalidades disponíveis
-        RadioGroup radioModalidade = tela.findViewById(
-                R.id.radioModalidade
-        );
+        RadioGroup radioModalidade = tela.findViewById(R.id.radioModalidade);
+        RadioButton radioOnline = tela.findViewById(R.id.radioOnline);
+        RadioButton radioPresencial = tela.findViewById(R.id.radioPresencial);
+        if (radioModalidade == null || radioOnline == null || radioPresencial == null) {
+            mostrarProfissionalIndisponivel();
+            return;
+        }
 
-        RadioButton radioOnline = tela.findViewById(
-                R.id.radioOnline
-        );
-
-        RadioButton radioPresencial = tela.findViewById(
-                R.id.radioPresencial
-        );
-
-        List<String> modalidades =
-                profissionalSelecionado.getModalidades();
+        List<String> modalidades = profissionalSelecionado.getModalidades();
 
         boolean ofereceOnline = false;
         boolean oferecePresencial = false;
@@ -633,7 +638,7 @@ public class DashboardBeneficiario extends AppCompatActivity {
 
                 String valor = modalidade.trim().toLowerCase(Locale.ROOT);
 
-                if (valor.contains("online")) {
+                if (valor.contains("virtual") || valor.contains("online")) {
                     ofereceOnline = true;
                 }
 
@@ -669,14 +674,9 @@ public class DashboardBeneficiario extends AppCompatActivity {
             }
 
         } else {
-
             radioModalidade.setVisibility(View.GONE);
-
-            Toast.makeText(
-                    this,
-                    "Este profissional não possui modalidades informadas.",
-                    Toast.LENGTH_LONG
-            ).show();
+            mostrarProfissionalIndisponivel();
+            return;
         }
 
         GridLayout grid = tela.findViewById(R.id.gridHorarios);
@@ -690,20 +690,56 @@ public class DashboardBeneficiario extends AppCompatActivity {
         continuar.setOnClickListener(v -> confirmarAgendamento(tela));
     }
 
-    private void mostrarFiltros(TextView empty) {
-        LinearLayout form = new LinearLayout(this); form.setOrientation(LinearLayout.VERTICAL); form.setPadding(28, 8, 28, 0);
-        android.widget.Spinner type = new android.widget.Spinner(this);
-        String[] types = {"Todos os tipos", "PSICOLOGO", "PSIQUIATRA", "TERAPEUTA"};
-        type.setAdapter(new android.widget.ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, types));
-        EditText area = new EditText(this); area.setHint("Área de atuação (opcional)"); area.setText(filtroArea);
-        form.addView(type); form.addView(area);
-        new android.app.AlertDialog.Builder(this).setTitle("Filtrar profissionais").setView(form)
-                .setNegativeButton("Cancelar", null).setPositiveButton("Aplicar", (d, w) -> {
-                    filtroTipo = type.getSelectedItemPosition() == 0 ? "" : types[type.getSelectedItemPosition()];
-                    filtroArea = area.getText().toString().trim();
-                    profissionaisAdapter.atualizarLista(new ArrayList<>());
-                    carregarProfissionais(empty);
-                }).show();
+    private void configurarChipsTipo(View tela, TextView estado) {
+        TextView todos = tela.findViewById(R.id.chipTipoTodos);
+        TextView psicologo = tela.findViewById(R.id.chipTipoPsicologo);
+        TextView psiquiatra = tela.findViewById(R.id.chipTipoPsiquiatra);
+        TextView terapeuta = tela.findViewById(R.id.chipTipoTerapeuta);
+        if (todos == null || psicologo == null || psiquiatra == null || terapeuta == null) return;
+        TextView[] chips = {todos, psicologo, psiquiatra, terapeuta};
+        String[] tipos = {"", "PSICOLOGO", "PSIQUIATRA", "TERAPEUTA"};
+        for (int i = 0; i < chips.length; i++) {
+            final int index = i;
+            chips[i].setOnClickListener(v -> {
+                filtroTipo = tipos[index];
+                for (int j = 0; j < chips.length; j++) {
+                    boolean selecionado = j == index;
+                    chips[j].setBackgroundResource(selecionado
+                            ? R.drawable.bg_filtro_selecionado : R.drawable.bg_filtro_normal);
+                    chips[j].setTextColor(android.graphics.Color.parseColor(
+                            selecionado ? "#FFFFFF" : "#75689A"));
+                    chips[j].setTypeface(null, selecionado
+                            ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+                }
+                aplicarFiltroTipo(estado);
+            });
+        }
+    }
+
+    private void aplicarFiltroTipo(TextView estado) {
+        List<ProfissionalResponse> filtrados = new ArrayList<>();
+        for (ProfissionalResponse item : profissionaisDisponiveis) {
+            if (item == null) continue;
+            if (filtroTipo.isEmpty() || filtroTipo.equalsIgnoreCase(item.getTipo())) filtrados.add(item);
+        }
+        if (profissionaisAdapter != null) profissionaisAdapter.atualizarLista(filtrados);
+        atualizarEstadoProfissionais(estado);
+    }
+
+    private void atualizarEstadoProfissionais(TextView estado) {
+        if (estado == null) return;
+        if (carregandoProfissionais) {
+            estado.setText("Carregando profissionais…");
+            estado.setVisibility(View.VISIBLE);
+        } else if (erroCarregamentoProfissionais != null) {
+            estado.setText(erroCarregamentoProfissionais);
+            estado.setVisibility(View.VISIBLE);
+        } else if (profissionaisAdapter == null || profissionaisAdapter.getItemCount() == 0) {
+            estado.setText("Nenhum profissional encontrado");
+            estado.setVisibility(View.VISIBLE);
+        } else {
+            estado.setVisibility(View.GONE);
+        }
     }
 
     private void carregarDetalhesProfissional(View tela, String id) {
@@ -721,14 +757,19 @@ public class DashboardBeneficiario extends AppCompatActivity {
                     if (detail.getLocais() != null && !detail.getLocais().isEmpty()) {
                         description.append("\n\nLocais e modalidades:\n");
                         for (com.example.mindu.api.profissional.local.LocalResponse place : detail.getLocais()) {
-                            description.append("• ").append(place.getModalidade());
-                            if (place.getCidade() != null) description.append(" — ").append(place.getCidade()).append("/").append(place.getEstado());
+                            if (place == null) continue;
+                            description.append("• ").append(place.getModalidade() == null ? "Modalidade não informada" : place.getModalidade());
+                            if (place.getCidade() != null) {
+                                description.append(" — ").append(place.getCidade());
+                                if (place.getEstado() != null) description.append("/").append(place.getEstado());
+                            }
                             description.append("\n");
                         }
                     }
                     about.setText(description.toString());
                 }
                 ImageView photo = tela.findViewById(R.id.imgFotoProfissional);
+                if (photo == null || id == null || id.trim().isEmpty()) return;
                 RetrofitClient.getApiService(DashboardBeneficiario.this).foto(id).enqueue(new Callback<okhttp3.ResponseBody>() {
                     @Override public void onResponse(Call<okhttp3.ResponseBody> c, Response<okhttp3.ResponseBody> r) {
                         if (!r.isSuccessful() || r.body() == null) return;
@@ -752,21 +793,35 @@ public class DashboardBeneficiario extends AppCompatActivity {
     }
 
     private void carregarHorarios(View tela, long dateMillis) {
-        GridLayout grid = tela.findViewById(R.id.gridHorarios);
-        if (grid == null || profissionalSelecionado == null) return;
+        GridLayout grid = tela == null ? null : tela.findViewById(R.id.gridHorarios);
+        if (grid == null) return;
         dataHoraSelecionada = null;
         grid.removeAllViews();
         TextView state = new TextView(this); state.setText("Carregando horários…"); grid.addView(state);
+        if (profissionalSelecionado == null || profissionalSelecionado.getId() == null
+                || profissionalSelecionado.getId().trim().isEmpty()) {
+            mostrarProfissionalIndisponivel();
+            return;
+        }
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(dateMillis);
         RetrofitClient.getApiService(this).horarios(profissionalSelecionado.getId(), date).enqueue(new Callback<List<String>>() {
             @Override public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 grid.removeAllViews();
-                if (!response.isSuccessful() || response.body() == null) { addGridMessage(grid, "Não foi possível consultar os horários."); return; }
+                if (!response.isSuccessful()) {
+                    addGridMessage(grid, "Não foi possível consultar os horários.");
+                    return;
+                }
                 List<String> available = response.body();
-                if (available.isEmpty()) { addGridMessage(grid, "Sem horários nesta data."); return; }
+                List<String> validSlots = new ArrayList<>();
+                if (available != null) for (String slot : available)
+                    if (slot != null && !slot.trim().isEmpty()) validSlots.add(slot);
+                if (validSlots.isEmpty()) {
+                    mostrarProfissionalIndisponivel();
+                    return;
+                }
                 grid.setColumnCount(3);
-                for (int i = 0; i < available.size(); i++) {
-                    final String slot = available.get(i);
+                for (int i = 0; i < validSlots.size(); i++) {
+                    final String slot = validSlots.get(i);
                     String label = slot.length() >= 16 ? slot.substring(11, 16) : slot;
                     Button button = new Button(DashboardBeneficiario.this); button.setText(label); button.setTextSize(12);
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(i / 3), GridLayout.spec(i % 3, 1f));
@@ -778,12 +833,44 @@ public class DashboardBeneficiario extends AppCompatActivity {
         });
     }
 
+    private void mostrarProfissionalIndisponivel() {
+        View modal = LayoutInflater.from(this).inflate(R.layout.dialog_profissional_indisponivel, null, false);
+        android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
+                .setView(modal)
+                .create();
+        View voltar = modal.findViewById(R.id.btnVoltarProfissionalIndisponivel);
+        if (voltar != null) voltar.setOnClickListener(v -> {
+            dialog.dismiss();
+            profissionalSelecionado = null;
+            dataHoraSelecionada = null;
+            abrirTela(R.layout.content_agendamento_beneficiario);
+        });
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+    }
+
     private void addGridMessage(GridLayout grid, String message) { TextView text = new TextView(this); text.setText(message); text.setPadding(dp(8), dp(8), dp(8), dp(8)); grid.addView(text); }
 
     private void confirmarAgendamento(View tela) {
-        if (dataHoraSelecionada == null) { Toast.makeText(this, "Escolha uma data e um horário disponível.", Toast.LENGTH_LONG).show(); return; }
-        RadioButton online = tela.findViewById(R.id.radioOnline); RadioButton presencial = tela.findViewById(R.id.radioPresencial);
-        String modality = online.isChecked() ? "VIRTUAL" : "PRESENCIAL";
+        if (profissionalSelecionado == null || profissionalSelecionado.getId() == null
+                || profissionalSelecionado.getId().trim().isEmpty()) {
+            mostrarProfissionalIndisponivel();
+            return;
+        }
+        if (dataHoraSelecionada == null || dataHoraSelecionada.trim().isEmpty()) {
+            Toast.makeText(this, "Escolha uma data e um horário disponível.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        RadioGroup modalidades = tela.findViewById(R.id.radioModalidade);
+        if (modalidades == null || modalidades.getVisibility() != View.VISIBLE) {
+            Toast.makeText(this, "Este profissional não possui modalidade de atendimento disponível.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        RadioButton online = tela.findViewById(R.id.radioOnline);
+        String modality = online != null && online.getVisibility() == View.VISIBLE && online.isChecked()
+                ? "VIRTUAL" : "PRESENCIAL";
         RetrofitClient.getApiService(this).agendar(new AgendamentoRequest(profissionalSelecionado.getId(), dataHoraSelecionada, modality))
                 .enqueue(new Callback<AgendamentoResponse>() {
                     @Override public void onResponse(Call<AgendamentoResponse> call, Response<AgendamentoResponse> response) {
@@ -797,32 +884,85 @@ public class DashboardBeneficiario extends AppCompatActivity {
     }
 
     private void mostrarMinhasConsultas() {
-        ScrollView scroll = new ScrollView(this);
-        LinearLayout list = new LinearLayout(this); list.setOrientation(LinearLayout.VERTICAL); list.setPadding(dp(18), dp(14), dp(18), dp(90)); scroll.addView(list);
-        Button back = new Button(this); back.setText("‹ Buscar profissionais"); back.setOnClickListener(v -> abrirTela(R.layout.content_agendamento_beneficiario)); list.addView(back);
-        list.addView(textLabel("Minhas consultas", 22, true)); list.addView(textLabel("Carregando…", 15, false));
-        containerBeneficiario.removeAllViews(); containerBeneficiario.addView(scroll);
+        LinearLayout page = new LinearLayout(this);
+        page.setOrientation(LinearLayout.VERTICAL);
+        page.setPadding(dp(18), dp(14), dp(18), dp(12));
+        if (fabMilaBeneficiario != null) fabMilaBeneficiario.setVisibility(View.GONE);
+        Button back = new Button(this);
+        back.setText("‹ Buscar profissionais");
+        estilizarBotaoMindU(back);
+        back.setOnClickListener(v -> abrirTela(R.layout.content_agendamento_beneficiario));
+        page.addView(back);
+        page.addView(textLabel("Minhas consultas", 22, true));
+        TextView state = textLabel("Carregando…", 15, false);
+        page.addView(state);
+        RecyclerView recycler = new RecyclerView(this);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setNestedScrollingEnabled(false);
+        page.addView(recycler, new LinearLayout.LayoutParams(-1, 0, 1));
+        containerBeneficiario.removeAllViews();
+        containerBeneficiario.addView(page);
+
         RetrofitClient.getApiService(this).meusAgendamentos().enqueue(new Callback<List<AgendamentoResponse>>() {
             @Override public void onResponse(Call<List<AgendamentoResponse>> call, Response<List<AgendamentoResponse>> response) {
-                list.removeViewAt(list.getChildCount() - 1);
-                if (!response.isSuccessful() || response.body() == null) { list.addView(textLabel(response.code() == 403 ? "Sua conta ainda não pode consultar agendamentos." : "Não foi possível carregar suas consultas.", 15, false)); return; }
-                if (response.body().isEmpty()) { list.addView(textLabel("Você ainda não tem consultas.", 15, false)); return; }
-                for (AgendamentoResponse item : response.body()) {
-                    String text = item.getDataHora() + "\n" + item.getProfissionalNome() + " • " + item.getModalidade() + " • " + item.getStatus();
-                    list.addView(textLabel(text, 15, true));
-                    if ("VIRTUAL".equalsIgnoreCase(item.getModalidade()) && item.getLinkOnline() != null && !item.getLinkOnline().trim().isEmpty()) {
-                        Button room = new Button(DashboardBeneficiario.this); room.setText("Abrir sala online"); room.setOnClickListener(v -> openSecureLink(item.getLinkOnline())); list.addView(room);
-                    }
-                    LinearLayout actions = new LinearLayout(DashboardBeneficiario.this);
-                    Button cancel = new Button(DashboardBeneficiario.this); cancel.setText("Cancelar");
-                    Button reschedule = new Button(DashboardBeneficiario.this); reschedule.setText("Remarcar");
-                    actions.addView(cancel, new LinearLayout.LayoutParams(0, -2, 1)); actions.addView(reschedule, new LinearLayout.LayoutParams(0, -2, 1)); list.addView(actions);
-                    cancel.setOnClickListener(v -> new android.app.AlertDialog.Builder(DashboardBeneficiario.this).setMessage("Cancelar esta consulta?").setNegativeButton("Voltar", null).setPositiveButton("Cancelar", (d, w) -> RetrofitClient.getApiService(DashboardBeneficiario.this).cancelar(item.getId()).enqueue(appointmentCallback("Consulta cancelada."))).show());
-                    reschedule.setOnClickListener(v -> escolherDataReagendamento(item));
+                if (!response.isSuccessful() || response.body() == null) {
+                    recycler.setVisibility(View.GONE);
+                    state.setText(response.code() == 403
+                            ? "Sua conta ainda não pode consultar agendamentos."
+                            : "Não foi possível carregar suas consultas.");
+                    return;
                 }
+                List<AgendamentoResponse> appointments = new ArrayList<>();
+                for (AgendamentoResponse item : response.body()) if (item != null) appointments.add(item);
+                if (appointments.isEmpty()) {
+                    recycler.setVisibility(View.GONE);
+                    state.setText("Você ainda não tem consultas.");
+                    return;
+                }
+                MinhasConsultasAdapter adapter = new MinhasConsultasAdapter(appointments, new MinhasConsultasAdapter.Listener() {
+                    @Override public void onAbrirSala(AgendamentoResponse item) { abrirSessaoDemo(item, "CLIENTE"); }
+                    @Override public void onCancelar(AgendamentoResponse item) {
+                        new android.app.AlertDialog.Builder(DashboardBeneficiario.this)
+                                .setMessage("Cancelar esta consulta?")
+                                .setNegativeButton("Voltar", null)
+                                .setPositiveButton("Cancelar", (d, w) -> RetrofitClient.getApiService(DashboardBeneficiario.this)
+                                        .cancelar(item.getId()).enqueue(appointmentCallback("Consulta cancelada.")))
+                                .show();
+                    }
+                    @Override public void onRemarcar(AgendamentoResponse item) { escolherDataReagendamento(item); }
+                });
+                recycler.setAdapter(adapter);
+                state.setVisibility(View.GONE);
+                recycler.setVisibility(View.VISIBLE);
             }
-            @Override public void onFailure(Call<List<AgendamentoResponse>> call, Throwable t) { list.removeViewAt(list.getChildCount() - 1); list.addView(textLabel("Falha de conexão ao carregar suas consultas.", 15, false)); }
+            @Override public void onFailure(Call<List<AgendamentoResponse>> call, Throwable t) {
+                recycler.setVisibility(View.GONE);
+                state.setText("Falha de conexão ao carregar suas consultas.");
+            }
         });
+    }
+
+    private void abrirSessaoDemo(AgendamentoResponse item, String role) {
+        if (item == null) return;
+        SessionDemoStore.markStarted(this, item);
+        Intent intent = new Intent(this, SalaAtendimentoActivity.class);
+        intent.putExtra(SalaAtendimentoActivity.ROLE, role);
+        intent.putExtra(SalaAtendimentoActivity.ID, item.getId());
+        intent.putExtra(SalaAtendimentoActivity.CLIENT_ID, item.getClienteId());
+        intent.putExtra(SalaAtendimentoActivity.CLIENT_NAME, item.getClienteNome());
+        intent.putExtra(SalaAtendimentoActivity.PRO_ID, item.getProfissionalId());
+        intent.putExtra(SalaAtendimentoActivity.PRO_NAME, item.getProfissionalNome());
+        intent.putExtra(SalaAtendimentoActivity.MODALITY, item.getModalidade());
+        intent.putExtra(SalaAtendimentoActivity.DATE, item.getDataHora());
+        startActivity(intent);
+    }
+
+    private void estilizarBotaoMindU(Button button) {
+        button.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#75689A")));
+        button.setTextColor(Color.WHITE);
+        button.setAllCaps(false);
+        button.setTypeface(android.graphics.Typeface.create("sans-serif-medium", 0));
+        button.setPadding(dp(16), dp(10), dp(16), dp(10));
     }
 
     private void escolherDataReagendamento(AgendamentoResponse item) {

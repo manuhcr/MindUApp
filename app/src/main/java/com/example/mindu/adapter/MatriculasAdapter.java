@@ -48,7 +48,8 @@ public class MatriculasAdapter extends RecyclerView.Adapter<MatriculasAdapter.Ma
 
         MatriculaResponse matricula = matriculas.get(position);
 
-        holder.txtCodigo.setText(matricula.codigo);
+        holder.txtCodigo.setText(matricula.codigo == null || matricula.codigo.trim().isEmpty()
+                ? "Código não informado" : matricula.codigo);
 
         if (matricula.utilizada) {
 
@@ -78,9 +79,10 @@ public class MatriculasAdapter extends RecyclerView.Adapter<MatriculasAdapter.Ma
             holder.txtStatus.setBackgroundColor(Color.parseColor("#E5F3ED"));
 
             holder.txtBeneficiario.setVisibility(View.GONE);
-            holder.btnCopiar.setVisibility(View.VISIBLE);
-
+            boolean codigoDisponivel = matricula.codigo != null && !matricula.codigo.trim().isEmpty();
+            holder.btnCopiar.setVisibility(codigoDisponivel ? View.VISIBLE : View.GONE);
             holder.btnCopiar.setOnClickListener(v -> {
+                if (!codigoDisponivel) return;
 
                 ClipboardManager clipboard =
                         (ClipboardManager) context.getSystemService(

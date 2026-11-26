@@ -12,6 +12,8 @@ final class AccountNavigator {
     static void open(Activity activity, MinhaContaResponse account) {
         String type = account.getTipo() == null ? "" : account.getTipo().trim().toUpperCase(java.util.Locale.ROOT);
         String status = account.getStatus() == null ? "" : account.getStatus().trim().toUpperCase(java.util.Locale.ROOT);
+        SessionManager.save(activity, SessionManager.getToken(activity), account.getTipo(),
+                account.getStatus(), account.getId(), account.getNome());
         if ("REJEITADO".equals(status)) {
             SessionManager.clear(activity);
             String message = "CLIENTE".equals(type)
@@ -31,7 +33,6 @@ final class AccountNavigator {
             if ("EMPRESA".equals(type)) intent = new Intent(activity, DashboardEmpresa.class);
         } else if ("PROFISSIONAL".equals(type)) {
             intent = new Intent(activity, DashboardProfissional.class);
-            intent.putExtra("nome_profissional", account.getNome());
         } else if ("ADMIN".equals(type)) {
             intent = new Intent(activity, DashboardAdmin.class);
         } else {

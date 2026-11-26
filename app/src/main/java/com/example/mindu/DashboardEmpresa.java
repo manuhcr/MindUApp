@@ -259,6 +259,10 @@ public class DashboardEmpresa extends AppCompatActivity {
     // =========================================================
 
     private void configurarTelaInicioEmpresa(View tela) {
+        TextView txtSaudacao = tela.findViewById(R.id.txtSaudacaoEmpresa);
+        String nomeSessao = SessionManager.getName(this);
+        txtSaudacao.setText(SaudacaoFormatter.format(nomeSessao));
+        carregarSaudacaoEmpresa(txtSaudacao);
 
         TextView txtUsoBeneficio =
                 tela.findViewById(R.id.txtUsoBeneficio);
@@ -363,6 +367,26 @@ public class DashboardEmpresa extends AppCompatActivity {
                 });
     }
 
+    private void carregarSaudacaoEmpresa(TextView saudacao) {
+        apiService.minhaConta().enqueue(new Callback<com.example.mindu.api.login.MinhaContaResponse>() {
+            @Override
+            public void onResponse(Call<com.example.mindu.api.login.MinhaContaResponse> call,
+                                   Response<com.example.mindu.api.login.MinhaContaResponse> response) {
+                if (!response.isSuccessful() || response.body() == null) return;
+                String nome = response.body().getNome();
+                if (nome == null || nome.trim().isEmpty()) return;
+                nome = nome.trim();
+                SessionManager.saveName(DashboardEmpresa.this, nome);
+                saudacao.setText(SaudacaoFormatter.format(nome));
+            }
+
+            @Override
+            public void onFailure(Call<com.example.mindu.api.login.MinhaContaResponse> call, Throwable t) {
+                // Mantém o nome da sessão exibido enquanto a API estiver indisponível.
+            }
+        });
+    }
+
     // =========================================================
     // RELATÓRIOS RH
     // =========================================================
@@ -431,11 +455,9 @@ public class DashboardEmpresa extends AppCompatActivity {
 
                         if (!response.isSuccessful() || response.body() == null) {
 
-                            Toast.makeText(
-                                    DashboardEmpresa.this,
-                                    "Não foi possível carregar os colaboradores.",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                            txtColaboradoresEmpresaVazio.setText("Não foi possível carregar os colaboradores.");
+                            txtColaboradoresEmpresaVazio.setVisibility(View.VISIBLE);
+                            rvColaboradoresEmpresa.setVisibility(View.GONE);
 
                             return;
                         }
@@ -1029,6 +1051,9 @@ public class DashboardEmpresa extends AppCompatActivity {
 
         btnGerarMatriculas.setOnClickListener(v -> gerarNovasMatriculas());
 
+        txtListaMatriculasVazia.setText("Carregando matrículas…");
+        txtListaMatriculasVazia.setVisibility(View.VISIBLE);
+        rvMatriculasEmpresa.setVisibility(View.GONE);
         carregarMatriculas();
     }
 
@@ -1046,7 +1071,7 @@ public class DashboardEmpresa extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
 
                             listaMatriculas.clear();
-                            listaMatriculas.addAll(response.body());
+                            for (MatriculaResponse item : response.body()) if (item != null) listaMatriculas.add(item);
 
                             int total = listaMatriculas.size();
                             int utilizadas = 0;
@@ -1085,11 +1110,9 @@ public class DashboardEmpresa extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(
-                                    DashboardEmpresa.this,
-                                    "Não foi possível carregar as matrículas.",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                            txtListaMatriculasVazia.setText("Não foi possível carregar as matrículas.");
+                            txtListaMatriculasVazia.setVisibility(View.VISIBLE);
+                            rvMatriculasEmpresa.setVisibility(View.GONE);
                         }
                     }
 
@@ -1101,11 +1124,9 @@ public class DashboardEmpresa extends AppCompatActivity {
                         Log.e("MATRICULAS_MINDU",
                                 "Erro ao carregar matrículas", t);
 
-                        Toast.makeText(
-                                DashboardEmpresa.this,
-                                "Erro de conexão ao carregar matrículas.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        txtListaMatriculasVazia.setText("Falha de conexão ao carregar matrículas.");
+                        txtListaMatriculasVazia.setVisibility(View.VISIBLE);
+                        rvMatriculasEmpresa.setVisibility(View.GONE);
                     }
                 });
     }
@@ -1246,6 +1267,9 @@ public class DashboardEmpresa extends AppCompatActivity {
 
         rvColaboradoresEmpresa.setAdapter(adapter);
 
+        txtColaboradoresEmpresaVazio.setText("Carregando colaboradores…");
+        txtColaboradoresEmpresaVazio.setVisibility(View.VISIBLE);
+        rvColaboradoresEmpresa.setVisibility(View.GONE);
         configurarAbas();
         configurarPesquisa();
         carregarColaboradores();
@@ -1264,7 +1288,7 @@ public class DashboardEmpresa extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
 
                             listaCompleta.clear();
-                            listaCompleta.addAll(response.body());
+                            for (ClienteResponse item : response.body()) if (item != null) listaCompleta.add(item);
 
                             filtrarColaboradores();
 
@@ -1283,11 +1307,9 @@ public class DashboardEmpresa extends AppCompatActivity {
                             Call<List<ClienteResponse>> call,
                             Throwable t) {
 
-                        Toast.makeText(
-                                DashboardEmpresa.this,
-                                "Erro de conexão com o servidor.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        txtColaboradoresEmpresaVazio.setText("Falha de conexão com o servidor.");
+                        txtColaboradoresEmpresaVazio.setVisibility(View.VISIBLE);
+                        rvColaboradoresEmpresa.setVisibility(View.GONE);
                     }
                 });
     }
@@ -1376,7 +1398,7 @@ public class DashboardEmpresa extends AppCompatActivity {
         listaFiltrada.clear();
 
         for (ClienteResponse colaborador : listaCompleta) {
-
+            if (colaborador == null) continue;
             boolean correspondeStatus =
                     statusSelecionado.equals(colaborador.getStatus());
 
