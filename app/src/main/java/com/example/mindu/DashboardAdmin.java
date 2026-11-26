@@ -56,7 +56,7 @@ public class DashboardAdmin extends AppCompatActivity {
     private ImageButton btnCameraAdmin;
     private FrameLayout areaFotoAdmin;
 
-    private ActivityResultLauncher<Void> cameraLauncher;
+    private ProfilePhotoController profilePhotoController;
     private FrameLayout containerAdmin;
     private ImageView navInicio;
     private ImageView navEmpresas;
@@ -102,24 +102,10 @@ public class DashboardAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!SessionManager.guard(this, "ADMIN")) return;
         setContentView(R.layout.activity_dashboard_admin);
-
-        cameraLauncher = registerForActivityResult(
-                new ActivityResultContracts.TakePicturePreview(),
-                bitmap -> {
-                    if (bitmap != null) {
-
-                        salvarFotoAdmin(bitmap);
-
-                        imgFotoAdmin.setImageBitmap(bitmap);
-                        imgFotoAdmin.setVisibility(View.VISIBLE);
-                        txtInicial.setVisibility(View.GONE);
-
-
-
-                    }
-                }
-        );
+        MilaFab.attach(this);
+        profilePhotoController = new ProfilePhotoController(this, false, savedInstanceState);
 
         containerAdmin = findViewById(R.id.containerAdmin);
 
@@ -259,20 +245,9 @@ public class DashboardAdmin extends AppCompatActivity {
             btnCameraAdmin = tela.findViewById(R.id.btnCameraAdmin);
             areaFotoAdmin = tela.findViewById(R.id.areaFotoAdmin);
 
-            carregarFotoAdmin();
-
-            imgFotoAdmin.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, android.graphics.Outline outline) {
-                    outline.setOval(0, 0, view.getWidth(), view.getHeight());
-                }
-            });
-
-            imgFotoAdmin.setClipToOutline(true);
-
-            btnCameraAdmin.setOnClickListener(v -> cameraLauncher.launch(null));
-
-            areaFotoAdmin.setOnClickListener(v -> cameraLauncher.launch(null));
+            SharedPreferences profilePrefs = getSharedPreferences("mindu", MODE_PRIVATE);
+            profilePhotoController.bind(areaFotoAdmin, imgFotoAdmin, txtInicial,
+                    profilePrefs.getString("nomeAdmin", "Administrador"));
 
             aplicarEfeitoVidro(blurCard, blurTarget);
 
@@ -288,6 +263,11 @@ public class DashboardAdmin extends AppCompatActivity {
         }
     }
 
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        if (profilePhotoController != null) profilePhotoController.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
 
     private void mostrarProfissionais() {
 
@@ -483,7 +463,7 @@ public class DashboardAdmin extends AppCompatActivity {
 
         // requisição de empresas
         RetrofitClient.getApiService(this)
-                .listarEmpresas()
+                .listarEmpresas(true)
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(
@@ -757,7 +737,7 @@ public class DashboardAdmin extends AppCompatActivity {
     private void carregarEmpresas() {
 
         RetrofitClient.getApiService(this)
-                .listarEmpresas()
+                .listarEmpresas(true)
                 .enqueue(new Callback<>() {
 
                     @Override
@@ -1110,35 +1090,6 @@ public class DashboardAdmin extends AppCompatActivity {
     }
 
 
-    private void carregarFotoAdmin() {
-        File arquivo = new File(getFilesDir(), "foto_admin.png");
-
-        if (arquivo.exists()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(arquivo.getAbsolutePath());
-
-            if (bitmap != null) {
-                imgFotoAdmin.setImageBitmap(bitmap);
-                imgFotoAdmin.setVisibility(View.VISIBLE);
-                txtInicial.setVisibility(View.GONE);
-            }
-        }
-    }
-    private void salvarFotoAdmin(Bitmap bitmap) {
-        try {
-            File arquivo = new File(getFilesDir(), "foto_admin.png");
-
-            FileOutputStream outputStream = new FileOutputStream(arquivo);
-
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-
-            outputStream.close();
-
-        } catch (IOException e) {
-            Log.e("MINDU_API", "Erro ao salvar foto do administrador", e);
-            Toast.makeText(this, "Erro ao salvar a foto.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void mostrarDialogInfoContaAdmin() {
 
         View dialogView = getLayoutInflater()
@@ -1215,27 +1166,7 @@ public class DashboardAdmin extends AppCompatActivity {
                 })
                 .setPositiveButton("Sair", (dialog, which) -> {
 
-                    SharedPreferences prefs =
-                            getSharedPreferences("mindu", MODE_PRIVATE);
-
-                    prefs.edit()
-                            .remove("token")
-                            .remove("nomeAdmin")
-                            .remove("emailAdmin")
-                            .apply();
-
-                    Intent intent = new Intent(
-                            DashboardAdmin.this,
-                            LoginAdmin.class
-                    );
-
-                    intent.setFlags(
-                            Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    );
-
-                    startActivity(intent);
-                    finish();
+                    SessionManager.logout(DashboardAdmin.this);
                 })
                 .show();
     }

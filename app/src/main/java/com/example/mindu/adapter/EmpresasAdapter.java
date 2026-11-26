@@ -37,14 +37,12 @@ public class EmpresasAdapter
     public class EmpresasViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtRazaoSocial;
-        TextView txtIdEmpresa;
         TextView txtPlanoEmpresa;
         Button btnExcluirEmpresa;
 
         public EmpresasViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtIdEmpresa = itemView.findViewById(R.id.txtIdEmpresa);
             txtRazaoSocial = itemView.findViewById(R.id.txtRazaoSocial);
             txtPlanoEmpresa = itemView.findViewById(R.id.txtPlanoEmpresa);
             btnExcluirEmpresa = itemView.findViewById(R.id.btnExcluirEmpresa);
@@ -82,7 +80,6 @@ public class EmpresasAdapter
 
         EmpresaResponse empresa = empresasExibidas.get(position);
 
-        holder.txtIdEmpresa.setText("ID: " + empresa.id);
         holder.txtRazaoSocial.setText(
                 "Razão Social: " + empresa.razaoSocial
         );

@@ -55,6 +55,16 @@ public class CadastroBeneficiario extends AppCompatActivity {
     private boolean cadastrando = false;
 
     private Call<EmpresaDaMatriculaResponse> chamadaValidacao;
+    private Call<ClienteResponse> chamadaCadastro;
+    private LoginFlow cadastroLoginFlow;
+
+    @Override
+    protected void onDestroy() {
+        if (chamadaValidacao != null) chamadaValidacao.cancel();
+        if (chamadaCadastro != null) chamadaCadastro.cancel();
+        if (cadastroLoginFlow != null) cadastroLoginFlow.cancel();
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,7 @@ public class CadastroBeneficiario extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro_beneficiario);
+        LoginBackButton.attach(this);
 
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main), (v, insets) -> {
@@ -340,6 +351,11 @@ public class CadastroBeneficiario extends AppCompatActivity {
             edtSenha.requestFocus();
             return;
         }
+        if (senha.length() < 8) {
+            edtSenha.setError("A senha deve ter no mínimo 8 caracteres.");
+            edtSenha.requestFocus();
+            return;
+        }
 
         // Exige matrícula validada
         if (empresaIdValidada == null
@@ -374,7 +390,8 @@ public class CadastroBeneficiario extends AppCompatActivity {
         );
 
         // Envia para a API
-        apiService.cadastrarCliente(request).enqueue(
+        chamadaCadastro = apiService.cadastrarCliente(request);
+        chamadaCadastro.enqueue(
                 new Callback<ClienteResponse>() {
 
                     @Override
@@ -382,17 +399,25 @@ public class CadastroBeneficiario extends AppCompatActivity {
                             Call<ClienteResponse> call,
                             Response<ClienteResponse> response) {
 
+                        if (isFinishing() || isDestroyed()) return;
                         cadastrando = false;
                         button.setEnabled(true);
 
                         if (response.isSuccessful()
                                 && response.body() != null) {
 
-                            Toast.makeText(
-                                    CadastroBeneficiario.this,
-                                    "Cadastro realizado com sucesso!",
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            cadastroLoginFlow = new LoginFlow(CadastroBeneficiario.this);
+                            cadastroLoginFlow.login(request.getEmail(), request.getSenha(), "CLIENTE",
+                                    new LoginFlow.Listener() {
+                                        @Override public void onSuccess(com.example.mindu.api.login.MinhaContaResponse account) {
+                                            AccountNavigator.open(CadastroBeneficiario.this, account);
+                                        }
+                                        @Override public void onError(String message) {
+                                            Toast.makeText(CadastroBeneficiario.this,
+                                                    "Cadastro realizado. O login automático falhou; entre pela tela de login.",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
                         } else {
 
@@ -409,6 +434,7 @@ public class CadastroBeneficiario extends AppCompatActivity {
                             Call<ClienteResponse> call,
                             Throwable t) {
 
+                        if (isFinishing() || isDestroyed()) return;
                         cadastrando = false;
                         button.setEnabled(true);
 

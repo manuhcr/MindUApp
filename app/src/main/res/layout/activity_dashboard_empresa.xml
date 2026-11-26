@@ -103,6 +103,7 @@
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="18dp"
         android:background="@drawable/bg_fab_mila"
+        android:padding="3dp"
         android:clickable="true"
         android:focusable="true"
         android:elevation="12dp"
@@ -110,14 +111,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/navEmpresa">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="M"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:background="@drawable/bg_avatar_mila"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mila_light"
+            android:contentDescription="Mila"/>
 
     </FrameLayout>
 

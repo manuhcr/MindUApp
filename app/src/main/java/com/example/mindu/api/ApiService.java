@@ -8,6 +8,7 @@ import com.example.mindu.api.empresas.EmpresaResponse;
 import com.example.mindu.api.cliente.ClienteRequest;
 import com.example.mindu.api.cliente.ClienteResponse;
 import com.example.mindu.api.cliente.dados.DadosSensiveisRequest;
+import com.example.mindu.api.cliente.dados.DadosSensiveisResponse;
 import com.example.mindu.api.dashboard.DashboardResponse;
 import com.example.mindu.api.login.LoginRequest;
 import com.example.mindu.api.login.LoginResponse;
@@ -16,6 +17,8 @@ import com.example.mindu.api.login.TrocaSenhaRequest;
 import com.example.mindu.api.matriculas.MatriculaResponse;
 import com.example.mindu.api.planos.PlanoResponse;
 import com.example.mindu.api.profissional.ProfissionalResponse;
+import com.example.mindu.api.profissional.ProfissionalPerfilRequest;
+import com.example.mindu.api.profissional.agendamento.LinkOnlineRequest;
 import com.example.mindu.api.profissional.agendamento.AgendamentoRequest;
 import com.example.mindu.api.profissional.agendamento.AgendamentoResponse;
 import com.example.mindu.api.profissional.agendamento.ReagendarRequest;
@@ -50,6 +53,14 @@ public interface ApiService {
 
     @POST("v1/chat")
     Call<ChatResponse> enviarMensagem(@Body ChatRequest body);
+
+    @Multipart
+    @POST("v1/chat/audio")
+    Call<ChatResponse> enviarAudio(
+            @Part MultipartBody.Part file,
+            @Part("message") RequestBody message,
+            @Part("history") RequestBody historyJson
+    );
 
     @GET("v1/auth/me")
     Call<MinhaContaResponse> minhaConta();
@@ -101,6 +112,9 @@ public interface ApiService {
     @GET("v1/clientes/me")
     Call<ClienteResponse> meuPerfil();
 
+    @GET("v1/clientes/me/dados-sensiveis")
+    Call<DadosSensiveisResponse> meusDadosSensiveis();
+
     @PATCH("v1/clientes/me/dados-sensiveis")
     Call<ClienteResponse> completarMeuPerfil(@Body DadosSensiveisRequest body);
 
@@ -132,6 +146,12 @@ public interface ApiService {
     @PATCH("v1/profissionais/{id}/aprovacao")
     Call<ProfissionalResponse> aprovarProfissional(@Path("id") String id, @Query("aprovado") boolean aprovado);
 
+    @GET("v1/profissionais/me")
+    Call<ProfissionalResponse> meuPerfilProfissional();
+
+    @PATCH("v1/profissionais/{id}")
+    Call<ProfissionalResponse> atualizarPerfilProfissional(@Path("id") String id, @Body ProfissionalPerfilRequest body);
+
     @POST("v1/profissionais/{id}/locais")
     Call<LocalResponse> adicionarLocal(@Path("id") String id, @Body LocalRequest body);
 
@@ -155,6 +175,13 @@ public interface ApiService {
     @GET("v1/profissionais/{id}/foto")
     Call<ResponseBody> foto(@Path("id") String id);
 
+    @Multipart
+    @PATCH("v1/profissionais/{id}/perfil")
+    Call<ResponseBody> atualizarFotoProfissional(
+            @Path("id") String id,
+            @Part MultipartBody.Part foto
+    );
+
     @GET("v1/profissionais/{id}/banner")
     Call<ResponseBody> banner(@Path("id") String id);
 
@@ -169,7 +196,7 @@ public interface ApiService {
     Call<List<ClienteResponse>> listarClientesAdmin(@Query("status") String status);
 
     @GET("v1/admin/empresas")
-    Call<List<EmpresaResponse>> listarEmpresas();
+    Call<List<EmpresaResponse>> listarEmpresas(@Query("ativo") Boolean ativo);
 
     @GET("v1/admin/agendamentos")
     Call<List<AgendamentoResponse>> listarAgendamentos();
@@ -195,6 +222,12 @@ public interface ApiService {
 
     @PATCH("v1/agendamentos/{id}/horario")
     Call<AgendamentoResponse> reagendar(@Path("id") String id, @Body ReagendarRequest body);
+
+    @PATCH("v1/agendamentos/{id}/link-online")
+    Call<AgendamentoResponse> definirLinkOnline(@Path("id") String id, @Body LinkOnlineRequest body);
+
+    @PATCH("v1/agendamentos/{id}/realizacao")
+    Call<AgendamentoResponse> marcarRealizado(@Path("id") String id);
 
 
 }

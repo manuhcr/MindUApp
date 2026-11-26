@@ -17,6 +17,7 @@ import android.view.ViewOutlineProvider;
 
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,11 @@ public class Acessos extends AppCompatActivity {
         // Aqui o Android transforma o activity_acessos.xml
         // em Views que podemos manipular pelo Java.
         setContentView(R.layout.activity_acessos);
+        String sessionMessage = getIntent().getStringExtra("session_message");
+        if (sessionMessage != null) {
+            Toast.makeText(this, sessionMessage, Toast.LENGTH_LONG).show();
+            getIntent().removeExtra("session_message");
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

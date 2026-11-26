@@ -118,11 +118,11 @@
             <!-- ================================================= -->
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputMatricula"
+                android:id="@+id/inputEmailProfissional"
                 android:layout_width="230dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="80dp"
-                android:hint="Matrícula"
+                android:hint="E-mail"
                 android:textColorHint="#3E3545"
                 app:boxBackgroundColor="#55F5F3F7"
                 app:boxBackgroundMode="filled"
@@ -139,7 +139,7 @@
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
+                    android:inputType="textEmailAddress"
                     android:textColor="#3E3545"
                     android:textSize="14sp" />
 
@@ -167,7 +167,7 @@
                 app:hintTextColor="#3E3545"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputMatricula">
+                app:layout_constraintTop_toBottomOf="@id/inputEmailProfissional">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtSenha"

@@ -93,4 +93,29 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fabMilaBeneficiario"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_fab_mila"
+        android:clickable="true"
+        android:contentDescription="Abrir conversa com a Mila"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/navBeneficiario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_avatar_mila"
+            android:clipToOutline="true"
+            android:contentDescription="Mila"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mila_light" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

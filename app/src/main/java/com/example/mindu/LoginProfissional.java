@@ -6,6 +6,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.Button;
+import android.widget.Toast;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,14 +18,22 @@ import androidx.core.view.WindowInsetsCompat;
 
 import eightbitlab.com.blurview.BlurTarget;
 import eightbitlab.com.blurview.BlurView;
+import com.example.mindu.api.login.MinhaContaResponse;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginProfissional extends AppCompatActivity {
+    private LoginFlow loginFlow;
+    private TextInputEditText edtEmail;
+    private TextInputEditText edtSenha;
+    private Button btnEntrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_profissional);
+        LoginBackButton.attach(this);
+        loginFlow = new LoginFlow(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -36,11 +46,54 @@ public class LoginProfissional extends AppCompatActivity {
 
         aplicarEfeitoVidroLiquido(blurCadastroBeneficiario);
 
+        edtEmail = findViewById(R.id.edtEmail);
+        edtSenha = findViewById(R.id.edtSenha);
+        btnEntrar = findViewById(R.id.button);
+        btnEntrar.setOnClickListener(v -> realizarLogin());
+
         TextView textSolicitaCredenciamento = findViewById(R.id.textCadastreOrg);
         textSolicitaCredenciamento.setOnClickListener(v -> {
             Intent rotacionar = new Intent(LoginProfissional.this, CadastroProfissional.class);
             startActivity(rotacionar);
         });
+    }
+
+    private void realizarLogin() {
+        String email = edtEmail.getText() == null ? "" : edtEmail.getText().toString().trim();
+        String senha = edtSenha.getText() == null ? "" : edtSenha.getText().toString();
+        if (email.isEmpty()) {
+            edtEmail.setError("Informe seu e-mail");
+            edtEmail.requestFocus();
+            return;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            edtEmail.setError("Informe um e-mail válido");
+            edtEmail.requestFocus();
+            return;
+        }
+        if (senha.isEmpty()) {
+            edtSenha.setError("Informe sua senha");
+            edtSenha.requestFocus();
+            return;
+        }
+
+        btnEntrar.setEnabled(false);
+        btnEntrar.setText("Entrando...");
+        loginFlow.login(email, senha, "PROFISSIONAL", new LoginFlow.Listener() {
+            @Override public void onSuccess(MinhaContaResponse account) {
+                AccountNavigator.open(LoginProfissional.this, account);
+            }
+            @Override public void onError(String message) {
+                btnEntrar.setEnabled(true);
+                btnEntrar.setText("Entrar");
+                Toast.makeText(LoginProfissional.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override protected void onDestroy() {
+        if (loginFlow != null) loginFlow.cancel();
+        super.onDestroy();
     }
 
     private void aplicarEfeitoVidroLiquido(View view) {

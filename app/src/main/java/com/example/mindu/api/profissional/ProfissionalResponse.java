@@ -8,6 +8,7 @@ public class ProfissionalResponse {
     private String nome;
     private String status;
     private String tipo;
+    private String bio;
     private List<String> tags;
     private List<String> modalidades;
 
@@ -26,6 +27,8 @@ public class ProfissionalResponse {
     public String getTipo() {
         return tipo;
     }
+
+    public String getBio() { return bio; }
 
     public List<String> getTags() {
         return tags;

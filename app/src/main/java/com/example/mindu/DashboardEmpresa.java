@@ -28,10 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindu.adapter.ColaboradoresAdapter;
 import com.example.mindu.adapter.MatriculasAdapter;
-import com.example.mindu.adapter.MensagemAdapter;
 import com.example.mindu.api.ApiService;
 import com.example.mindu.api.RetrofitClient;
-import com.example.mindu.api.chat.ChatTurn;
 import com.example.mindu.api.cliente.ClienteResponse;
 import com.example.mindu.api.dashboard.DashboardResponse;
 import com.example.mindu.api.login.MinhaContaResponse;
@@ -83,13 +81,7 @@ public class DashboardEmpresa extends AppCompatActivity {
     private String buscaAtual = "";
 
     private FrameLayout fabMila;
-
-    private RecyclerView rvMensagensMila;
-    private EditText edtMensagemMila;
-    private ImageView btnEnviarMila;
-
-    private MensagemAdapter mensagemAdapter;
-    private final List<ChatTurn> mensagensMila = new ArrayList<>();
+    private ProfilePhotoController profilePhotoController;
 
     // Dados dos relatórios
     private boolean relatorioCarregado = false;
@@ -126,8 +118,10 @@ public class DashboardEmpresa extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!SessionManager.guard(this, "EMPRESA")) return;
         setContentView(R.layout.activity_dashboard_empresa);
-
+        MilaFab.attach(this);
+        profilePhotoController = new ProfilePhotoController(this, false, savedInstanceState);
         fabMila = findViewById(R.id.fabMila);
 
         apiService = RetrofitClient.getApiService(this);
@@ -138,10 +132,6 @@ public class DashboardEmpresa extends AppCompatActivity {
         navColaboradoresEmpresa = findViewById(R.id.navColaboradoresEmpresa);
         navMatriculasEmpresa = findViewById(R.id.navMatriculasEmpresa);
         navPerfilEmpresa = findViewById(R.id.navPerfilEmpresa);
-
-        fabMila.setOnClickListener(v -> {
-            mostrarTela(R.layout.activity_chat_mila);
-        });
 
         navInicioEmpresa.setOnClickListener(v -> {
             atualizarNavegacao(navInicioEmpresa);
@@ -190,12 +180,6 @@ public class DashboardEmpresa extends AppCompatActivity {
 
         ((android.view.ViewGroup) containerEmpresa).removeAllViews();
         ((android.view.ViewGroup) containerEmpresa).addView(tela);
-
-        fabMila.setVisibility(
-                layout == R.layout.activity_chat_mila
-                        ? View.GONE
-                        : View.VISIBLE
-        );
 
         if (layout == R.layout.content_colaboradores_empresa) {
 
@@ -262,33 +246,12 @@ public class DashboardEmpresa extends AppCompatActivity {
                     blurTarget
             );
 
+            View sair = tela.findViewById(R.id.cardSairEmpresa);
+            if (sair != null) sair.setOnClickListener(v -> SessionManager.logout(this));
+
             configurarTelaPerfilEmpresa(tela);
 
-        } else if (layout == R.layout.activity_chat_mila) {
-
-            configurarChatMila(tela);
         }
-    }
-
-    // =========================================================
-    // CHAT MILA
-    // =========================================================
-
-    private void configurarChatMila(View tela) {
-
-        rvMensagensMila = tela.findViewById(R.id.rvMensagensMila);
-        edtMensagemMila = tela.findViewById(R.id.edtMensagemMila);
-        btnEnviarMila = tela.findViewById(R.id.btnEnviarMila);
-
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(this);
-
-        layoutManager.setStackFromEnd(true);
-
-        rvMensagensMila.setLayoutManager(layoutManager);
-
-        mensagemAdapter = new MensagemAdapter(mensagensMila);
-        rvMensagensMila.setAdapter(mensagemAdapter);
     }
 
     // =========================================================
@@ -1665,6 +1628,10 @@ public class DashboardEmpresa extends AppCompatActivity {
         TextView txtStatus =
                 tela.findViewById(R.id.txtPlanoDetalhesPerfil);
 
+        profilePhotoController.bind(tela.findViewById(R.id.areaFotoEmpresa),
+                tela.findViewById(R.id.imgFotoEmpresa),
+                tela.findViewById(R.id.txtInicialEmpresa), null);
+
         apiService.minhaConta().enqueue(
                 new Callback<MinhaContaResponse>() {
 
@@ -1678,6 +1645,9 @@ public class DashboardEmpresa extends AppCompatActivity {
                             MinhaContaResponse conta = response.body();
 
                             txtNome.setText(conta.getNome());
+                            TextView initial = tela.findViewById(R.id.txtInicialEmpresa);
+                            if (initial != null && conta.getNome() != null && !conta.getNome().trim().isEmpty())
+                                initial.setText(conta.getNome().trim().substring(0, 1).toUpperCase());
                             txtEmail.setText(conta.getEmail());
                             txtTipo.setText(conta.getTipo());
 
@@ -1711,6 +1681,11 @@ public class DashboardEmpresa extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        if (profilePhotoController != null) profilePhotoController.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     // =========================================================
