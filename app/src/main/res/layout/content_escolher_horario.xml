@@ -66,7 +66,7 @@
                         android:id="@+id/txtNomeEspecialistaSelecionado"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dra. Amanda Rossi"
+                        android:text="Especialista"
                         android:textColor="#75689A"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Psicoterapeuta Cognitivo"
+                        android:text="Especialidade"
                         android:textColor="#777080"
                         android:textSize="12sp" />
 
@@ -164,79 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:columnCount="3"
-                    android:rowCount="2">
-
-                    <Button
-                        android:id="@+id/btnHorario0900"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#EAE6F0"
-                        android:text="09:00"
-                        android:textAllCaps="false"
-                        android:textColor="#75689A"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/btnHorario1000"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#75689A"
-                        android:text="10:00"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/btnHorario1100"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#EAE6F0"
-                        android:text="11:00"
-                        android:textAllCaps="false"
-                        android:textColor="#75689A"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/btnHorario1400"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#EAE6F0"
-                        android:text="14:00"
-                        android:textAllCaps="false"
-                        android:textColor="#75689A"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/btnHorario1500"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#EAE6F0"
-                        android:text="15:00"
-                        android:textAllCaps="false"
-                        android:textColor="#75689A"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/btnHorario1600"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="#EAE6F0"
-                        android:text="16:00"
-                        android:textAllCaps="false"
-                        android:textColor="#75689A"
-                        android:textSize="12sp" />
+                    android:rowCount="0">
 
                 </GridLayout>
 
@@ -271,25 +199,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/radioOnline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#75689A"
-                        android:checked="true"
-                        android:text="Online"
-                        android:textColor="#5E586B"
-                        android:textSize="13sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioPresencial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#75689A"
-                        android:text="Presencial"
-                        android:textColor="#5E586B"
-                        android:textSize="13sp" />
 
                 </RadioGroup>
 

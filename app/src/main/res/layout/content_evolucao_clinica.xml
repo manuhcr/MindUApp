@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:fillViewport="true"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="28dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Evolução clínica"
+            android:textColor="#4B426D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Registre as informações relevantes da sessão."
+            android:textColor="#777080"
+            android:textSize="13sp" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurDadosSessaoEvolucao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_vidro">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dados da sessão"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtPacienteEvolucao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Paciente: não selecionado"
+                    android:textColor="#292535"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/txtDataSessaoEvolucao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Data da sessão"
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Registro da evolução"
+            android:textColor="#292535"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtRelatoEvolucao"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_vidro"
+            android:gravity="top|start"
+            android:hint="Descreva os pontos relevantes trabalhados na sessão..."
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="14dp"
+            android:textColor="#292535"
+            android:textColorHint="#91899F"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Observações e próximos passos"
+            android:textColor="#292535"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtObservacoesEvolucao"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_vidro"
+            android:gravity="top|start"
+            android:hint="Adicione observações importantes ou próximos passos..."
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="14dp"
+            android:textColor="#292535"
+            android:textColorHint="#91899F"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnSalvarEvolucaoClinica"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#75689A"
+            android:text="Salvar evolução"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

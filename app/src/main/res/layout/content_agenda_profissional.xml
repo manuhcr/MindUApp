@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:fillViewport="true"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Minha agenda"
+            android:textColor="#4B426D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Visualize seus atendimentos e organize seus horários."
+            android:textColor="#777080"
+            android:textSize="13sp" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurCalendarioProfissional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_vidro">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Selecione uma data"
+                    android:textColor="#75689A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <CalendarView
+                    android:id="@+id/calendarAgendaProfissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dateTextAppearance="@android:style/TextAppearance.Small"
+                    android:weekDayTextAppearance="@android:style/TextAppearance.Small" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Atendimentos do dia"
+            android:textColor="#292535"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurListaAgendaProfissional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_vidro">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/txtDataAgendaProfissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Atendimentos selecionados"
+                    android:textColor="#75689A"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtAgendaVaziaProfissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:padding="18dp"
+                    android:text="Nenhum atendimento para esta data."
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAgendaProfissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </eightbitlab.com.blurview.BlurView>
+    </LinearLayout>
+</ScrollView>

@@ -222,8 +222,6 @@ public class DashboardAdmin extends AppCompatActivity {
 
             carregarIndicadores();
 
-            TextView txtSaudacao = tela.findViewById(R.id.txtSaudacaoAdmin);
-
             // Atalhos de acesso
             BlurView cardEmpresas = tela.findViewById(
                     R.id.cardGerenciarEmpresasAdmin
@@ -238,14 +236,9 @@ public class DashboardAdmin extends AppCompatActivity {
             cardProfissionais.setOnClickListener(v -> mostrarProfissionais());
 
 
-            SharedPreferences prefs = getSharedPreferences("mindu", MODE_PRIVATE);
-            String nomeAdmin = prefs.getString("nomeAdmin", "");
+            TextView txtSaudacao = tela.findViewById(R.id.txtSaudacaoAdmin);
 
-            if (nomeAdmin != null && !nomeAdmin.trim().isEmpty()) {
-                txtSaudacao.setText("Olá, " + nomeAdmin.trim() + "! 👋");
-            } else {
-                txtSaudacao.setText("Olá! 👋");
-            }
+            carregarSaudacaoAdmin(txtSaudacao);
         }
 
         if (layout == R.layout.content_perfil_admin) {
@@ -994,6 +987,56 @@ public class DashboardAdmin extends AppCompatActivity {
 
         blurView.setClipToOutline(true);
         blurView.setElevation(4 * density);
+    }
+
+    private void carregarSaudacaoAdmin(TextView txtSaudacao) {
+
+        SharedPreferences prefs = getSharedPreferences("mindu", MODE_PRIVATE);
+
+        // Exibe primeiro o nome salvo, se existir
+        String nomeSalvo = prefs.getString("nomeAdmin", "");
+
+        if (nomeSalvo != null && !nomeSalvo.trim().isEmpty()) {
+            txtSaudacao.setText("Olá, " + nomeSalvo.trim() + "! 👋");
+        } else {
+            txtSaudacao.setText("Olá! 👋");
+        }
+
+        // Busca os dados atualizados na API
+        RetrofitClient.getApiService(this)
+                .minhaConta()
+                .enqueue(new Callback<MinhaContaResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<MinhaContaResponse> call,
+                            Response<MinhaContaResponse> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            String nome = response.body().getNome();
+
+                            if (nome != null && !nome.trim().isEmpty()) {
+
+                                nome = nome.trim();
+
+                                txtSaudacao.setText("Olá, " + nome + "! 👋");
+
+                                prefs.edit()
+                                        .putString("nomeAdmin", nome)
+                                        .apply();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<MinhaContaResponse> call,
+                            Throwable t) {
+
+                        Log.e("MINDU_API", "Erro ao carregar saudação", t);
+                    }
+                });
     }
 
     private void carregarPerfilAdmin(View tela) {
